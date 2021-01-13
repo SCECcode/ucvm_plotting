@@ -1,0 +1,7 @@
+include README.md LICENSE
+recursive-include examples *.py
+recursive-include utilities *
+recursive-include ucvm_plotting *.py
+recursive-include tests *.py
+recursive-include docs *
+
