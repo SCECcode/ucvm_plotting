@@ -1,0 +1,1 @@
+plot_depth_profile -s 34,-118 -b 0 -e 50000 -d vs,vp,density -v 500 -c cvmh -o depth.png 

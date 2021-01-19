@@ -55,6 +55,5 @@ if __name__ == "__main__":
         keywords=KEYWORDS,
         install_requires=INSTALL_REQUIRES,
         packages=["pycvm"], 
-#        package_data = {"pygmt.tests": ["data/*", "baseline/*"]},
-        scripts=['ucvm_plotting/plot_depth_profile.py'] 
+        scripts=["ucvm_plotting/plot_depth_profile.py"] 
     )
