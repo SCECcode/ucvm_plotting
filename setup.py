@@ -34,7 +34,7 @@ CLASSIFIERS = [
     "License :: OSI Approved :: {}".format(LICENSE),
 ]
 PLATFORMS = "Any"
-INSTALL_REQUIRES = ["numpy", "matplotlib", "basemap", "basemap-data-hires", "packaging"]
+INSTALL_REQUIRES = ["numpy", "matplotlib", "basemap", "packaging"]
 KEYWORDS = ["UCVM"]
 
 if __name__ == "__main__":

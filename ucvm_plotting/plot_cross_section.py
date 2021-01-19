@@ -21,7 +21,7 @@ def usage():
     print("\t-s, --starting: starting depth for cross-section (meters)")
     print("\t-e, --ending: ending depth for cross-section (meters)")
     print("\t-h, --horizontal: horizontal spacing for cross-section (meters)")
-    print("\t-v, --vertical: vertical spacing for cross-section (meters)"(
+    print("\t-v, --vertical: vertical spacing for cross-section (meters)")
     print("\t-d, --datatype: either 'vs', 'vp', 'density', or 'poisson', without quotation marks")
     print("\t-c, --cvm: one of the installed CVMs")
     print("\t-z, --zrange: optional Z-range for elygtl:ely (e.g. -z 0,350)")

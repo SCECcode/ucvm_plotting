@@ -10,6 +10,6 @@ import time
 
 #
 # get installed models
-cmd="$UCVM_INSTALL_PATH/bin/ucvm_query.sh -J"
+cmd="$UCVM_INSTALL_PATH/bin/run_ucvm_query.sh -H"
 os.system(cmd)
 
