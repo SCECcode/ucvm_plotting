@@ -866,6 +866,25 @@ class UCVM:
         
         return properties
 
+# import raw floats data from the external file into 
+# numpy array
+    def import_np_float_array(self, fname, num_x, num_y):
+        rawfile=fname
+        k = rawfile.rfind(".png")
+        if( k != -1) : 
+            rawfile = rawfile[:k] + "_data.raw"
+        try :
+            fh = open(rawfile, 'rb') 
+        except:
+            print("ERROR: binary data does not exist.")
+            exit(1)
+            
+        floats=[]
+        sz = (num_x * num_y)
+        floats = np.load(fh)
+        pdb.set_trace()
+        fh.close()
+        return floats
     
 # import raw floats data from the external file 
 # that is in ascii float format, 1 float per line
@@ -877,7 +896,7 @@ class UCVM:
         if( k != -1) : 
             rawfile = rawfile[:k] + "_data.raw"
         try :
-            fh = open(rawfile, 'r') 
+            fh = open(rawfile, 'rb') 
         except:
             print("ERROR: binary data does not exist.")
             exit(1)
@@ -948,6 +967,23 @@ class UCVM:
         
         return floats
 
+#  export np float array to an exernal file
+    def export_np_float_array(self, floats, fname):
+        rawfile = fname
+        if rawfile is None :
+            rawfile="data.bin"
+        k = rawfile.rfind(".png")
+        if( k != -1) : 
+            rawfile = rawfile[:k] + "_data.bin"
+        try :
+            fh = open(rawfile, 'wb+') 
+        except:
+            print("ERROR: can not write out binary data.")
+            exit(1)
+
+        np.save(fh, floats)
+        fh.close
+
 #  export raw floats nxy ndarray  to an external file 
     def export_binary(self, floats, fname):
         rawfile = fname
@@ -961,10 +997,9 @@ class UCVM:
         except:
             print("ERROR: can not write out binary data.")
             exit(1)
+
         floats.tofile(fh)
-
         print("export_binary(), size=",floats.size)
-
         fh.close()
 
 #  { 'num_x' : xval, 'num_y' : yval, 'total' : total }

@@ -154,7 +154,7 @@ class CrossSection:
             print("expecting x ",self.num_x," y ",self.num_y)
 
             if self.datafile.rfind(".raw") :
-                data = u.import_data(self.datafile, self.num_x, self.num_y)
+                data = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
             else:
                 data = u.import_binary(self.datafile, self.num_x, self.num_y)
 ## this set of data is only for --datatype: either 'vs', 'vp', 'rho', or 'poisson'
@@ -382,13 +382,13 @@ class CrossSection:
           self.meta['depth_list'] = self.depth_list
           if self.filename:
               u.export_metadata(self.meta,self.filename)
-              u.export_binary(datapoints,self.filename)
+              u.export_np_float_array(datapoints,self.filename)
           else:
 #https://stackoverflow.com/questions/2257441/random-string-generation-with-upper-case-letters-and-digits-in-python
               rnd=''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
               f = "cross_section"+rnd
               u.export_metadata(self.meta,f)
-              u.export_binary(datapoints,f)
+              u.export_np_float_array(datapoints,f)
 
 
         img = plt.imshow(newdatapoints, cmap=colormap, norm=norm)
