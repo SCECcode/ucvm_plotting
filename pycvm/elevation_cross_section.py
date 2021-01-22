@@ -149,7 +149,7 @@ class ElevationCrossSection:
             self.num_y = abs((int(self.toelevation) - int(self.startelevation)) / int(self.vspacing)) +1
 
             print("\nUsing -->"+self.datafile)
-            print("expecting x ",self.num_x," y ",self.num_y)
+            print("expecting x "+self.num_x+" y "+self.num_y)
             if self.datafile.rfind(".raw") :
                 data = u.import_raw_data(self.datafile, self.num_x, self.num_y)
             else:

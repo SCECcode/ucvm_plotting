@@ -138,7 +138,7 @@ class HorizontalSlice:
             else:
                 data = u.import_binary(self.datafile, self.num_x, self.num_y)
             print("\nUsing --> "+self.datafile) 
-            print("expecting x ",self.num_x," y ",self.num_y)
+            print("expecting x "+self.num_x+" y "+self.num_y)
         else: 
             #  Generate a list of points to pass to UCVM.
             ucvmpoints = []
@@ -240,7 +240,7 @@ class HorizontalSlice:
         nancnt=0
         zerocnt=0
         negcnt=0
-        print("total cnt is ",self.num_x * self.num_y)
+        print("total cnt is "+self.num_x * self.num_y)
         for i in range(0, self.num_y):
             for j in range(0, self.num_x):
                 if (self.datafile != None) :

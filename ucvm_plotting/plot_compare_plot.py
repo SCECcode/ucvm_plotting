@@ -50,8 +50,8 @@ def main(argv):
   if (len(xinputfile)<1 or len(yinputfile)<1):
     usage()
 
-  print("\nInput CVM files are: ", xinputfile, " ", yinputfile)
-  print("Output Image file is: ", outputfile)
+  print("Input CVM files are: "+ xinputfile +" " yinputfile)
+  print("Output Image file is: "+ outputfile)
 
   list_of_colors = "blue"
 
@@ -66,11 +66,11 @@ def main(argv):
 
   fh = open(xinputfile,'r')
   x = np.fromfile(fh, dtype=np.float32)
-  print("extracted ",len(x)," data points from ", xinputfile)
+  print("extracted "+len(x)+" data points from "+ xinputfile)
   fh.close()
   fh = open(yinputfile,'r')
   y = np.fromfile(fh, dtype=np.float32)
-  print("extracted ",len(y)," data points from ", yinputfile)
+  print("extracted "+len(y)+" data points from "+ yinputfile)
   fh.close()
 
   ax.scatter(x,y,color=list_of_colors,s=5,edgecolor='none')
