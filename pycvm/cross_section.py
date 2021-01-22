@@ -154,7 +154,7 @@ class CrossSection:
             print("expecting x ",self.num_x," y ",self.num_y)
 
             if self.datafile.rfind(".raw") :
-                data = u.import_data(self.datafile, self.num_x, self.num_y)
+                data = u.import_raw_data(self.datafile, self.num_x, self.num_y)
             else:
                 data = u.import_binary(self.datafile, self.num_x, self.num_y)
 ## this set of data is only for --datatype: either 'vs', 'vp', 'rho', or 'poisson'

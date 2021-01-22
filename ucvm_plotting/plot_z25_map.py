@@ -60,7 +60,7 @@ elif ret_val == "help":
 elif len(ret_val) > 0:
     print("Using parameters:\n")
     for key, value in ret_val.iteritems():
-        print(key , " = " , value)
+        print(key +" = "+ value)
         meta[key]=value
         try:
             float(value)
