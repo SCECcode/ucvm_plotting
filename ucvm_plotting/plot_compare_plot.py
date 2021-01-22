@@ -50,7 +50,7 @@ def main(argv):
   if (len(xinputfile)<1 or len(yinputfile)<1):
     usage()
 
-  print("Input CVM files are: "+ xinputfile +" " yinputfile)
+  print("Input CVM files are: "+ xinputfile +" "+yinputfile)
   print("Output Image file is: "+ outputfile)
 
   list_of_colors = "blue"

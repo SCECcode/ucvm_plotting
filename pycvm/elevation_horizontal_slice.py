@@ -240,7 +240,7 @@ class ElevationHorizontalSlice:
         nancnt=0
         zerocnt=0
         negcnt=0
-        print("total cnt is "+self.num_x * self.num_y)
+        print("total cnt is %d"%(self.num_x * self.num_y))
         for i in xrange(0, self.num_y):
             for j in xrange(0, self.num_x):
                 if (self.datafile != None) :
