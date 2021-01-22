@@ -545,7 +545,6 @@ class UCVM:
     #  @param cvm The CVM from which this data should be retrieved.
     #  @return An array of @link MaterialProperties @endlink.
     def query(self, point_list, cvm, elevation = None):
-        
         shared_object = "../model/" + cvm + "/lib/lib" + cvm + ".so"
         properties = []
         
@@ -729,12 +728,12 @@ class UCVM:
     #  @return An array of @link MaterialProperties @endlink.
     def elevation_etree(self, point_list, cvm):
         
-        shared_object = "../model/" + cvm + "/lib/lib" + cvm + ".so"
         properties = []
         
+        # shared_object = "../model/" + cvm + "/lib/lib" + cvm + ".so"
         # Can we load this library dynamically and bypass the C code entirely?
-        if os.path.isfile(shared_object):
-            import ctypes
+        #if os.path.isfile(shared_object):
+            #import ctypes
             #obj = ctypes.cdll.LoadLibrary(shared_object)
             #print(obj)
         
@@ -779,15 +778,14 @@ class UCVM:
     #  @param cvm The CVM from which this data should be retrieved.
     #  @return An array of @link MaterialProperties @endlink.
     def map_grid(self, point_list, cvm):
-        
-        shared_object = "../model/" + cvm + "/lib/lib" + cvm + ".so"
         properties = []
         
+        #shared_object = "../model/" + cvm + "/lib/lib" + cvm + ".so"
         # Can we load this library dynamically and bypass the C code entirely?
-        if os.path.isfile(shared_object):
-            import ctypes
-            #obj = ctypes.cdll.LoadLibrary(shared_object)
-            #print(obj)
+        #if os.path.isfile(shared_object):
+        #import ctypes
+        #obj = ctypes.cdll.LoadLibrary(shared_object)
+        #print(obj)
         
         proc = Popen([self.binary_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
         

@@ -55,5 +55,12 @@ if __name__ == "__main__":
         keywords=KEYWORDS,
         install_requires=INSTALL_REQUIRES,
         packages=["pycvm"], 
-        scripts=["ucvm_plotting/plot_depth_profile.py"] 
+        scripts=["ucvm_plotting/make_map_grid.py","ucvm_plotting/plot_compare_plot.py",
+"ucvm_plotting/plot_cross_section.py","ucvm_plotting/plot_density_plot.py",
+"ucvm_plotting/plot_depth_profile.py","ucvm_plotting/plot_elevation_cross_section.py",
+"ucvm_plotting/plot_elevation_horizontal_slice.py","ucvm_plotting/plot_elevation_map.py",
+"ucvm_plotting/plot_elevation_profile.py","ucvm_plotting/plot_horizontal_slice.py",
+"ucvm_plotting/plot_scatter_plot.py","ucvm_plotting/plot_vs30_etree_map.py",
+"ucvm_plotting/plot_vs30_map.py","ucvm_plotting/plot_z10_map.py",
+"ucvm_plotting/plot_z25_map.py"] 
     )
