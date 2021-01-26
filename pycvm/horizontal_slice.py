@@ -12,6 +12,7 @@ from mpl_toolkits import basemap
 from mpl_toolkits.basemap import cm
 from common import Plot, Point, MaterialProperties, UCVM, UCVM_CVMS, \
                    math, pycvm_cmapDiscretize, cm, mcolors, basemap, np, plt
+import pdb
 
 ##
 #  @class HorizontalSlice
@@ -133,10 +134,14 @@ class HorizontalSlice:
 
 ### MEI
         if (self.datafile != None) :
+            data=[]
             if self.datafile.rfind(".raw") != -1 :
                 data = u.import_raw_data(self.datafile, self.num_x, self.num_y)
             else:  ## with .bin file
-                data = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
+                data2d = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
+                ## flatten it,
+                ##?? data = data2d.reshape([1, self.num_x * self.num_y])
+
             print("\nUsing --> "+self.datafile) 
             print("expecting x "+str(self.num_x)+" y "+str(self.num_y))
         else: 
@@ -244,7 +249,6 @@ class HorizontalSlice:
         for i in range(0, self.num_y):
             for j in range(0, self.num_x):
                 if (self.datafile != None) :
-                    pdb.set_trace()
                     datapoints[i][j] = self.materialproperties[i][j].getProperty(mproperty)
                 elif mproperty != "poisson":
                     if color_scale == "sd" or color_scale == "sd_r":

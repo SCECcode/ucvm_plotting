@@ -395,6 +395,19 @@ class MaterialProperties:
         return cls(new_line[14], new_line[15], new_line[16])
 
     ##
+    #  Initializes the class from a float list.
+    #
+    #  @param cls Not used. Call as MaterialProperties.fromNPFloats(flist).
+    #  @param flist The flist line containing the material properties as imported from np array
+    #  @return A constructed MaterialProperties class.
+    @classmethod
+    def fromNPFloats(cls, flist):
+        vp=flist[0]
+        vs=flist[1]
+        density=flist[2]
+        return cls(vp, vs, density)
+
+    ##
     #  Initializes the class from a JSON  output string line.
     #
     #  @param cls Not used. Call as MaterialProperties.fromJSONOutput(jdict).
@@ -959,6 +972,7 @@ class UCVM:
         return floats
 
 #  export np float array to an exernal file
+#  
     def export_np_float_array(self, floats, fname):
         print("calling export_np_float_array")
         rawfile = fname

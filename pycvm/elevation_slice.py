@@ -69,7 +69,9 @@ class ElevationSlice(HorizontalSlice):
             if self.datafile.rfind(".raw") != -1 :
                 data = u.import_raw_data(self.datafile, self.num_x, self.num_y)
             else: ## file with .bin
-                data = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
+                data2d = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
+                ## flatten them
+                data = data2d.reshape([1, self.num_x * self.num_y])
         else:
             #  Generate a list of points to pass to UCVM.
             ucvmpoints = []
