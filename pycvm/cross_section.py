@@ -131,16 +131,16 @@ class CrossSection:
                   lon_list.append( round(lon,5))
                   lat_list.append( round(lat,5))
 #                if(cnt < 10) :
-#                   print("point.. lon ",lon, " lat ",lat," j ",j)
+#                   print("point.. lon "+str(lon)+" lat "+str(lat)+" j "+str(j))
 #                   cnt += 1
                 
         self.lon_list=lon_list
         self.lat_list=lat_list
         self.depth_list=depth_list
-#        print("total points generated..", len(point_list))
-#        print("total lon..", len(lon_list))
-#        print("total lat..", len(lat_list))
-#        print("total lat..", len(depth_list))
+#        print("total points generated.."+str(len(point_list)))
+#        print("total lon.."+ str(len(lon_list)))
+#        print("total lat.."+ str(len(lat_list)))
+#        print("total lat.."+ str(len(depth_list)))
 
         u = UCVM(install_dir=self.installdir, config_file=self.configfile, z_range=self.z_range)
 
@@ -151,11 +151,9 @@ class CrossSection:
             ## Private number of y points.
             self.num_y = (int(self.todepth) - int(self.startingdepth)) / int(self.vspacing) +1
             print("\nUsing -->"+self.datafile)
-            print("expecting x ",self.num_x," y ",self.num_y)
+            print("expecting x "+str(self.num_x)+" y "+str(self.num_y))
 
-            print("filename "+self.datafile)
-            print(self.datafile.rfind(".raw")
-            if self.datafile.rfind(".raw") :
+            if self.datafile.rfind(".raw") != -1:
                 data = u.import_binary(self.datafile, self.num_x, self.num_y)
             else:  ## ends in .bin
                 data = u.import_np_float_array(self.datafile, self.num_x, self.num_y)

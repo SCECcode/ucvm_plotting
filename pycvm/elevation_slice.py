@@ -65,8 +65,8 @@ class ElevationSlice(HorizontalSlice):
         ###MEI
         if (self.datafile != None) :
             print("\nUsing --> "+self.datafile)
-        # print("expecting x "+self.num_x+" y "+self.num_y)
-            if self.datafile.rfind(".raw") :
+        # print("expecting x "+str(self.num_x)+" y "+str(self.num_y))
+            if self.datafile.rfind(".raw") != -1 :
                 data = u.import_raw_data(self.datafile, self.num_x, self.num_y)
             else: ## file with .bin
                 data = u.import_np_float_array(self.datafile, self.num_x, self.num_y)

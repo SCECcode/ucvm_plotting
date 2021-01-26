@@ -133,12 +133,12 @@ class HorizontalSlice:
 
 ### MEI
         if (self.datafile != None) :
-            if self.datafile.rfind(".raw") :
+            if self.datafile.rfind(".raw") != -1 :
                 data = u.import_raw_data(self.datafile, self.num_x, self.num_y)
             else:  ## with .bin file
                 data = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
             print("\nUsing --> "+self.datafile) 
-            print("expecting x "+self.num_x+" y "+self.num_y)
+            print("expecting x "+str(self.num_x)+" y "+str(self.num_y))
         else: 
             #  Generate a list of points to pass to UCVM.
             ucvmpoints = []
@@ -269,9 +269,9 @@ class HorizontalSlice:
                 else :
                     datapoints[i][j] = u.poisson(self.materialproperties[i][j].vs, self.materialproperties[i][j].vp) 
 
-#        print(" total number of nancnt is ", nancnt)
-#        print(" total number of zerocnt is ", zerocnt)
-#        print(" total number of negcnt is ", negcnt)
+#        print(" total number of nancnt is "+str(nancnt))
+#        print(" total number of zerocnt is "+str(zerocnt))
+#        print(" total number of negcnt is "+str(negcnt))
 
         myInt=1000
         if mproperty == "poisson": ## no need to reduce.. should also be using sd or dd
@@ -347,8 +347,8 @@ class HorizontalSlice:
         img = m.imshow(t, cmap=colormap, norm=norm)
 
        
-#        print("MIN is ", np.nanmin(datapoints))
-#        print("MAX is ", np.nanmax(datapoints))
+#        print("MIN is "+str(np.nanmin(datapoints)))
+#        print("MAX is "+str(np.nanmax(datapoints)))
 #        img=m.scatter(xlist, ylist, c=dlist, cmap=colormap, norm=norm, s=1, edgecolor='',marker='o')      
 #        img=m.scatter(xcoords, ycoords, c=datapoints, cmap=colormap, norm=norm, s=1, edgecolor='',marker='o')      
     

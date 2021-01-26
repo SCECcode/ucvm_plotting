@@ -149,8 +149,8 @@ class ElevationCrossSection:
             self.num_y = abs((int(self.toelevation) - int(self.startelevation)) / int(self.vspacing)) +1
 
             print("\nUsing -->"+self.datafile)
-            print("expecting x "+self.num_x+" y "+self.num_y)
-            if self.datafile.rfind(".raw") :
+            print("expecting x "+str(self.num_x)+" y "+str(self.num_y))
+            if self.datafile.rfind(".raw") != -1 :
                 data = u.import_raw_data(self.datafile, self.num_x, self.num_y)
             else:
                 data = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
@@ -188,7 +188,7 @@ class ElevationCrossSection:
             for y in range(0, self.num_y):
                 for x in range(0, self.num_x):   
                     self.materialproperties[y][x] = data[y * self.num_x + x]     
-#            print("outputting num_x ",self.num_x," num_y ",self.num_y)
+#            print("outputting num_x "+str(self.num_x)+" num_y "+str(self.num_y))
 
     ## 
     #  Plots the horizontal slice either to an image or a file name.
@@ -317,9 +317,9 @@ class ElevationCrossSection:
         self.min_val=np.nanmin(newdatapoints)
         self.mean_val=np.mean(newdatapoints)
 
-#        print("max_val ", self.max_val)
-#        print("min_val ", self.min_val)
-#        print("mean_val", self.mean_val)
+#        print("max_val "+ str(self.max_val))
+#        print("min_val "+ str(self.min_val))
+#        print("mean_val"+ str(self.mean_val))
 
         BOUNDS = u.makebounds()
         TICKS = u.maketicks()

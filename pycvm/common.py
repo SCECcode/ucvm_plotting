@@ -105,7 +105,7 @@ def ask_path(question,target):
         if os.exists(temp_val) and os.isdir(tmp_val) :
             return temp_val
         else :
-            print("\n" + temp_val + " does not exist or not a directory")
+            print("\n" + str(temp_val) + " does not exist or not a directory")
             temp_val= raw_input("Please enter a different path or blank to use the default path: ")
     return target
 
@@ -123,7 +123,7 @@ def ask_file(question,target):
         if os.exists(temp_val) and os.isfile(tmp_val) :
             return temp_val
         else :
-            print("\n" + temp_val + " does not exist or not a file")
+            print("\n" + str(temp_val) + " does not exist or not a file")
             temp_val= raw_input("Please enter a different file or blank to use the default file: ")
     return target
 
@@ -530,7 +530,7 @@ class UCVM:
             try :
                 f=float(p)
             except :
-                print("ERROR: ", line)
+                print("ERROR: "+str(line))
                 exit(1)
            
         return output
@@ -557,14 +557,14 @@ class UCVM:
 #        print("CVM", cvm)
         if( elevation ) :
             if self.z_range != None :
-#                print("RANGE", self.z_range)
+#                print("RANGE"+str(self.z_range))
 #                print("CVM", cvm) 
                 proc = Popen([self.binary_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge", "-z", self.z_range], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
             else :
                 proc = Popen([self.binary_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge"], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
         else :
             if self.z_range != None :
-#                print("RANGE", self.z_range)
+#                print("RANGE"+str(self.z_range))
 #                print("CVM", cvm) 
                 proc = Popen([self.binary_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd", "-z", self.z_range], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
             else:
@@ -662,7 +662,7 @@ class UCVM:
         
         for line in output:
             if ("WARNING" in line) or ("slow performance" in line) or ("Using Geo Depth coordinates as default mode" in line):
-                 print("skipping text",line)
+                 print("skipping text :"+line)
             else:
                  try :
                      p=float(line.split()[2])
@@ -753,7 +753,7 @@ class UCVM:
 
         for line in output:
             if ("WARNING" in line) or ("slow performance" in line) or ("Using Geo Depth coordinates as default mode" in line):
-                print("skipping text",line)
+                print("skipping text :"+line)
             else:
                 # Position 3 returned by ucvm_query is a elevation in the etree. Return this value
                 try:
@@ -805,7 +805,7 @@ class UCVM:
             if ("WARNING" in line) or ("slow performance" in line) or ("Using Geo Depth coordinates as default mode" in line):
                 print("skipping text",line)
             else:
-                # print("line:",line)
+                # print("line :"+line)
                 # return the whole line which will be printed to file
                 properties.append(line)
 
@@ -850,9 +850,9 @@ class UCVM:
 
         for line in output:
             if ("WARNING" in line) or ("slow performance" in line) or ("Using Geo Depth coordinates as default mode" in line):
-                print("skipping text",line)
+                print("skipping text :"+line)
             else:
-                #print("line:",line)
+                #print("line :"+line)
                 # return position 4 from ucvm_query is the etree vs30 value. return that
                 try :
                    p=float(line.split()[4])
@@ -916,7 +916,7 @@ class UCVM:
         rawfile=fname
         k = rawfile.rfind(".json")
         if( k == -1) : 
-            print("Supplied ",fname," did not have .json suffix\n")
+            print("Supplied "+fname+" did not have .json suffix\n")
         try :
             fh = open(rawfile, 'r') 
         except :
@@ -952,11 +952,11 @@ class UCVM:
           fh.seek(0,0)
           floats = np.fromfile(fh, dtype=np.float)
 
-        print("TOTAL number of binary data read:"+len(floats)+"\n")
+        print("TOTAL number of binary data read:"+str(len(floats))+"\n")
 
         # sanity check,  
         if len(floats) != (num_x * num_y) :
-            print("import_binary(), wrong size !!!"+ len(floats)+ " expecting "+ (num_x * num_y))
+            print("import_binary(), wrong size !!!"+ str(len(floats))+ " expecting "+ stsr(num_x * num_y))
             exit(1)
 
         fh.close()
@@ -998,7 +998,7 @@ class UCVM:
             exit(1)
 
         floats.tofile(fh)
-        print("export_binary(), size=" + floats.size)
+        print("export_binary(), size=" + str(floats.size))
         fh.close()
 
 #  { 'num_x' : xval, 'num_y' : yval, 'total' : total }
