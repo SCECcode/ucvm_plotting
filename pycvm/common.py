@@ -876,7 +876,7 @@ class UCVM:
         try :
             fh = open(rawfile, 'rb') 
         except:
-            print("ERROR: binary data does not exist.")
+            print("ERROR: binary np float array data does not exist.")
             exit(1)
             
         floats=[]
@@ -952,11 +952,11 @@ class UCVM:
           fh.seek(0,0)
           floats = np.fromfile(fh, dtype=np.float)
 
-        print("TOTAL number of binary data read:",len(floats),"\n")
+        print("TOTAL number of binary data read:"+len(floats)+"\n")
 
         # sanity check,  
         if len(floats) != (num_x * num_y) :
-            print("import_binary(), wrong size !!!", len(floats), " expecting ", (num_x * num_y))
+            print("import_binary(), wrong size !!!"+ len(floats)+ " expecting "+ (num_x * num_y))
             exit(1)
 
         fh.close()
@@ -998,7 +998,7 @@ class UCVM:
             exit(1)
 
         floats.tofile(fh)
-        print("export_binary(), size=",floats.size)
+        print("export_binary(), size=" + floats.size)
         fh.close()
 
 #  { 'num_x' : xval, 'num_y' : yval, 'total' : total }
@@ -1125,7 +1125,7 @@ class UCVM:
             ticks.append(tick)
 
         ticks.append(round((step * nstep + minval),4))
-#        print("ticks ", ticks)
+#        print("ticks "+ ticks)
         return ticks
 
 
