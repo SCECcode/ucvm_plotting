@@ -956,7 +956,7 @@ class UCVM:
 
         # sanity check,  
         if len(floats) != (num_x * num_y) :
-            print("import_binary(), wrong size !!!"+ str(len(floats))+ " expecting "+ stsr(num_x * num_y))
+            print("import_binary(), wrong size !!!"+ str(len(floats))+ " expecting "+ str(num_x * num_y))
             exit(1)
 
         fh.close()

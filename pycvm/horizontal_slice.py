@@ -244,6 +244,7 @@ class HorizontalSlice:
         for i in range(0, self.num_y):
             for j in range(0, self.num_x):
                 if (self.datafile != None) :
+                    pdb.set_trace()
                     datapoints[i][j] = self.materialproperties[i][j].getProperty(mproperty)
                 elif mproperty != "poisson":
                     if color_scale == "sd" or color_scale == "sd_r":
