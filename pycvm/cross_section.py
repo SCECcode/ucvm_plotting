@@ -153,6 +153,8 @@ class CrossSection:
             print("\nUsing -->"+self.datafile)
             print("expecting x ",self.num_x," y ",self.num_y)
 
+            print("filename "+self.datafile)
+            print(self.datafile.rfind(".raw")
             if self.datafile.rfind(".raw") :
                 data = u.import_binary(self.datafile, self.num_x, self.num_y)
             else:  ## ends in .bin
