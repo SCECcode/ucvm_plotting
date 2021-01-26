@@ -126,7 +126,7 @@ else:
         if cvm in UCVM_CVMS:
             cvmtoprint = UCVM_CVMS[cvm]
         corresponding_cvm.append(cvm)
-        print("\t%d) %s" % (counter, cvmtoprint)
+        print("\t%d) %s" % (counter, cvmtoprint))
         counter += 1
     
     cvm_selected = -1
@@ -141,7 +141,6 @@ else:
 
     color = ""
     while color != "s" and color != "d" :
-        print(""
         color = raw_input("Finally, would you like a descritized or smooth color scale\n(enter 'd' for discrete, 's' for smooth): ")
         color = color.strip()
 
