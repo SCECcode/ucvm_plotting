@@ -866,7 +866,7 @@ class UCVM:
         
         return properties
 
-# import raw floats data from the external file into 
+# import raw floats array data from the external file into 
 # numpy array
     def import_np_float_array(self, fname, num_x, num_y):
         rawfile=fname
@@ -882,7 +882,6 @@ class UCVM:
         floats=[]
         sz = (num_x * num_y)
         floats = np.load(fh)
-        pdb.set_trace()
         fh.close()
         return floats
     

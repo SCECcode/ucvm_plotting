@@ -135,8 +135,8 @@ class ElevationHorizontalSlice:
         if (self.datafile != None) :
             if self.datafile.rfind(".raw") :
                 data = u.import_raw_data(self.datafile, self.num_x, self.num_y)
-            else:
-                data = u.import_binary(self.datafile, self.num_x, self.num_y)
+            else:  ## file with .bin
+                data = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
             print("\nUsing --> "+self.datafile) 
             print("expecting x "+self.num_x+" y "+self.num_y)
 	else: 
@@ -338,7 +338,7 @@ class ElevationHorizontalSlice:
           self.meta['lat_list']=lats.tolist()
           if self.filename:
               u.export_metadata(self.meta,self.filename)
-              u.export_binary(datapoints,self.filename)
+              u.export_np_float_array(datapoints,self.filename)
                     
 
         ## reduce the datapoints before passing in..

@@ -154,9 +154,10 @@ class CrossSection:
             print("expecting x ",self.num_x," y ",self.num_y)
 
             if self.datafile.rfind(".raw") :
-                data = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
-            else:
                 data = u.import_binary(self.datafile, self.num_x, self.num_y)
+            else:  ## ends in .bin
+                data = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
+
 ## this set of data is only for --datatype: either 'vs', 'vp', 'rho', or 'poisson'
         ## The 2D array of retrieved material properties.
             self.materialproperties = [[MaterialProperties(-1, -1, -1) for x in range(self.num_x)] for x in range(self.num_y)] 
