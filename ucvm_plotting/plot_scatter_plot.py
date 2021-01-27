@@ -51,7 +51,7 @@ def main(argv):
   print("\n")
   print("Input CVM file is: "+inputfile)
   print("Output Image file is: "+outputfile)
-  print("Slide Depth:"+st(depth))
+  print("Slide Depth:"+str(depth))
   print("Description:"+descript)
 
   list_of_datafiles = inputfile
