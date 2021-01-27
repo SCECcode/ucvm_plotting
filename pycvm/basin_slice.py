@@ -14,8 +14,6 @@
 from horizontal_slice import HorizontalSlice
 from common import Point, MaterialProperties, UCVM, UCVM_CVMS, \
                    math, pycvm_cmapDiscretize, cm, mcolors, np, plt
-import pdb
-
 ##
 #  @class BasinSlice
 #  @brief Gets a horizontal slice of the basin data.

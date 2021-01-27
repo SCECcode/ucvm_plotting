@@ -15,7 +15,6 @@ from matplotlib import cm
 from common import Plot, Point, MaterialProperties, UCVM, UCVM_CVMS, \
                    math, pycvm_cmapDiscretize, cm, mcolors, np, plt
 
-import pdb
 import random
 import string
 
@@ -151,7 +150,7 @@ class CrossSection:
             ## Private number of y points.
             self.num_y = (int(self.todepth) - int(self.startingdepth)) / int(self.vspacing) +1
             print("\nUsing -->"+self.datafile)
-            print("expecting x "+str(self.num_x)+" y "+str(self.num_y))
+##            print("expecting x "+str(self.num_x)+" y "+str(self.num_y))
 
             if self.datafile.rfind(".raw") != -1:
                 data = u.import_binary(self.datafile, self.num_x, self.num_y)

@@ -11,7 +11,6 @@
 from pycvm import ElevationCrossSection, UCVM, VERSION, UCVM_CVMS, Point, ask_number, ask_path, ask_file, get_user_opts
 import getopt, sys, os
 import json
-import pdb
 
 ## Prints usage statement.
 def usage():

@@ -10,7 +10,6 @@
 
 from pycvm import Z25Slice, UCVM, VERSION, UCVM_CVMS, Point, ask_number, ask_path, ask_file, get_user_opts
 import getopt, sys, os
-import pdb
 
 ## Prints usage of this utility.
 def usage():

@@ -66,11 +66,11 @@ def main(argv):
 
   fh = open(xinputfile,'r')
   x = np.fromfile(fh, dtype=np.float32)
-  print("extracted %d data points from %s"%(len(x),xinputfile))
+#  print("extracted %d data points from %s"%(len(x),xinputfile))
   fh.close()
   fh = open(yinputfile,'r')
   y = np.fromfile(fh, dtype=np.float32)
-  print("extracted %d data points from %s"%(len(y),yinputfile))
+#  print("extracted %d data points from %s"%(len(y),yinputfile))
   fh.close()
 
   ax.scatter(x,y,color=list_of_colors,s=5,edgecolor='none')

@@ -15,7 +15,6 @@ import multiprocessing
 import math
 import struct
 import getopt
-import pdb
 import json
 
 #  Numpy is required.
@@ -974,7 +973,7 @@ class UCVM:
 #  export np float array to an exernal file
 #  
     def export_np_float_array(self, floats, fname):
-        print("calling export_np_float_array")
+#        print("calling export_np_float_array")
         rawfile = fname
         if rawfile is None :
             rawfile="data.bin"
@@ -992,7 +991,7 @@ class UCVM:
 
 #  export raw floats nxy ndarray  to an external file 
     def export_binary(self, floats, fname):
-        print("calling export_binary")
+#        print("calling export_binary")
         rawfile = fname
         if rawfile is None :
             rawfile="data.bin"
@@ -1027,7 +1026,7 @@ class UCVM:
 
 #  export ascii meta data to an external file 
     def export_metadata(self,meta,fname):
-        print("calling export_metadata")
+#        print("calling export_metadata")
         metafile=fname
         if metafile is None:
           metafile = "meta.json"
@@ -1058,7 +1057,7 @@ class UCVM:
 
 #  export material properties in JSON form to an external file 
     def export_matprops(self,blob,fname):
-        print("calling export_matprops")
+#        print("calling export_matprops")
         matpropsfile=fname
         if matpropsfile is None :
             matpropsfile="matprops.json"
@@ -1077,7 +1076,7 @@ class UCVM:
 
 #  export material properties in JSON form to an external file 
     def export_velocity(self,filename,vslist,vplist,rholist):
-        print("calling export_velocity")
+#        print("calling export_velocity")
         k = filename.rfind(".png")
         rawfile=filename
         if( k != -1) :

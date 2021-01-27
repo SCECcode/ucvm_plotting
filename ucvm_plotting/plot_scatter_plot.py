@@ -49,10 +49,10 @@ def main(argv):
     usage()
 
   print("\n")
-  print("Input CVM file is: ", inputfile)
-  print("Output Image file is: ", outputfile)
-  print("Slide Depth:",depth)
-  print("Description:",descript)
+  print("Input CVM file is: "+inputfile)
+  print("Output Image file is: "+outputfile)
+  print("Slide Depth:"+st(depth))
+  print("Description:"+descript)
 
   list_of_datafiles = inputfile
   list_of_colors = "blue"
