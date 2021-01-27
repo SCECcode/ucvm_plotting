@@ -136,9 +136,13 @@ class ElevationHorizontalSlice:
             if self.datafile.rfind(".raw") != -1 :
                 data = u.import_raw_data(self.datafile, self.num_x, self.num_y)
             else:  ## file with .bin
-                data = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
+                data2d = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
+                ## flatten them
+                data1d = data2d.reshape([1, self.num_x * self.num_y])
+                ## turn first one into a list
+                data=data1d[0].tolist()
             print("\nUsing --> "+self.datafile) 
-            print("expecting x "+str(self.num_x)+" y "+str(self.num_y))
+ 
 	else: 
             #  Generate a list of points to pass to UCVM.
             ucvmpoints = []
@@ -152,7 +156,6 @@ class ElevationHorizontalSlice:
         i = 0
         j = 0
         isfloat = 0
-#        fp=open("raw_data","w")
         if (self.datafile != None) :
             isfloat = 1
         for matprop in data:

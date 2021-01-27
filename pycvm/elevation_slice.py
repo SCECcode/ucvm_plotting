@@ -71,7 +71,9 @@ class ElevationSlice(HorizontalSlice):
             else: ## file with .bin
                 data2d = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
                 ## flatten them
-                data = data2d.reshape([1, self.num_x * self.num_y])
+                data1d = data2d.reshape([1, self.num_x * self.num_y])
+                ## turn first one into a list
+                data=data1d[0].tolist()
         else:
             #  Generate a list of points to pass to UCVM.
             ucvmpoints = []

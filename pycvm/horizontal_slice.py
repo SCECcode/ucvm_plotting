@@ -139,11 +139,12 @@ class HorizontalSlice:
                 data = u.import_raw_data(self.datafile, self.num_x, self.num_y)
             else:  ## with .bin file
                 data2d = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
-                ## flatten it,
-                ##?? data = data2d.reshape([1, self.num_x * self.num_y])
+                ## flatten them
+                data1d = data2d.reshape([1, self.num_x * self.num_y])
+                ## turn first one into a list
+                data=data1d[0].tolist()
 
             print("\nUsing --> "+self.datafile) 
-            print("expecting x "+str(self.num_x)+" y "+str(self.num_y))
         else: 
             #  Generate a list of points to pass to UCVM.
             ucvmpoints = []
