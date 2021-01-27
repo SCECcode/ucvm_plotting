@@ -1,0 +1,32 @@
+(cd compare_plot; ./run_cvmh_compare_plot.sh)
+
+(cd cross_section; ./run_cvmh_cross_section_vs.sh)
+
+(cd density_plot; ./run_cvmh_density_plot.sh)
+
+(cd depth_profile; ./run_cvmh_depth_profile.sh)
+
+(cd elevation_cross_section; ./run_cvmh_elevation_cross_section_vp.sh; ./run_cvmh_elevation_cross_section_vs.sh)
+
+(cd elevation_map; ./run_cvmh_elevation_map.sh)
+
+(cd elevation_profile; ./run_cvmh_elevation_profile.sh)
+
+(cd horizontal_slice; ./run_cvmh_horizontal_slice_vs.sh)
+
+#mix_plots:
+#make_bicolor_plots.py
+#make_density_plots.py
+#make_norcal_plots.py
+#make_plots.py
+#make_scatter_plots.py
+
+(cd scatter_plot; ./run_cvmh_scatter_plot.sh; ./run_norcal_scatter_plot.sh)
+
+(cd vs30_etree_map; ./run_cvmh_vs30_etree_map.sh)
+
+(cd vs30_map; ./run_cvmh_vs30_map.sh)
+
+(cd z10_map; ./run_cvmh_z10_map.sh)
+
+(cd z25_map; ./run_cvmh_z25_map.sh)
