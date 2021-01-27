@@ -68,9 +68,14 @@ class BasinSlice(HorizontalSlice):
         u = UCVM(install_dir=self.installdir, config_file=self.configfile)
 ### MEI
         if (self.datafile != None) :
-#            print("\nUsing --> "+datafile)
-            data = u.import_binary(self.datafile, self.num_x, self.num_y)
-#            print("Total points imported is ", len(data), "for ", self.num_x, " and ", self.num_y)
+#print("\nUsing --> "+datafile)
+#data = u.import_binary(self.datafile, self.num_x, self.num_y)
+#print("Total points imported is ", len(data), "for ", self.num_x, " and ", self.num_y)
+             data2d = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
+             ## flatten them
+             data1d = data2d.reshape([1, self.num_x * self.num_y])
+             ## turn first one into a list
+             data=data1d[0].tolist()
         else:
             #  Generate a list of points to pass to UCVM.
             ucvmpoints = []
