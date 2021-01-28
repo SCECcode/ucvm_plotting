@@ -13,12 +13,15 @@ jobs:
     - name: test out the docker
       run: pwd
       shell: bash 
-    - name: look around 1
-      run: ls $GITHUB_WORKSPACE 
+    - name: test 1 
+      run: which ucvm_query
       shell: bash 
-    - name: look around 2
-      run: ls $GITHUB_WORKSPACE/* 
+    - name: test 2
+      run: ucvm_query -H
       shell: bash 
-    - name: look around 3
-      run: ls ~/*
+    - name: test 3
+      run: ls -l /app
+      shell: bash 
+    - name: test 4
+      run: echo $UCVM_SRC_PATH
       shell: bash 
