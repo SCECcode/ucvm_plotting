@@ -7,13 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 5
-
     steps:
-    - name: Check out ucvm_plotting
-    - uses: actions/checkout@v2
-      run: pwd
-      shell: bash
     - name: Using UCVM docker image
-    - uses: docker://sceccode/miniucvm:1.1
+      uses: docker://sceccode/miniucvm:1.1
+    - name: Current location
       run: pwd
       shell: bash
