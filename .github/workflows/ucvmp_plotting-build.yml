@@ -13,6 +13,12 @@ jobs:
     - name: test out the docker
       run: pwd
       shell: bash 
-    - name: look around
-      run: ls $GITHUB_WORKSPACE /github/workspace
+    - name: look around 1
+      run: ls $GITHUB_WORKSPACE 
+      shell: bash 
+    - name: look around 2
+      run: ls $GITHUB_WORKSPACE/* 
+      shell: bash 
+    - name: look around 3
+      run: ls ~/*
       shell: bash 
