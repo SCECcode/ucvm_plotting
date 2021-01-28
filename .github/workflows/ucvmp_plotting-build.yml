@@ -14,6 +14,6 @@ jobs:
       run: pwd
       shell: bash
     - name: Using UCVM docker image
-      uses: docker://sceccode/miniucvm:1.1
+    - uses: docker://sceccode/miniucvm:1.1
       run: pwd
       shell: bash
