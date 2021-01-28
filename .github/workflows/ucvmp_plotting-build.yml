@@ -10,6 +10,3 @@ jobs:
     steps:
     - name: Using UCVM docker image
       uses: docker://sceccode/miniucvm:1.1
-    - name: Current location
-      run: pwd
-      shell: bash
