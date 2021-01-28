@@ -13,4 +13,6 @@ jobs:
     - name: test out the docker
       run: pwd
       shell: bash 
-      working-directory: ~/app/target
+    - name: look around
+      run: ls
+      shell: bash 
