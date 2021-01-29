@@ -5,23 +5,12 @@ on: [push]
 jobs:
   build-linux:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 5
     steps:
     - name: Using UCVM docker image
-      uses: docker://sceccode/miniucvm:1.1
-    - name: test out the docker
-      run: pwd
-      shell: bash 
-    - name: test 1 
-      run: which ucvm_query
-      shell: bash 
-    - name: test 2
-      run: ucvm_query -H
-      shell: bash 
-    - name: test 3
-      run: ls -l /app
-      shell: bash 
-    - name: test 4
-      run: echo $UCVM_SRC_PATH
-      shell: bash 
+    - run: pwd
+    - run: ls /
+    - run: echo $HOME
+    - name: add a file
+      run: touch $HOME/dumdum.txt
+    - uses: actions/checkout@1
+    - uses: docker://sceccode/miniucvm:1.1
