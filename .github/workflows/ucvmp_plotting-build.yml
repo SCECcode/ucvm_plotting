@@ -16,4 +16,9 @@ jobs:
     - uses: docker://sceccode/miniucvm:1.1
     - run: ls $HOME
     - run: ls
+    - run: ls /
+    - run: ls /github/workspace
+    - run: ls /github/workflow
+    - run: ls /app
+    - run: ls /app/target
     - run: ucvm_query -H
