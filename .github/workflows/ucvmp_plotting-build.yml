@@ -1,16 +1,1 @@
-name: Python Package using Conda
-
-on: [push]
-
-jobs:
-  build-linux:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Using UCVM docker image
-    - run: pwd
-    - run: ls /
-    - run: echo $HOME
-    - name: add a file
-      run: touch $HOME/dumdum.txt
-    - uses: actions/checkout@1
-    - uses: docker://sceccode/miniucvm:1.1
+test.yml
