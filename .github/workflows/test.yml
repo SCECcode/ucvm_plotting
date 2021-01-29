@@ -12,5 +12,5 @@ jobs:
     - name: add a file
       run: touch $HOME/dumdum.txt
     # Those steps are actions, which may run inside a container
-    - uses: actions/checkout@1
+    - uses: actions/checkout@v1
     - uses: docker://sceccode/miniucvm:1.1
