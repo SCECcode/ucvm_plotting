@@ -6,18 +6,17 @@ jobs:
   build-linux:
     runs-on: ubuntu-18.04
     steps:
-    - run: pwd
-    - run: ls /
     - run: echo $HOME
-    - name: add a file
-      run: touch $HOME/dumdum.txt
+    - run: pwd
+    - run: ls /home
+    - run: ls /home/runner
+    - run: ls /home/runner/work
     # Those steps are actions, which may run inside a container
     - uses: actions/checkout@v1
     - uses: docker://sceccode/miniucvm:1.1
-    - run: ls $HOME
-    - run: ls
-    - run: ls /
+    - run: echo $RUNNER_WORKSPACE
     - run: ls $RUNNER_WORKSPACE
+    - run: echo $GITHUB_WORKSPACE
+    - run: ls $GITHUB_WORKSPACE
     - run: env
-    - run: echo $GITHUB_ENV
-    - run: pwd
+    - run: $GITHUB_ENV
