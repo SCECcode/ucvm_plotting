@@ -24,4 +24,5 @@ jobs:
     - run: ls /usr/local
     - run: ls /usr/local/bin
     - run: more ~/.bashrc
+    - run: ls /etc/profile.d
 
