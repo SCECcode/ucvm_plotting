@@ -13,7 +13,7 @@ jobs:
     #
     - run: ls /home/runner/work
     # Those steps are actions, which may run inside a container
-    - uses: docker://mpihuisu/py2ucvm
+    - uses: docker://mpihuisu/py2ucvm:1.0
     - uses: actions/checkout@v1
     - run: echo $RUNNER_WORKSPACE
     - run: ls $RUNNER_WORKSPACE/ucvm_plotting
