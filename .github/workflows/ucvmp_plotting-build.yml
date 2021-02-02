@@ -12,8 +12,8 @@ jobs:
     - run: ls /home/runner
     - run: ls /home/runner/work
     # Those steps are actions, which may run inside a container
-    - uses: actions/checkout@v1
     - uses: docker://sceccode/miniucvm:1.1
+    - uses: actions/checkout@v1
     - run: echo $RUNNER_WORKSPACE
     - run: ls $RUNNER_WORKSPACE/ucvm_plotting
     - run: echo $GITHUB_WORKSPACE
@@ -22,6 +22,6 @@ jobs:
     - run: more $GITHUB_ENV
     - run: ls /
     - run: ls /usr/local
-    - run: ls /usr/local/src
     - run: ls /usr/local/bin
-    - run: ls /usr/local/share
+    - run: more ~/.bashrc
+
