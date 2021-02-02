@@ -20,6 +20,8 @@ jobs:
     - run: ls $GITHUB_WORKSPACE
     - run: env
     - run: more $GITHUB_ENV
+    - run: ls /
     - run: ls /usr/local
-    - run: ls /usr/local/opt
-    - run: ls /usr/local/opt/ucvm
+    - run: ls /usr/local/src
+    - run: ls /usr/local/bin
+    - run: ls /usr/local/share
