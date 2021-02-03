@@ -17,9 +17,8 @@ jobs:
     #
     - run: ls /home/runner/work
     # Those steps are actions, which may run inside a container
-    - run: 
-        using: 'docker'
-        image: 'docker://mpihuisu/py2ucvm:1.1'
+    - uses: docker://mpihuisu/py2ucvm:1.1
+    - run: ucvm_query -H
     - run: echo $RUNNER_WORKSPACE
     - run: echo $GITHUB_WORKSPACE
     - run: ls $GITHUB_WORKSPACE
