@@ -19,6 +19,7 @@ jobs:
     # Those steps are actions, which may run inside a container
     - uses: docker://mpihuisu/py2ucvm:1.1
     - run: echo $GITHUB_WORKSPACE
+    - run: file $GITHUB_WORKSPACE
     - run: ls $GITHUB_WORKSPACE
     - run: env
     - run: more $GITHUB_ENV
