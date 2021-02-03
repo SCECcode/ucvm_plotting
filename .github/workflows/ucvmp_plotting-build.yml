@@ -17,7 +17,7 @@ jobs:
     #
     - run: ls /home/runner/work
     # Those steps are actions, which may run inside a container
-    - runs: 
+    - run: 
         using: 'docker'
         image: 'docker://mpihuisu/py2ucvm:1.1'
     - run: echo $RUNNER_WORKSPACE
