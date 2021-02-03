@@ -12,12 +12,10 @@ jobs:
     steps:
     - run: echo $HOME
     - run: pwd
-    - run: ls /home
-    - run: ls /home/runner
-    #
     - run: ls /home/runner/work
     # Those steps are actions, which may run inside a container
     - uses: docker://mpihuisu/py2ucvm:1.1
+    - run: pwd
     - run: echo $GITHUB_WORKSPACE
     - run: file $GITHUB_WORKSPACE
     - run: ls $GITHUB_WORKSPACE
