@@ -5,6 +5,10 @@ on: [push]
 jobs:
   build-linux:
     runs-on: ubuntu-18.04
+    env: 
+      UCVM_SRC_PATH: /UCVMC 
+      UCVM_INSTALL_PATH: /usr/local/ucvm
+      LD_LIBRARY_PATH: /usr/local/ucvm/lib/euclid3/lib:/usr/local/ucvm/lib/proj-5/lib:/usr/local/ucvm/model/cvms/lib:/usr/local/ucvm/model/cvms5/lib:/usr/local/ucvm/model/cvmh1511/lib
     steps:
     - run: echo $HOME
     - run: pwd
@@ -13,10 +17,10 @@ jobs:
     #
     - run: ls /home/runner/work
     # Those steps are actions, which may run inside a container
-    - uses: docker://mpihuisu/py2ucvm:1.0
-    - uses: actions/checkout@v1
+    - runs: 
+        using: 'docker'
+        image: 'docker://mpihuisu/py2ucvm:1.1'
     - run: echo $RUNNER_WORKSPACE
-    - run: ls $RUNNER_WORKSPACE/ucvm_plotting
     - run: echo $GITHUB_WORKSPACE
     - run: ls $GITHUB_WORKSPACE
     - run: env
