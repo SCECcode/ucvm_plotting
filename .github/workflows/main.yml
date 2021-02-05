@@ -7,9 +7,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - id: foo
-      uses: actions/hello-world-composite-run-steps-action@v1
+      uses: meihuisu/hello-world-composite-run-steps-action@v1
       with:
-        who-to-greet: 'Mona the Octocat'
+        who-to-greet: 'Mona the Dumdum'
     - run: echo random-number ${{ steps.foo.outputs.random-number }}
       shell: bash
 
