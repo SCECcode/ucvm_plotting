@@ -3,11 +3,21 @@ name: Build UCVM + ucvm_plotting
 #on: [push]
 
 jobs:
-  build-linux:
-    runs-on: ubuntu-18.04
+  build_ucvm:
+    runs-on: ubuntu-latest
     steps:
     - name: Bring in UCVM
     - uses: SCECcode/UCVMC.git@toPython3
+    - run: |
+       xxx
        shell: bash
-    - run: cat $HOME/query.txt
+  build_plotting:
+    needs: build_ucvm
+    - uses: actions/checkout@v2
+    - run: |
+       xxx
+       shell:xxx
+  test:
+    needs: build_plotting
+    - run: |
 
