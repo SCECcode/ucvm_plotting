@@ -1,0 +1,13 @@
+name: Build UCVM + ucvm_plotting
+
+#on: [push]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-18.04
+    steps:
+    - name: Bring in UCVM
+    - uses: SCECcode/UCVMC.git@toPython3
+       shell: bash
+    - run: cat $HOME/query.txt
+
