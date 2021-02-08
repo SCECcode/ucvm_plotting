@@ -1,0 +1,14 @@
+on: [push]
+  
+jobs:
+  get_ucvm:
+    runs-on: ubuntu-latest
+    name: A job to build UCVM
+    steps:
+    - uses: actions/checkout@v2
+    - id: foo
+      uses: SCECcode/UCVMC/.github/actions@action1
+      with:
+        model-to-build: 'cvmh'
+
+
