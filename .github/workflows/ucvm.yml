@@ -1,15 +1,15 @@
 on: [push]
-  
+
 jobs:
-  get_ucvm:
+  hello_world_job:
     runs-on: ubuntu-latest
-    name: A job to build UCVM
+    name: A job to say hello
     steps:
     - uses: actions/checkout@v2
     - id: foo
       uses: SCECcode/UCVMC/.github/actions@action1
       with:
-        ref: toPython3
-        who-to-greet: 'cvmh'
+        who-to-greet: 'Mona from ucvm_plotting'
     - run: echo random-number ${{ steps.foo.outputs.random-number }}
       shell: bash
+
