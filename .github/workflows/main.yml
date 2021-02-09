@@ -9,6 +9,7 @@ jobs:
     - id: foo
       uses: meihuisu/hello-world-composite-run-steps-action/.github/actions@v8
       with:
+        ref: toPython3
         who-to-greet: 'Mona from ucvm_plotting'
     - run: echo random-number ${{ steps.foo.outputs.random-number }}
       shell: bash
