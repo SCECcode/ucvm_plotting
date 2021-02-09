@@ -6,10 +6,15 @@ jobs:
     name: A job to say hello
     steps:
     - uses: actions/checkout@v2
-    - id: build
+    - id: build-ucvm
       uses: SCECcode/UCVMC/.github/actions@action1
       with:
         target-models: 'cvmh'
-    - run: echo build-log ${{ steps.build.outputs.build-log }}
+    - run: echo build-log ${{ steps.build-ucvm.outputs.build-log }}
       shell: bash
-
+    - id: build-self
+      run: pwd
+      shell: bash
+    - run: ls
+      shell: bash
+ 
