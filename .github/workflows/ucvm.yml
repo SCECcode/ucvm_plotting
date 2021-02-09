@@ -9,6 +9,6 @@ jobs:
     - id: foo
       uses: SCECcode/UCVMC/.github/actions@action1
       with:
-        who-to-greet: 'cvmh'
+        who-to-gree: 'cvmh'
     - run: echo random-number ${{ steps.foo.outputs.random-number }}
       shell: bash
