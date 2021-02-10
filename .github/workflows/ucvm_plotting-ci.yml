@@ -1,9 +1,11 @@
+name: ucvm_plotting-ci
+
 on: [push]
 
 jobs:
-  hello_world_job:
+  ucvm_plotting-build:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: A job to build ucvm_plotting
     steps:
     - uses: actions/checkout@v2
     - run: ( echo "UCVM_PLOTTING_PATH=$RUNNER_WORKSPACE/ucvm_plotting" >> $GITHUB_ENV )
@@ -16,7 +18,7 @@ jobs:
       shell: bash
     - run: env
       shell: bash
-    - run: ls $UCVM_PLOTTING_PATH 
+    - run: ls $UCVM_PLOTTING_PATH/ucvm_plotting 
       shell: bash
     - id: build-self
       run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/ucvm_plotting-build.sh)
