@@ -10,6 +10,7 @@ which installed_models.py
 installed_models.py
 
 echo "--- Setup basemap and matplotlib :"
+which pip
 pip -V
 conda -V
 conda install -y -c conda-forge basemap basemap-data-hires
