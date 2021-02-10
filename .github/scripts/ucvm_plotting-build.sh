@@ -9,6 +9,11 @@ echo "--- Show ucvm built info :"
 which installed_models.py
 installed_models.py
 
-echo "--- Unpac ucvm_plotting :"
-conda install -y matplotlib basemap basemap-data-hires
+echo "--- Setup basemap and matplotlib :"
+pip -V
+conda -V
+conda install -y -c conda-forge basemap basemap-data-hires
+conda install -y  matplotlib
+
+echo "--- Unpack ucvm_plotting :"
 ./unpack-dist
