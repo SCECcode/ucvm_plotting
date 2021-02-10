@@ -9,4 +9,7 @@ ucvm_query -H
 echo "--- Unpac ucvm_plotting :"
 ./unpack-dist
 
+python -V
+which conda
 pip list
+conda list
