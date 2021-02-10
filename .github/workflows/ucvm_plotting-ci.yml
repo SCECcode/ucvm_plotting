@@ -6,6 +6,8 @@ jobs:
     name: A job to say hello
     steps:
     - uses: actions/checkout@v2
+    - run: ( echo "UCVM_PLOTTING_PATH=$RUNNER_WORKSPACE" >> $GITHUB_ENV )
+      shell: bash
     - id: build-ucvm
       uses: SCECcode/UCVMC/.github/actions@action1
       with:
@@ -13,7 +15,7 @@ jobs:
     - run: echo build-log ${{ steps.build-ucvm.outputs.build-log }}
       shell: bash
     - id: build-self
-      run: pwd
+      run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/ucvm_plotting-build.sh)
       shell: bash
     - run: ls
       shell: bash
