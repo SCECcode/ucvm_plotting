@@ -1,5 +1,5 @@
 
-[![ucvm-ci Actions Status](https://github.com/SCECcode/ucvm_plotting/workflows/ucvm_plotting_ci/badge.svg)](https://github.com/SCECcode/ucvm_plotting/actions)
+[![ucvm_plotting-ci Actions Status](https://github.com/SCECcode/ucvm_plotting/workflows/ucvm_plotting-ci/badge.svg)](https://github.com/SCECcode/ucvm_plotting/actions)
 
 
 # ucvm_plotting
