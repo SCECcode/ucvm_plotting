@@ -8,3 +8,5 @@ echo "--- Show ucvm built info :"
 ucvm_query -H
 echo "--- Unpac ucvm_plotting :"
 ./unpack-dist
+
+pip list
