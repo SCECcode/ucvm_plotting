@@ -16,13 +16,9 @@ jobs:
         target-models: 'cvmh'
     - run: echo build-log ${{ steps.build-ucvm.outputs.build-log }}
       shell: bash
-    - run: env
-      shell: bash
-    - run: ls $UCVM_PLOTTING_PATH/ucvm_plotting 
-      shell: bash
     - id: build-self
       run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/ucvm_plotting-build.sh)
       shell: bash
-    - run: ls
+    - run: ls $UCVM_PLOTTING_PATH/ucvm_plotting 
       shell: bash
  

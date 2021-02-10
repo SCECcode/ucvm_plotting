@@ -7,7 +7,5 @@ which ucvm_query
 echo "--- Show ucvm built info :"
 ucvm_query -H
 echo "--- Unpac ucvm_plotting :"
-conda install matplotlib basemap basemap-data-hires
+conda install -y matplotlib basemap basemap-data-hires
 ./unpack-dist
-
-conda list
