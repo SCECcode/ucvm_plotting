@@ -6,7 +6,7 @@ jobs:
     name: A job to say hello
     steps:
     - uses: actions/checkout@v2
-    - run: ( echo "UCVM_PLOTTING_PATH=$RUNNER_WORKSPACE" >> $GITHUB_ENV )
+    - run: ( echo "UCVM_PLOTTING_PATH=$RUNNER_WORKSPACE/ucvm_plotting" >> $GITHUB_ENV )
       shell: bash
     - id: build-ucvm
       uses: SCECcode/UCVMC/.github/actions@action1
