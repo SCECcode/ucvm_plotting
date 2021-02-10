@@ -12,14 +12,19 @@ installed_models.py
 echo "--- Setup basemap and matplotlib :"
 which pip
 pip -V
-conda -V
 which python
 python -V
+which conda
+conda -V
 
 #pip install basemap basemap-data-hires
 #pip install matplotlib
 #conda install -y -c conda-forge basemap basemap-data-hires
 #conda install -y  matplotlib
 
+echo "Test basemap :"
+./.github/scripts/test_basemap.py
+
 echo "--- Unpack ucvm_plotting :"
-./unpack-dist
+
+#./unpack-dist
