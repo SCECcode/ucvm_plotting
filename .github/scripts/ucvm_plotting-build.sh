@@ -13,8 +13,10 @@ echo "--- Setup basemap and matplotlib :"
 which pip
 pip -V
 conda -V
-conda install -y -c conda-forge basemap basemap-data-hires
-conda install -y  matplotlib
+pip install basemap basemap-data-hires
+pip install matplotlib
+#conda install -y -c conda-forge basemap basemap-data-hires
+#conda install -y  matplotlib
 
 echo "--- Unpack ucvm_plotting :"
 ./unpack-dist
