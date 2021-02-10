@@ -13,8 +13,11 @@ echo "--- Setup basemap and matplotlib :"
 which pip
 pip -V
 conda -V
-pip install basemap basemap-data-hires
-pip install matplotlib
+which python
+python -V
+
+#pip install basemap basemap-data-hires
+#pip install matplotlib
 #conda install -y -c conda-forge basemap basemap-data-hires
 #conda install -y  matplotlib
 
