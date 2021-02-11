@@ -9,13 +9,8 @@ echo "--- Show ucvm built info :"
 which installed_models.py
 installed_models.py
 
-echo "--- Setup basemap and matplotlib :"
-
-pip install matplotlib
-pip install basemap basemap-data-hires
-
 echo "Test basemap :"
 ./.github/scripts/test_basemap.py
 
-#echo "--- Unpack ucvm_plotting :"
-#./unpack-dist
+echo "--- Unpack ucvm_plotting :"
+./unpack-dist
