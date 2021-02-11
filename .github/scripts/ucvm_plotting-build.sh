@@ -18,13 +18,14 @@ which conda
 conda -V
 
 conda init bash
-source ~/.bashrc
+source /home/runner/.bashrc
 
 which python
 python -V
 
+echo "======"
 #ls /usr/share/miniconda/bin
-#/usr/share/miniconda/bin/python -V
+/usr/share/miniconda/bin/python -V
 
 #/usr/share/miniconda/bin/activate
 #conda init
