@@ -26,19 +26,19 @@ jobs:
         activate-conda: true
         update-conda: true
         conda-channels: anaconda, conda-forge
-    - run: |
+      run: |
            which python
            python -V
            conda --version
            which python2
            python2 -V
     - name: Deep python
-    - run: /opt/hostedtoolcache/Python/2.7.17/x64/bin/python -V
+      run: /opt/hostedtoolcache/Python/2.7.17/x64/bin/python -V
       shell: bash
     - name: install basemap
       run: |
         conda install matplotlib basemap basemap-data-hires
         conda list
-    - id: build-self
+    - name: build-self
       run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/ucvm_plotting-build.sh)
       shell: bash
