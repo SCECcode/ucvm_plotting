@@ -24,6 +24,7 @@ jobs:
     - name: Set up Conda
       uses: s-weigand/setup-conda@v1
       with:
+        activate-conda: true
         update-conda: true
         conda-channels: anaconda, conda-forge
     - run: |
