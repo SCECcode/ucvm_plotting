@@ -41,6 +41,7 @@ jobs:
     - name: Display Python version
       run: python -c "import sys; print(sys.version)"
       shell: bash
-#        pip install -c conda-forge  matplotlib basemap basemap-data-hires
-#        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-#        conda list
+    - name: install basemap
+      run: |
+        pip install -c conda-forge  matplotlib basemap basemap-data-hires
+        conda list
