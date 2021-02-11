@@ -17,7 +17,9 @@ python -V
 which conda
 conda -V
 
-conda activate base
+conda init base
+source ~/.bashrc
+
 which python
 python -V
 
