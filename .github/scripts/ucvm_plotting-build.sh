@@ -18,16 +18,18 @@ which conda
 conda -V
 
 ls /usr/share/miniconda/bin
+/usr/share/miniconda/bin/python -V
 
-/usr/share/miniconda/bin/activate
-conda init
+#/usr/share/miniconda/bin/activate
+#conda init
 
-#pip install basemap basemap-data-hires
-#pip install matplotlib
-conda list |grep matplotlib
-conda install pyqt
-conda install matplotlib
-conda install basemap basemap-data-hires
+pip install pyqt basemap basemap-data-hires
+pip install matplotlib
+
+#conda list |grep matplotlib
+#conda install pyqt
+#conda install matplotlib
+#conda install basemap basemap-data-hires
 #conda install -c conda-forge basemap basemap-data-hires
 
 echo "Test basemap :"
