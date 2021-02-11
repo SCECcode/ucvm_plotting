@@ -17,14 +17,14 @@ python -V
 which conda
 conda -V
 
-ls /usr/share/miniconda/bin
+#ls /usr/share/miniconda/bin
 /usr/share/miniconda/bin/python -V
 
 #/usr/share/miniconda/bin/activate
 #conda init
 
-pip install pyqt basemap basemap-data-hires
 pip install matplotlib
+pip install basemap basemap-data-hires
 
 #conda list |grep matplotlib
 #conda install pyqt
@@ -35,5 +35,5 @@ pip install matplotlib
 echo "Test basemap :"
 ./.github/scripts/test_basemap.py
 
-echo "--- Unpack ucvm_plotting :"
+#echo "--- Unpack ucvm_plotting :"
 #./unpack-dist
