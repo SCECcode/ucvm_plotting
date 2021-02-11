@@ -32,14 +32,8 @@ jobs:
            conda --version
            which python2
            python2 -V
+    - name: Deep python
     - run: /opt/hostedtoolcache/Python/2.7.17/x64/bin/python -V
-    - name: Check python version again
-      run: |
-        which python
-        which python2
-      shell: bash
-    - name: Display Python version
-      run: python -c "import sys; print(sys.version)"
       shell: bash
     - name: install basemap
       run: |
@@ -48,4 +42,3 @@ jobs:
     - id: build-self
       run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/ucvm_plotting-build.sh)
       shell: bash
-
