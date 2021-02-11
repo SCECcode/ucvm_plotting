@@ -26,7 +26,7 @@ jobs:
         activate-conda: true
         update-conda: true
         conda-channels: anaconda, conda-forge
-      run: |
+    - run: |
            which python
            python -V
            conda --version
