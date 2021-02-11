@@ -17,6 +17,11 @@ python -V
 which conda
 conda -V
 
+conda init
+
+which python
+python -V
+
 #pip install basemap basemap-data-hires
 #pip install matplotlib
 conda list |grep matplotlib
