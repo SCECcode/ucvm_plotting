@@ -45,3 +45,7 @@ jobs:
       run: |
         conda install matplotlib basemap basemap-data-hires
         conda list
+    - id: build-self
+      run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/ucvm_plotting-build.sh)
+      shell: bash
+
