@@ -1,5 +1,6 @@
 name: ucvm_plotting-ci
 
+
 on: [push]
 
 jobs:
@@ -25,7 +26,7 @@ jobs:
       run: python -c "import sys; print(sys.version)"
     - name: Install dependencies
       run: |
-        pip install matplotlib basemap basemap-data-hires
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Display pip pkgs
-      run: pip list
+        $CONDA/bin/conda env update --file environment.yml --name base python=2.7.17
+#        pip install -c conda-forge  matplotlib basemap basemap-data-hires
+#        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        conda list
