@@ -17,14 +17,18 @@ python -V
 which conda
 conda -V
 
+conda activate base
+which python
+python -V
+
 #ls /usr/share/miniconda/bin
-/usr/share/miniconda/bin/python -V
+#/usr/share/miniconda/bin/python -V
 
 #/usr/share/miniconda/bin/activate
 #conda init
 
-pip install matplotlib
-pip install basemap basemap-data-hires
+#pip install matplotlib
+#pip install basemap basemap-data-hires
 
 #conda list |grep matplotlib
 #conda install pyqt
