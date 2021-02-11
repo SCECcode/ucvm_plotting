@@ -17,10 +17,10 @@ python -V
 which conda
 conda -V
 
-conda init
+ls /usr/share/miniconda/bin
 
-which python
-python -V
+/usr/share/miniconda/bin/activate
+conda init
 
 #pip install basemap basemap-data-hires
 #pip install matplotlib

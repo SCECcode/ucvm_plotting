@@ -19,6 +19,10 @@ jobs:
     - id: build-self
       run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/ucvm_plotting-build.sh)
       shell: bash
+    - run: which python
+      shell: bash
+    - run: python -V
+      shell: bash
     - run: ls $UCVM_PLOTTING_PATH/ucvm_plotting 
       shell: bash
  
