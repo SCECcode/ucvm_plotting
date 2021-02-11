@@ -23,6 +23,9 @@ jobs:
         python-version: '2.7.17'
     - name: Set up Conda
       uses: s-weigand/setup-conda@v1
+      with:
+        update-conda: true
+        conda-channels: anaconda, conda-forge
     - run: |
            which python
            python -V
