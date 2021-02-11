@@ -12,8 +12,12 @@ installed_models.py
 echo "--- Setup basemap and matplotlib :"
 which pip
 pip -V
+
 which python
 python -V
+which python3
+python3 -V
+
 which conda
 conda -V
 
@@ -35,8 +39,8 @@ echo "======"
 
 #conda list |grep matplotlib
 #conda install pyqt
-#conda install matplotlib
-#conda install basemap basemap-data-hires
+conda install matplotlib
+conda install basemap basemap-data-hires
 #conda install -c conda-forge basemap basemap-data-hires
 
 echo "Test basemap :"
