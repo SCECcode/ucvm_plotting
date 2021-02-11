@@ -10,38 +10,9 @@ which installed_models.py
 installed_models.py
 
 echo "--- Setup basemap and matplotlib :"
-which pip
-pip -V
 
-which python
-python -V
-which python3
-python3 -V
-
-which conda
-conda -V
-
-conda init bash
-source /home/runner/.bashrc
-
-which python
-python -V
-
-echo "======"
-#ls /usr/share/miniconda/bin
-/usr/share/miniconda/bin/python -V
-
-#/usr/share/miniconda/bin/activate
-#conda init
-
-#pip install matplotlib
-#pip install basemap basemap-data-hires
-
-#conda list |grep matplotlib
-#conda install pyqt
-conda install matplotlib
-conda install basemap basemap-data-hires
-#conda install -c conda-forge basemap basemap-data-hires
+pip install matplotlib
+pip install basemap basemap-data-hires
 
 echo "Test basemap :"
 ./.github/scripts/test_basemap.py
