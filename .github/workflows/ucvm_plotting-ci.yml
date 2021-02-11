@@ -27,6 +27,7 @@ jobs:
            which python
            python -V
            conda --version
+    - run: /opt/hostedtoolcache/Python/2.7.17/x64/bin/python -V
     - name: Check python version again
       run: which python
     - name: Display Python version
