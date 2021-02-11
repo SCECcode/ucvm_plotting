@@ -19,8 +19,11 @@ conda -V
 
 #pip install basemap basemap-data-hires
 #pip install matplotlib
-conda install -y basemap basemap-data-hires
-conda install -y matplotlib
+conda list |grep matplotlib
+conda install pyqt
+conda install matplotlib
+conda install basemap basemap-data-hires
+#conda install -c conda-forge basemap basemap-data-hires
 
 echo "Test basemap :"
 ./.github/scripts/test_basemap.py
