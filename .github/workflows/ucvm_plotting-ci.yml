@@ -43,5 +43,5 @@ jobs:
       shell: bash
     - name: install basemap
       run: |
-        pip install -c conda-forge  matplotlib basemap basemap-data-hires
+        pip install matplotlib basemap basemap-data-hires
         conda list
