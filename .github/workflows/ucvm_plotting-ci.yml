@@ -23,9 +23,12 @@ jobs:
         python-version: '2.7.17'
     - name: Set up Conda
       uses: s-weigand/setup-conda@v1
-    - run: conda --version
-    - run: which python
-    - run: python -V
+    - run: |
+           which python
+           python -V
+           conda --version
+    - name: Check python version again
+      run: which python
     - name: Display Python version
       run: python -c "import sys; print(sys.version)"
 #        pip install -c conda-forge  matplotlib basemap basemap-data-hires
