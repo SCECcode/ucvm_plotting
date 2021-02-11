@@ -30,8 +30,10 @@ jobs:
     - run: /opt/hostedtoolcache/Python/2.7.17/x64/bin/python -V
     - name: Check python version again
       run: which python
+      shell: bash
     - name: Display Python version
       run: python -c "import sys; print(sys.version)"
+      shell: bash
 #        pip install -c conda-forge  matplotlib basemap basemap-data-hires
 #        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 #        conda list
