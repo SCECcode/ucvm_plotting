@@ -4,7 +4,7 @@ import matplotlib
 print matplotlib.__file__
 
 import mpl_toolkits
-print mpl_tookits.__file__
+print(mpl_tookits.__file__)
 
 try:
     from mpl_toolkits import basemap
