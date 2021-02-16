@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import matplotlib 
-print matplotlib.__file__
+print(matplotlib.__file__)
 
 import mpl_toolkits
 print(mpl_tookits.__file__)
