@@ -22,8 +22,7 @@ jobs:
         python-version: '2.7.17'
     - name: Install dependencies
       run: |
-        # $CONDA is an environment variable pointing to the root of the miniconda directory
-        $CONDA/bin/conda env update --file environment.yml --name base
+        conda env update --file environment.yml --name base
 #    - name: Set up Conda
 #      uses: s-weigand/setup-conda@v1
 #      with:
@@ -36,6 +35,7 @@ jobs:
     - run: python -V
     - run: which python2
     - run: python2 -V
+    - run: pip -V
     - name: bring in basemap
       run: conda install matplotlib basemap basemap-data-hires
     - name: test basemap
