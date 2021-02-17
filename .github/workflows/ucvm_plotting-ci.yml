@@ -31,6 +31,8 @@ jobs:
     - run: python2 -V
     - name: bring in basemap
       run: conda install matplotlib basemap basemap-data-hires
+    - name: test basemap
+#     run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/test_basemap.py)
 #    - name: build-self
 #      run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/ucvm_plotting-build.sh)
 #      shell: bash
