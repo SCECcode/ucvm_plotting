@@ -20,15 +20,15 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '2.7.17'
-    - name: Install dependencies
-      run: |
-        conda env update --file environment.yml --name base
-#    - name: Set up Conda
-#      uses: s-weigand/setup-conda@v1
-#      with:
-#        update-conda: true
-#        python-version: '2.7.17'
-#        conda-channels: anaconda, conda-forge
+#    - name: Install dependencies
+#      run: |
+#        conda env update --file environment.yml --name base
+    - name: Set up Conda
+      uses: s-weigand/setup-conda@v1
+      with:
+        update-conda: true
+        python-version: '2.7.17'
+        conda-channels: anaconda, conda-forge
     - run: conda --version
     - run: which python
     - run: which conda
