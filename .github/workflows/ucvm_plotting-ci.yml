@@ -16,16 +16,20 @@ jobs:
 #        target-models: 'cvmh'
 #    - run: echo build-log ${{ steps.build-ucvm.outputs.build-log }}
 #      shell: bash
-#    - name: Set up Python 2.7.17
-#      uses: actions/setup-python@v2
-#      with:
-#        python-version: '2.7.17'
-    - name: Set up Conda
-      uses: s-weigand/setup-conda@v1
+    - name: Set up Python 2.7.17
+      uses: actions/setup-python@v2
       with:
-        update-conda: true
         python-version: '2.7.17'
-        conda-channels: anaconda, conda-forge
+    - name: Install dependencies
+      run: |
+        # $CONDA is an environment variable pointing to the root of the miniconda directory
+        $CONDA/bin/conda env update --file environment.yml --name base
+#    - name: Set up Conda
+#      uses: s-weigand/setup-conda@v1
+#      with:
+#        update-conda: true
+#        python-version: '2.7.17'
+#        conda-channels: anaconda, conda-forge
     - run: conda --version
     - run: which python
     - run: which conda
