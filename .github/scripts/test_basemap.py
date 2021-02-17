@@ -1,9 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 import matplotlib 
+print(matplotlib)
 print(matplotlib.__file__)
 
 import mpl_toolkits
+print(mpl_toolkits)
 print(mpl_toolkits.__file__)
 
 try:
