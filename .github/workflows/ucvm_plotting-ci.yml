@@ -23,10 +23,12 @@ jobs:
     - name: Set up Conda
       uses: s-weigand/setup-conda@v1
       with:
-        activate-conda: false
-    - run: which conda
+        update-conda: true
+        python-version: '2.7.17'
+        conda-channels: anaconda, conda-forge
     - run: conda --version
     - run: which python
+    - run: which conda
     - run: python -V
     - run: which python2
     - run: python2 -V
