@@ -24,13 +24,14 @@ jobs:
       uses: s-weigand/setup-conda@v1
       with:
         activate-conda: false
+    - run: which conda
     - run: conda --version
     - run: which python
     - run: python -V
     - run: which python2
     - run: python2 -V
     - name: bring in basemap
-      run: pip install matplotlib basemap basemap-data-hires
+      run: conda install matplotlib basemap basemap-data-hires
     - name: test basemap
       run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/test_basemap.py)
 #    - name: build-self
