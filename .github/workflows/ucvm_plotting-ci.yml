@@ -16,19 +16,20 @@ jobs:
 #        target-models: 'cvmh'
 #    - run: echo build-log ${{ steps.build-ucvm.outputs.build-log }}
 #      shell: bash
-    - name: Set up Python 2.7.17
-      uses: actions/setup-python@v2
-      with:
-        python-version: '2.7.17'
-#    - name: Install dependencies
-#      run: |
-#        conda env update --file environment.yml --name base
+    - run: which python
+    - run: which conda
+    - run: python -V
+#    - name: Set up Python 2.7.17
+#      uses: actions/setup-python@v2
+#      with:
+#        python-version: '2.7.17'
     - name: Set up Conda
       uses: s-weigand/setup-conda@v1
       with:
-        update-conda: true
+        update-conda: false
+        activate-conda: true
         python-version: '2.7.17'
-        conda-channels: anaconda, conda-forge
+        conda-channels: conda-forge
     - run: conda --version
     - run: which python
     - run: which conda
@@ -36,10 +37,10 @@ jobs:
     - run: which python2
     - run: python2 -V
     - run: pip -V
-    - name: bring in basemap
-      run: conda install matplotlib basemap basemap-data-hires
-    - name: test basemap
-      run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/test_basemap.py)
+#    - name: bring in basemap
+#      run: conda install matplotlib basemap basemap-data-hires
+#    - name: test basemap
+#      run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/test_basemap.py)
 #    - name: build-self
 #      run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/ucvm_plotting-build.sh)
 #      shell: bash
