@@ -28,7 +28,7 @@ jobs:
       with:
         update-conda: false
         activate-conda: true
-        python-version: '2.7.17'
+#        python-version: '2.7.17'
         conda-channels: conda-forge
     - run: conda --version
     - run: which python
