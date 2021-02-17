@@ -23,20 +23,17 @@ jobs:
     - name: Set up Conda
       uses: s-weigand/setup-conda@v1
       with:
-        activate-conda: true
-        update-conda: true
-        conda-channels: anaconda, conda-forge
-    - run: |
-           which python
-           python -V
-           conda --version
-           which python2
-           python2 -V
-           conda install matplotlib basemap basemap-data-hires
-           conda list
-    - name: build-self
-      run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/ucvm_plotting-build.sh)
-      shell: bash
-    - name: test plotting
-      run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/ucvm_plotting-test.sh)
-      shell: bash
+        activate-conda: false
+    - run: conda --version
+    - run: which python
+    - run: python -V
+    - run: which python2
+    - run: python2 -V
+    - name: bring in basemap
+    - run: conda install matplotlib basemap basemap-data-hires
+#    - name: build-self
+#      run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/ucvm_plotting-build.sh)
+#      shell: bash
+#    - name: test plotting
+#      run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/ucvm_plotting-test.sh)
+#      shell: bash
