@@ -16,10 +16,10 @@ jobs:
 #        target-models: 'cvmh'
 #    - run: echo build-log ${{ steps.build-ucvm.outputs.build-log }}
 #      shell: bash
-    - name: Set up Python 2.7.17
-      uses: actions/setup-python@v2
-      with:
-        python-version: '2.7.17'
+#    - name: Set up Python 2.7.17
+#      uses: actions/setup-python@v2
+#      with:
+#        python-version: '2.7.17'
     - name: Set up Conda
       uses: s-weigand/setup-conda@v1
       with:
