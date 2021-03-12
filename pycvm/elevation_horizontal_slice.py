@@ -361,7 +361,11 @@ class ElevationHorizontalSlice:
         cbar = plt.colorbar(img, cax=cax, orientation='horizontal',spacing='proportional',ticks=TICKS)
         if mproperty != "poisson":
             if horizontal_label == None:
-                cbar.set_label(mproperty.title() + " (km/s)")
+                if(mproperty.title() == "Density") :
+                  cbar.set_label(mproperty.title() + " (g/cm^3)")
+                else:
+                  cbar.set_label(mproperty.title() + " (km/s)")
+
             else:
                 cbar.set_label(horizontal_label)
         else:

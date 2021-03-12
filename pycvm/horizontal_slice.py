@@ -7,7 +7,6 @@
 #  Allows for generation of a horizontal slice, either interactively, via
 #  arguments, or through Python code in the class HorizontalSlice.
 
-import pdb
 
 #  Imports
 from mpl_toolkits import basemap
@@ -363,10 +362,12 @@ class HorizontalSlice:
     
         cax = plt.axes([0.125, 0.05, 0.775, 0.02])
         cbar = plt.colorbar(img, cax=cax, orientation='horizontal',spacing='proportional',ticks=TICKS)
-        pdb.set_trace()
         if mproperty != "poisson":
             if horizontal_label == None:
-                cbar.set_label(mproperty.title() + " (km/s)")
+                if(mproperty.title() == "Density") :
+                  cbar.set_label(mproperty.title() + " (g/cm^3)")
+                else: 
+                  cbar.set_label(mproperty.title() + " (km/s)")
             else:
                 cbar.set_label(horizontal_label)
         else:

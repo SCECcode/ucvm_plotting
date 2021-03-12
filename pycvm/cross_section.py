@@ -404,7 +404,10 @@ class CrossSection:
         cax = plt.axes([0.1, 0.1, 0.8, 0.02])
         cbar = plt.colorbar(img, cax=cax, orientation='horizontal',ticks=TICKS,spacing='regular')
         if mproperty != "poisson":
-            cbar.set_label(mproperty.title() + " (km/s)")
+            if(mproperty.title() == "Density") :
+              cbar.set_label(mproperty.title() + " (g/cm^3)")
+            else:
+              cbar.set_label(mproperty.title() + " (km/s)")
         else:
             cbar.set_label("Poisson(Vs,Vp)")
        
