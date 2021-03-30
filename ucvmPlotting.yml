@@ -1,4 +1,4 @@
-name: withPython2
+name: ucvmPlotting
 channels:
   - conda-forge
   - defaults
@@ -80,5 +80,5 @@ dependencies:
   - pip:
     - packaging==20.8
     - ucvm-plotting==0.0.1
-prefix: ~/.conda/envs/withPython2
+prefix: ~/.conda/envs/ucvmPlotting
 
