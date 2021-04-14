@@ -11,9 +11,15 @@ The current ucvm_plotting Software is based on UCVM v19.4.0 which was released i
 UCVM is distributed as open-source scientific software. It can be installed compiled and run on most Linux-based computer systems if the system includes software development tools including Python, C, and Fortran compilers, and other software tools. The UCVM v19.4.0 source code is distributed using a github repository. On Github, users can find the source code, installation directions for Linux, and a wiki that provide examples and the expected results from UCVM.
 
 
-## Background
+## Installation
 
-## 
+Prerequisite :  anaconda2/python2/matplotlib/basemap
+
+* install UCVM per instruction
+* source ucvm's install_loc/conf/ucvm_env.sh
+* git clone https://github.com/SCECcode/ucvm_plotting.git
+* cd into ucvm_plotting
+* ./unpack-dist
 
 * Contact: software@scec.usc.edu
 
