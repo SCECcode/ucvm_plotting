@@ -15,7 +15,7 @@ UCVM is distributed as open-source scientific software. It can be installed comp
 
 Prerequisite :  anaconda2/python2/matplotlib/basemap
 
-* install UCVM per instruction
+* install UCVM per instruction, https://github.com/SCECcode/UCVMC
 * source ucvm's install_loc/conf/ucvm_env.sh
 * git clone https://github.com/SCECcode/ucvm_plotting.git
 * cd into ucvm_plotting
