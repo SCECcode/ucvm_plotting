@@ -26,4 +26,4 @@ Prerequisite :  anaconda2/python2/matplotlib/basemap
 * Contact: software@scec.usc.edu
 
 ## License
-UCVMC is released under the Apache 2.0 license. Please see the LICENSE file for distribution license and disclaimers.
+UCVMC is released under the BSD-3 license. Please see the LICENSE file for distribution license and disclaimers.
