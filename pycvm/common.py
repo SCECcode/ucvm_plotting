@@ -492,11 +492,14 @@ class UCVM:
         if install_dir != None:
             ## Location of the UCVM binary directory.
             self.binary_dir = install_dir + "/bin"
+            self.utility_dir = install_dir + "/utilities"
         elif 'UCVM_INSTALL_PATH' in os.environ:
             mypath=os.environ.get('UCVM_INSTALL_PATH')
             self.binary_dir = mypath+"/bin"
+            self.utility_dir = mypath+"/utilitie"
         else:
             self.binary_dir = "../bin"
+            self.utility_dir = "../utilities"
         
         if config_file != None:
             ## Location of the UCVM configuration file.
@@ -571,16 +574,16 @@ class UCVM:
             if self.z_range != None :
 #                print("RANGE"+str(self.z_range))
 #                print("CVM", cvm) 
-                proc = Popen([self.binary_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge", "-z", self.z_range], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge", "-z", self.z_range], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
             else :
-                proc = Popen([self.binary_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge"], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge"], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
         else :
             if self.z_range != None :
 #                print("RANGE"+str(self.z_range))
 #                print("CVM", cvm) 
-                proc = Popen([self.binary_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd", "-z", self.z_range], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd", "-z", self.z_range], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
             else:
-                proc = Popen([self.binary_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd" ], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd" ], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
         
         text_points = ""
         
@@ -749,7 +752,7 @@ class UCVM:
             #obj = ctypes.cdll.LoadLibrary(shared_object)
             #print(obj)
         
-        proc = Popen([self.binary_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+        proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
         
         text_points = ""
         
@@ -799,7 +802,7 @@ class UCVM:
         #obj = ctypes.cdll.LoadLibrary(shared_object)
         #print(obj)
         
-        proc = Popen([self.binary_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+        proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
         
         text_points = ""
         
@@ -838,7 +841,7 @@ class UCVM:
     def vs30_etree(self, point_list, cvm):
         properties = []
         
-        proc = Popen([self.binary_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+        proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
         
         text_points = ""
         

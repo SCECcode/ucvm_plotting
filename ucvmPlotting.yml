@@ -79,6 +79,6 @@ dependencies:
   - zlib=1.2.11=h516909a_1010
   - pip:
     - packaging==20.8
-    - ucvm-plotting==0.0.1
+    - ucvm-plotting==0.0.2
 prefix: ~/.conda/envs/ucvmPlotting
 
