@@ -496,7 +496,7 @@ class UCVM:
         elif 'UCVM_INSTALL_PATH' in os.environ:
             mypath=os.environ.get('UCVM_INSTALL_PATH')
             self.binary_dir = mypath+"/bin"
-            self.utility_dir = mypath+"/utilitie"
+            self.utility_dir = mypath+"/utilities"
         else:
             self.binary_dir = "../bin"
             self.utility_dir = "../utilities"
