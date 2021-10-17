@@ -62,5 +62,6 @@ if __name__ == "__main__":
 "ucvm_plotting/plot_elevation_profile.py","ucvm_plotting/plot_horizontal_slice.py",
 "ucvm_plotting/plot_scatter_plot.py","ucvm_plotting/plot_vs30_etree_map.py",
 "ucvm_plotting/plot_vs30_map.py","ucvm_plotting/plot_z10_map.py",
-"ucvm_plotting/plot_z25_map.py"] 
+"ucvm_plotting/plot_z25_map.py",
+"utilities/makegrid.sh","utilities/view_png.py"] 
     )
