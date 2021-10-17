@@ -11,7 +11,11 @@
 import getopt, sys, os
 
 import matplotlib
-matplotlib.use('TkAgg')
+if os.environ.get('DISPLAY','') == '':
+    print('no display found. Using non-interactive Agg backend')
+    matplotlib.use('Agg')
+else:
+    matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
 ## Prints usage of this utility.
