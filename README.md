@@ -32,8 +32,18 @@ Prerequisite :  anaconda2/python2/matplotlib/basemap
 * cd into ucvm_plotting
 * ./unpack-dist
 
-
 # Usage:
+An example ucvm_plotting script is called make_plots.py
+
+* make_plots.py - A test script that generates a series of cross section plots for each supported model and one horizontal slice for cvmh
+
+This script produces a plot for each cvm:
+
+<pre>
+./plot_horizontal_slice.py -b 30.5,-126.0 -u 42.5,-112.5 -s 0.05 -e 0.0 -d poisson -a s -c cs173h -o cs173h_poisson_map.png
+</pre>
+[<img src="https://github.com/SCECcode/UCVMC/blob/master/documentation/plots/make_plots/cs173h_poisson_map.png" width="300" height="300" />](http://github.com/SCECcode/UCVMC/blob/master/documentation/plots/make_plots/cs173h_poisson_map.png)
+
 
 # Support:
 Support for UCVM is provided by that Southern California Earthquake Center (SCEC) Research Computing Group. This group supports several research software distributions including UCVM. Users can report issues and feature requests using UCVM's github-based issue tracking link below. Developers will also respond to emails sent to the SCEC software contact listed below.
