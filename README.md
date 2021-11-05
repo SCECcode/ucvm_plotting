@@ -44,7 +44,7 @@ The following command will produce a depth profile of  vs, vp and density at (34
 [<img src="https://github.com/SCECcode/ucvm_plotting/wiki/images/plots/depth_profile.png" width="300" height="300" />](https://github.com/SCECcode/ucvm_plotting/wiki/images/plots/depth_profile.png)
 
 ### plot_horizontal.py
-The following command will produce a horizontal cross section plot of CVM-H v15.1 from depth 0 to 500m.
+The following command will produce a horizontal map view plot plot of Vs values from CVM-H v15.1 at a depth of 500m for the Los Angeles region.
 <pre>
 ./plot_horizontal_slice.py -b 33.5,-118.75 -u 34.5,-117.5 -s 0.01 -e 500 -d vs -a s -c cvmh
 </pre>
