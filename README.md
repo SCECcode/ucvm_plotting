@@ -36,7 +36,7 @@ Once both ucvm and ucvm_plotting are installed, users can run ucvm_plotting scri
 
 ### plot_depth_profile.py
 
-The following command will produce a depth profile of  vs, vp and density at (34,-118) from depth of 0 to 50000m
+The following command will produce a depth profile of CVM-H v15.1 for Vs, Vp and density at (34,-118) from depth of 0 to 50000m
 <pre>
 ./plot_depth_profile.py -s 34,-118 -b 0 -e 50000 -d vs,vp,density -v 500 -c cvmh -o depth_profile.png
 </pre>
