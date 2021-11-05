@@ -26,14 +26,14 @@ UCVM_plotting is distributed as open-source scientific software. It can be insta
 # Installation: 
 Prerequisite :  anaconda2/python2/matplotlib/basemap
 
-* install UCVM per instruction, https://github.com/SCECcode/UCVMC
+* install UCVM per instruction, https://github.com/SCECcode/ucvm/wiki
 * source ucvm's install_loc/conf/ucvm_env.sh
 * git clone https://github.com/SCECcode/ucvm_plotting.git
 * cd into ucvm_plotting
 * ./unpack-dist
 
 # Usage:
-Once ucvm_plotting is installed, together with a working version of UCVM, users can run ucvm_plotting scripts like this:
+Once both ucvm and ucvm_plotting are installed, users can run ucvm_plotting scripts like this:
 <pre>
 ./plot_horizontal_slice.py -b 30.5,-126.0 -u 42.5,-112.5 -s 0.05 -e 0.0 -d poisson -a s -c cs173h -o cs173h_poisson_map.png
 </pre>
@@ -42,7 +42,7 @@ Once ucvm_plotting is installed, together with a working version of UCVM, users 
 
 # Support:
 Support for UCVM is provided by that Southern California Earthquake Center (SCEC) Research Computing Group. This group supports several research software distributions including UCVM. Users can report issues and feature requests using UCVM's github-based issue tracking link below. Developers will also respond to emails sent to the SCEC software contact listed below.
-1. [UCVM Github Issue Tracker:](https://github.com/SCECcode/ucvm_display/issues)
+1. [UCVM Github Issue Tracker:](https://github.com/SCECcode/ucvm_plotting/issues)
 2. Email Contact: software@scec.usc.edu
 
 # Contributing:
