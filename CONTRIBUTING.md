@@ -1,4 +1,4 @@
-# Contributing to UCVM
+# Contributing to ucvm_plotting
 
 This document provides an overview on how to contribute to UCVM, and will provide step-by-step instructions on a practical contribution workflow.
 
