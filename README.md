@@ -4,7 +4,7 @@
 
 # ucvm_plotting
 
-<a href="http://www.scec.org/research"><img src="https://github.com/sceccode/ucvm_plotting/wiki/main/images/ucvm_plotting_logo.png"></a>
+<a href="http://www.scec.org/research"><img src="https://github.com/sceccode/blob/ucvm_plotting/wiki/main/images/ucvm_plotting_logo.png"></a>
 
 # Description: 
 This ucvm_plotting software was originally included in UCVM v19.4.0 which was released in June 2019. In 2021, the plotting utilities in UCVM v19.4 were moved into this standalone repository. 
