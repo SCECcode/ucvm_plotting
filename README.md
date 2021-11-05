@@ -1,4 +1,3 @@
-
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 ![GitHub repo size](https://img.shields.io/github/repo-size/sceccode/ucvm_plotting)
 [![ucvm_plotting-ci Actions Status](https://github.com/SCECcode/ucvm_plotting/workflows/ucvm_plotting-ci/badge.svg)](https://github.com/SCECcode/ucvm_plotting/actions)
@@ -26,14 +25,14 @@ UCVM_plotting is distributed as open-source scientific software. It can be insta
 # Installation: 
 Prerequisite :  anaconda2/python2/matplotlib/basemap
 
-* install UCVM per instruction, https://github.com/SCECcode/ucvm.wiki
+* install UCVM per instruction, https://github.com/SCECcode/ucvm/wiki
 * source ucvm's install_loc/conf/ucvm_env.sh
 * git clone https://github.com/SCECcode/ucvm_plotting.git
 * cd into ucvm_plotting
 * ./unpack-dist
 
 # Usage:
-Once ucvm_plotting is installed, together with a working version of UCVM, users can run ucvm_plotting scripts like this:
+Once both ucvm and ucvm_plotting are installed, users can run ucvm_plotting scripts like this:
 <pre>
 ./plot_horizontal_slice.py -b 30.5,-126.0 -u 42.5,-112.5 -s 0.05 -e 0.0 -d poisson -a s -c cs173h -o cs173h_poisson_map.png
 </pre>
