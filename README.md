@@ -4,7 +4,7 @@
 
 # ucvm_plotting
 
-<a href="http://www.scec.org/research"><img src="https://github.com/sceccode/ucvm_plotting.wiki/main/images/ucvm_plotting_logo.png"></a>
+<a href="http://www.scec.org/research"><img src="https://github.com/sceccode/ucvm_plotting/wiki/main/images/ucvm_plotting_logo.png"></a>
 
 # Description: 
 This ucvm_plotting software was originally included in UCVM v19.4.0 which was released in June 2019. In 2021, the plotting utilities in UCVM v19.4 were moved into this standalone repository. 
@@ -14,7 +14,7 @@ The UCVM plotting utilities make use of Python2 libraries which will must be con
 UCVM_plotting is distributed as open-source scientific software. It can be installed compiled and run on most Linux-based computer systems if the system includes software development tools including Python, C, and Fortran compilers, and other software tools. The UCVM v19.4.0 source code is distributed using a github repository. On Github, users can find the source code, installation directions for Linux, and a wiki that provide examples and the expected results from UCVM.
 
 # Table of Contents:
-1. [Software Documentation](https://github.com/SCECcode/ucvm_plotting.wiki/blob/main/images/ucvm_plotting_log.png)
+1. [Software Documentation](https://github.com/SCECcode/ucvm_plotting/wiki/blob/main/images/ucvm_plotting_logo.png)
 2. [Installation](#installation)
 3. [Usage](#usage)
 4. [Support](#support)
