@@ -5,7 +5,7 @@
 
 # ucvm_plotting
 
-<a href="http://www.scec.org/research"><img src="https://github.com/sceccode/ucvm_plotting/blob/main/documentation/ucvm_logo.png" width="300"></a>
+<a href="http://www.scec.org/research"><img src="https://github.com/sceccode/ucvm_plotting.wiki/blob/main/images/ucvm_plotting_logo.png"></a>
 
 # Description: 
 This ucvm_plotting software was originally included in UCVM v19.4.0 which was released in June 2019. In 2021, the plotting utilities in UCVM v19.4 were moved into this standalone repository. 
@@ -15,7 +15,7 @@ The UCVM plotting utilities make use of Python2 libraries which will must be con
 UCVM_plotting is distributed as open-source scientific software. It can be installed compiled and run on most Linux-based computer systems if the system includes software development tools including Python, C, and Fortran compilers, and other software tools. The UCVM v19.4.0 source code is distributed using a github repository. On Github, users can find the source code, installation directions for Linux, and a wiki that provide examples and the expected results from UCVM.
 
 # Table of Contents:
-1. [Software Documentation](https://github.com/SCECcode/ucvm_plotting/wiki)
+1. [Software Documentation](https://github.com/SCECcode/ucvm_plotting.wiki/blob/main/images/ucvm_plotting_log.png)
 2. [Installation](#installation)
 3. [Usage](#usage)
 4. [Support](#support)
@@ -26,7 +26,7 @@ UCVM_plotting is distributed as open-source scientific software. It can be insta
 # Installation: 
 Prerequisite :  anaconda2/python2/matplotlib/basemap
 
-* install UCVM per instruction, https://github.com/SCECcode/UCVMC
+* install UCVM per instruction, https://github.com/SCECcode/ucvm.wiki
 * source ucvm's install_loc/conf/ucvm_env.sh
 * git clone https://github.com/SCECcode/ucvm_plotting.git
 * cd into ucvm_plotting
@@ -37,12 +37,12 @@ Once ucvm_plotting is installed, together with a working version of UCVM, users 
 <pre>
 ./plot_horizontal_slice.py -b 30.5,-126.0 -u 42.5,-112.5 -s 0.05 -e 0.0 -d poisson -a s -c cs173h -o cs173h_poisson_map.png
 </pre>
-[<img src="https://github.com/SCECcode/UCVMC/blob/master/documentation/plots/make_plots/cs173h_poisson_map.png" width="300" height="300" />](http://github.com/SCECcode/UCVMC/blob/master/documentation/plots/make_plots/cs173h_poisson_map.png)
+[<img src="https://github.com/SCECcode/ucvm_plotting.wiki/blob/main/images/plots/make_plots/cs173h_poisson_map.png" width="300" height="300" />](http://github.com/SCECcode/ucvm_plotting.wiki/blob/main/images/plots/make_plots/cs173h_poisson_map.png)
 
 
 # Support:
 Support for UCVM is provided by that Southern California Earthquake Center (SCEC) Research Computing Group. This group supports several research software distributions including UCVM. Users can report issues and feature requests using UCVM's github-based issue tracking link below. Developers will also respond to emails sent to the SCEC software contact listed below.
-1. [UCVM Github Issue Tracker:](https://github.com/SCECcode/ucvm_display/issues)
+1. [UCVM Github Issue Tracker:](https://github.com/SCECcode/ucvm_plotting/issues)
 2. Email Contact: software@scec.usc.edu
 
 # Contributing:
