@@ -10,12 +10,12 @@ jobs:
     - uses: actions/checkout@v2
     - run: ( echo "UCVM_PLOTTING_PATH=$RUNNER_WORKSPACE/ucvm_plotting" >> $GITHUB_ENV )
       shell: bash
-#    - id: build-ucvm
-#      uses: SCECcode/UCVMC/.github/actions@action1
-#      with:
-#        target-models: 'cvmh'
-#    - run: echo build-log ${{ steps.build-ucvm.outputs.build-log }}
-#      shell: bash
+    - id: build-ucvm
+      uses: SCECcode/UCVM/.github/actions@action1
+      with:
+        target-models: 'cvmh'
+    - run: echo build-log ${{ steps.build-ucvm.outputs.build-log }}
+      shell: bash
     - run: which python
     - run: which conda
     - run: python -V
