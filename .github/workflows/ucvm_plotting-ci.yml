@@ -11,7 +11,7 @@ jobs:
     - run: ( echo "UCVM_PLOTTING_PATH=$RUNNER_WORKSPACE/ucvm_plotting" >> $GITHUB_ENV )
       shell: bash
     - id: build-ucvm
-      uses: SCECcode/UCVM/.github/actions@action1
+      uses: SCECcode/UCVM/.github/actions@action
       with:
         target-models: 'cvmh'
     - run: echo build-log ${{ steps.build-ucvm.outputs.build-log }}
