@@ -23,7 +23,8 @@ UCVM_plotting is distributed as open-source scientific software. It can be insta
 7. [License](#license)
 
 # Installation: 
-Prerequisite :  anaconda2/python2/matplotlib/basemap
+Prerequisite :  anaconda with python2 virtual environment. The python2 environment should include the following libraries. The required python2 environment can be added to an anaconda python3 installation with this command
+* conda create -n python2 python=2.7 scipy pip numpy matplotlib basemap basemap-data-hires
 
 * install UCVM per instruction, https://github.com/SCECcode/ucvm/wiki
 * source ucvm's install_loc/conf/ucvm_env.sh
