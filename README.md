@@ -31,6 +31,7 @@ Prerequisite :  anaconda with python2 virtual environment. The python2 environme
 * git clone https://github.com/SCECcode/ucvm_plotting.git
 * cd into ucvm_plotting
 * ./unpack-dist
+* This will build the ucvm_plotting utilities, and add the ucvm_plotting scripts to the users path.
 
 # Usage:
 Once both ucvm and ucvm_plotting are installed, users can run ucvm_plotting scripts like this:
