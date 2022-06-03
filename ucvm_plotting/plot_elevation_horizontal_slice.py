@@ -22,6 +22,7 @@ def usage():
     print("\t-e, --elevation: elevation for horizontal slice in meters (e.g. 1000)")
     print("\t-d, --datatype: either 'vs', 'vp', 'density', or 'poisson', without quotation marks")
     print("\t-c, --cvm: one of the installed velocity models")
+    print("\t-z, --zrange: optional Z-range for elygtl:ely (e.g. -z 0,350)")
     print("\t-a, --scale: color scale, either 's' for smooth, 'd' for discretized or 'b' for bi-color scale, without quotes")
     print("\t-g, --gate: optional gate value for bi-color scale gate")
     print("\t-f, --datafile: optional binary input data filename")
@@ -38,6 +39,7 @@ ret_val = get_user_opts({"b,bottomleft":"lat1,lon1", \
                          "e,elevation":"elevation", \
                          "d,datatype":"data_type", \
                          "c,cvm":"cvm", \
+                         "z,zrange,o":"zrange1,zrange2", \
                          "a,scale": "color", \
                          "g,gate,o": "gate", \
                          "f,datafile,o":"datafile",
@@ -150,6 +152,11 @@ else:
 
     cvm_selected = corresponding_cvm[cvm_selected]
     meta['cvm']=cvm_selected
+
+    zrange1=0
+    zrange2=350 
+    meta['zrange1'] = zrange1
+    meta['zrange2'] = zrange2
 
     # We will offer three color options. Discretized, smooth or bi-color. But, we'll only offer red-blue for now.
     gate = 2.5

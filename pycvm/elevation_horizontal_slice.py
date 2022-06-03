@@ -89,6 +89,10 @@ class ElevationHorizontalSlice:
         else:
             self.cvm = None
 
+        self.z_range = None
+        if 'zrange1' in self.meta and 'zrange2' in self.meta :
+            self.z_range=self.meta['zrange1']+","+self.meta['zrange2']
+
         if 'installdir' in self.meta:
             self.installdir = self.meta['installdir']
         else:
@@ -129,7 +133,7 @@ class ElevationHorizontalSlice:
         ## The 2D array of retrieved material properties.
         self.materialproperties = [[MaterialProperties(-1, -1, -1) for x in xrange(self.num_x)] for x in xrange(self.num_y)] 
         
-        u = UCVM(install_dir=self.installdir, config_file=self.configfile)
+        u = UCVM(install_dir=self.installdir, config_file=self.configfile, z_range=self.z_range)
 
 ### MEI
         if (self.datafile != None) :
