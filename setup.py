@@ -21,7 +21,7 @@ DESCRIPTION = "Python code extensions for UCVM and plotting library for the SCEC
 with open("README.md") as f:
     LONG_DESCRIPTION = "".join(f.readlines())
 
-VERSION = "0.0.2"
+VERSION = "0.0.3"
 
 CLASSIFIERS = [
     "Development Status :: 1 - Alpha",
