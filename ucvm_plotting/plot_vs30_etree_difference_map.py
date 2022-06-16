@@ -1,19 +1,18 @@
 #!/usr/bin/env python
 
 ##
-#  @file plot_vs30_etree_map.py
-#  @brief Plots a Vs30 slice using command-line parameters.
-#  @author David Gill - SCEC <davidgil@usc.edu>
+#  @file plot_vs30_etree_difference_map.py
+#  @brief Plots a Vs30 etrree differenceslice using command-line parameters.
 #  @version 14.7.0
 #
-#  Plots a Vs30 slice given a set of command-line parameters.
+#  Plots a Vs30 dfference slice given a set of command-line parameters.
 
-from pycvm import Vs30EtreeSlice, UCVM, VERSION, UCVM_CVMS, Point, ask_number, ask_path, ask_file, get_user_opts
+from pycvm import Vs30EtreeDifferenceSlice, UCVM, VERSION, UCVM_CVMS, Point, ask_number, ask_path, ask_file, get_user_opts
 import getopt, sys, os
 
 ## Prints usage of this utility.
 def usage():
-    print("Generates a Vs30 map or text file given two bounding latitude and longitude ")
+    print("Generates a Vs30 difference map or text file given two bounding latitude and longitude and 2 Vs30 etree data files ")
     print("co-ordinates, the CVM to plot, and a couple of other settings.")
     print("\nValid arguments:")
     print("\t-b, --bottomleft: bottom-left latitude, longitude (e.g. 34,-118)")
@@ -21,7 +20,7 @@ def usage():
     print("\t-s, --spacing: grid spacing in degrees (typically 0.01)")
     print("\t-c, --cvm: one of the installed community velocity models")
     print("\t-a, --scale: color scale, either 's' for smooth or 'd' for discretized, without quotes")
-    print("\t-f, --datafile: optional binary input data filename")
+    print("\t-f, --datafile: binary input data filenames")
     print("\t-o, --outfile: optional png output filename")
     print("\t-t, --title: optional plot title")
     print("\t-H, --help: optional display usage information")
@@ -34,7 +33,7 @@ ret_val = get_user_opts({"b,bottomleft":"lat1,lon1",\
                          "s,spacing":"spacing", \
                          "c,cvm":"cvm", \
                          "a,scale": "color", \
-                         "f,datafile,o":"datafile", \
+                         "f,datafile":"datafile1,datafile2", \
                          "o,outfile,o":"outfile", \
                          "t,title,o":"title", \
                          "H,help,o":"", \
@@ -67,7 +66,7 @@ else:
     print("")
     print("Vs30 Etree - UCVM %s" % VERSION)
     print("")
-    print("This utility helps you either plot a Vs30 basin depth map or save the data in a")
+    print("This utility helps you either plot a Vs30 etree map or save the data in a")
     print("text file that you can then later parse.")
     print("")
     print("In order to create the plot, you must first specify the region.")
@@ -104,6 +103,11 @@ else:
     installdir = None
     configfile = None
 
+    # Ask for data files
+    datafile1 = ask_file("First vs30 etree data file to use")
+    datafile2 = ask_file("Second vs30 etree data file to use")
+    meta['datafile1']=datafile1
+    meta['datafile2']=datafile2
 
     # Ask if a different installdir should be  used
     cwd = os.getcwd()
