@@ -94,6 +94,14 @@ class HorizontalSlice:
         if 'zrange1' in self.meta and 'zrange2' in self.meta :
             self.z_range=self.meta['zrange1']+","+self.meta['zrange2']
 
+        if 'scalemin' in selef.meta and 'scalemax' in self.meta :
+            ## user supplied a fixed scale bounds
+            self.scalemin=self.meta['scalemin']
+            self.scalemax=self.meta['scalemax']
+        else:
+            self.scalemin=NONE
+            self.scalemax=NONE
+
         if 'installdir' in self.meta:
             self.installdir = self.meta['installdir']
         else:
@@ -222,8 +230,12 @@ class HorizontalSlice:
 
         u = UCVM(install_dir=self.installdir, config_file=self.configfile)
 
-        BOUNDS = u.makebounds()
-        TICKS = u.maketicks()
+        if self.scalemin != NONE and self.scalemax != NONE:
+            BOUNDS= u.makebounds(self.scalemin, self.scalemax, 5)
+            TICKS = u.maketicks(self.scalemin, self.scalemax, 5)
+        else:
+            BOUNDS = u.makebounds()
+            TICKS = u.maketicks()
        
         m = basemap.Basemap(projection='cyl', llcrnrlat=self.bottomrightpoint.latitude, \
                             urcrnrlat=self.upperleftpoint.latitude, \
