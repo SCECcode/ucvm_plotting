@@ -231,8 +231,8 @@ class HorizontalSlice:
         u = UCVM(install_dir=self.installdir, config_file=self.configfile)
 
         if self.scalemin != None and self.scalemax != None:
-            BOUNDS= u.makebounds(self.scalemin, self.scalemax, 5)
-            TICKS = u.maketicks(self.scalemin, self.scalemax, 5)
+            BOUNDS= u.makebounds(float(self.scalemin), float(self.scalemax), 5)
+            TICKS = u.maketicks(float(self.scalemin), float(self.scalemax), 5)
         else:
             BOUNDS = u.makebounds()
             TICKS = u.maketicks()
