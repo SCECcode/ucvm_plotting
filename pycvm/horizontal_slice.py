@@ -99,8 +99,8 @@ class HorizontalSlice:
             self.scalemin=self.meta['scalemin']
             self.scalemax=self.meta['scalemax']
         else:
-            self.scalemin=NONE
-            self.scalemax=NONE
+            self.scalemin=None
+            self.scalemax=None
 
         if 'installdir' in self.meta:
             self.installdir = self.meta['installdir']
@@ -230,7 +230,7 @@ class HorizontalSlice:
 
         u = UCVM(install_dir=self.installdir, config_file=self.configfile)
 
-        if self.scalemin != NONE and self.scalemax != NONE:
+        if self.scalemin != None and self.scalemax != None:
             BOUNDS= u.makebounds(self.scalemin, self.scalemax, 5)
             TICKS = u.maketicks(self.scalemin, self.scalemax, 5)
         else:
