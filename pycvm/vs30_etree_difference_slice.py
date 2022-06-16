@@ -28,6 +28,17 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
     
         #  Initializes the base class which is a horizontal slice.
         HorizontalSlice.__init__(self, upperleftpoint, bottomrightpoint, meta)
+
+        if 'datafile1' in self.meta :
+            self.datafile1 = self.meta['datafile1']
+        else:
+            self.datafile1 = None
+
+        if 'datafile2' in self.meta :
+            self.datafile2 = self.meta['datafile2']
+        else:
+            self.datafile2 = None
+    
     
     ##
     #  Retrieves the values for this Vs30 slice and stores them in the class.
