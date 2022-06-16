@@ -1,2 +1,4 @@
 
-pip install dist/ucvm_plotting-0.0.3.tar.gz
+#pip install dist/ucvm_plotting-0.0.3.tar.gz
+
+sudo /usr/local/share/anaconda2/bin/pip install dist/ucvm_plotting-0.0.3.tar.gz
