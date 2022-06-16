@@ -35,7 +35,7 @@ ret_val = get_user_opts({"b,bottomleft":"lat1,lon1",\
                          "s,spacing":"spacing", \
                          "c,cvm":"cvm", \
                          "a,scale": "color", \
-                         "A,scalebounds,o": "scalemin", "scalemax" \
+                         "A,scalebounds,o": "scalemin,scalemax" \
                          "f,datafile,o":"datafile", \
                          "o,outfile,o":"outfile", \
                          "t,title,o":"title", \
