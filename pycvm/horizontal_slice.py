@@ -94,7 +94,7 @@ class HorizontalSlice:
         if 'zrange1' in self.meta and 'zrange2' in self.meta :
             self.z_range=self.meta['zrange1']+","+self.meta['zrange2']
 
-        if 'scalemin' in selef.meta and 'scalemax' in self.meta :
+        if 'scalemin' in self.meta and 'scalemax' in self.meta :
             ## user supplied a fixed scale bounds
             self.scalemin=self.meta['scalemin']
             self.scalemax=self.meta['scalemax']
