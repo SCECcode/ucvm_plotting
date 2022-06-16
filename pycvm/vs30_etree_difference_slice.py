@@ -56,7 +56,7 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
         u = UCVM(install_dir=self.installdir, config_file=self.configfile)
 
         ### should be 2 datafiles
-        if (self.datafile1 == None || self.datafile2 == None) :
+        if (self.datafile1 == None or self.datafile2 == None) :
             print("Require 2 data files to make a difference plot")
             return False
         else:

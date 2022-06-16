@@ -157,6 +157,6 @@ print("Retrieving data. Please wait...")
  
 ###################################################################################
 # Generate the horizontal slice.
-v = Vs30EtreeSlice(Point(lon1, lat2, 0), Point(lon2, lat1, 0),meta)
+v = Vs30EtreeDifferenceSlice(Point(lon1, lat2, 0), Point(lon2, lat1, 0),meta)
 v.plot()
 
