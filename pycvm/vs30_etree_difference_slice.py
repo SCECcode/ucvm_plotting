@@ -71,17 +71,18 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
             print("Require 2 data files to make a difference plot")
             return False
         else:
+            print("\nUsing --> "+self.datafile1)
             # print("expecting x ",self.num_x," y ",self.num_y)
             dataA2d = u.import_np_float_array(self.datafile1, self.num_x, self.num_y)
             ## flatten them
-            dataA1d = data2d.reshape([1, self.num_x * self.num_y])
+            dataA1d = dataA2d.reshape([1, self.num_x * self.num_y])
             ## turn first one into a list
             dataA=dataA1d[0].tolist()
 
             print("\nUsing --> "+self.datafile2)
             dataB2d = u.import_np_float_array(self.datafile2, self.num_x, self.num_y)
             ## flatten them
-            dataB1d = data2d.reshape([1, self.num_x * self.num_y])
+            dataB1d = dataB2d.reshape([1, self.num_x * self.num_y])
             ## turn first one into a list
             dataB=dataB1d[0].tolist()
 
