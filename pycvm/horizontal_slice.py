@@ -347,7 +347,7 @@ class HorizontalSlice:
         elif color_scale == 'dd':
             BOUNDS= u.makebounds(newmin_val, newmax_val, 5, newmean_val, substep=5,all=True)
             TICKS = u.maketicks(newmin_val, newmax_val, 5)
-            colormap = pycvm_cmapDiscretize(basemap.cm.GMT_seis, len(BOUNDS) - 1)
+            colormap = pycvm_cmapDiscretize(basemap.cm.jet, len(BOUNDS) - 1)
 #            colormap = pycvm_cmapDiscretize(basemap.cm.GMT_globe, len(BOUNDS) - 1)
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
         else:
@@ -355,7 +355,7 @@ class HorizontalSlice:
 
 # very special case for showing 'difference plot'
         if 'difference' in self.meta :
-            colormap = pycvm_cmapDiscretize(basemap.cm.BlueDarkRed18, len(BOUNDS) - 1)
+            colormap = pycvm_cmapDiscretize(basemap.cm.GMT_globe, len(BOUNDS) - 1)
              
 
         if( self.datafile == None ):
