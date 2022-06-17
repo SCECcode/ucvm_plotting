@@ -353,7 +353,7 @@ class HorizontalSlice:
         else:
             print("ERROR: unknown option for colorscale.")
 
-// very special case for showing 'difference plot'
+# very special case for showing 'difference plot'
         if 'difference' in self.meta :
             colormap = pycvm_cmapDiscretize(basemap.cm.BlueDarkRed18, len(BOUNDS) - 1)
              
