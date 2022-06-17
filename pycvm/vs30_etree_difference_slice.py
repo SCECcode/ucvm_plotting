@@ -121,5 +121,6 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
             self.meta['title'] = title
 
         self.meta['mproperty']="vs"
+        self.meta['difference']="vs30"
 
         HorizontalSlice.plot(self)
