@@ -236,7 +236,7 @@ class HorizontalSlice:
         else:
             BOUNDS = u.makebounds()
             TICKS = u.maketicks()
-       
+
         m = basemap.Basemap(projection='cyl', llcrnrlat=self.bottomrightpoint.latitude, \
                             urcrnrlat=self.upperleftpoint.latitude, \
                             llcrnrlon=self.upperleftpoint.longitude, \

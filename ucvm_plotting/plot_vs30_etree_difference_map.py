@@ -20,6 +20,7 @@ def usage():
     print("\t-s, --spacing: grid spacing in degrees (typically 0.01)")
     print("\t-c, --cvm: one of the installed community velocity models")
     print("\t-a, --scale: color scale, either 's' for smooth or 'd' for discretized, without quotes")
+    print("\t-A, --scalebounds: max and min of the color scale")
     print("\t-f, --datafile: binary input data filenames")
     print("\t-o, --outfile: optional png output filename")
     print("\t-t, --title: optional plot title")
@@ -33,6 +34,7 @@ ret_val = get_user_opts({"b,bottomleft":"lat1,lon1",\
                          "s,spacing":"spacing", \
                          "c,cvm":"cvm", \
                          "a,scale": "color", \
+                         "A,scalebounds,o": "scalemin,scalemax", \
                          "f,datafile":"datafile1,datafile2", \
                          "o,outfile,o":"outfile", \
                          "t,title,o":"title", \
