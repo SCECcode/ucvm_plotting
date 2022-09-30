@@ -1076,6 +1076,31 @@ class UCVM:
         fh.close()
 
 
+#  export material properties in csv form to an external file
+    def export_matprops_csv(self,jblob,fname):
+XXX
+#        print("calling export_matprops_csv")
+        matpropsfile=fname
+        if matpropsfile is None :
+            matpropsfile="matprops.csv"
+        k = matpropsfile.rfind(".png")
+        if( k != -1) :
+            matpropsfile = matpropsfile[:k] + "_matprops.csv"
+        try :
+            fh = open(matpropsfile, 'w+')
+        except:
+            print("ERROR: can not write the material property data.")
+            exit(1)
+
+        mlist= jblob["matprops"]
+        for item in mlist :
+           vp=item['vp']
+           vs=item['vs']
+           density=item['density']
+           aline = "%.3f,%.3f,%.3f\n" % (p, vs, density)
+           fh.write(aline)
+        fh.close()
+
 
 #  export material properties in JSON form to an external file 
     def export_velocity(self,filename,vslist,vplist,rholist):
