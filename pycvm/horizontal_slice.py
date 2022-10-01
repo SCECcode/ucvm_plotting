@@ -94,6 +94,14 @@ class HorizontalSlice:
         if 'zrange1' in self.meta and 'zrange2' in self.meta :
             self.z_range=self.meta['zrange1']+","+self.meta['zrange2']
 
+        if 'scalemin' in self.meta and 'scalemax' in self.meta :
+            ## user supplied a fixed scale bounds
+            self.scalemin=self.meta['scalemin']
+            self.scalemax=self.meta['scalemax']
+        else:
+            self.scalemin=None
+            self.scalemax=None
+
         if 'installdir' in self.meta:
             self.installdir = self.meta['installdir']
         else:
@@ -222,9 +230,13 @@ class HorizontalSlice:
 
         u = UCVM(install_dir=self.installdir, config_file=self.configfile)
 
-        BOUNDS = u.makebounds()
-        TICKS = u.maketicks()
-       
+        if self.scalemin != None and self.scalemax != None:
+            BOUNDS= u.makebounds(float(self.scalemin), float(self.scalemax), 5)
+            TICKS = u.maketicks(float(self.scalemin), float(self.scalemax), 5)
+        else:
+            BOUNDS = u.makebounds()
+            TICKS = u.maketicks()
+
         m = basemap.Basemap(projection='cyl', llcrnrlat=self.bottomrightpoint.latitude, \
                             urcrnrlat=self.upperleftpoint.latitude, \
                             llcrnrlon=self.upperleftpoint.longitude, \
@@ -340,6 +352,11 @@ class HorizontalSlice:
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
         else:
             print("ERROR: unknown option for colorscale.")
+
+# very special case for showing 'difference plot'
+        if 'difference' in self.meta :
+            colormap = pycvm_cmapDiscretize(basemap.cm.jet, len(BOUNDS) - 1)
+             
 
         if( self.datafile == None ):
           self.meta['num_x'] = self.num_x
