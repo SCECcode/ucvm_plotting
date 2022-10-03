@@ -30,6 +30,7 @@ def usage():
     print("\t-H, --help: optional display usage information")
     print("\t-i, --installdir: optional UCVM isntall directory")
     print("\t-n, --configfile: optional UCVM configfile")
+    print("\t-C, --comment: optional comment for this profile")
     print("UCVM %s\n" % VERSION)
 
 ret_val = get_user_opts({"s,startingpoint":"lat1,lon1", \
@@ -45,7 +46,8 @@ ret_val = get_user_opts({"s,startingpoint":"lat1,lon1", \
                          "t,title,o":"title", \
                          "H,help,o":"", \
                          "i,installdir,o":"installdir", \
-                         "n,configfile,o":"configfile" })
+                         "n,configfile,o":"configfile", \
+                         "C,comment,o":"comment" })
 
 meta = {}
 
