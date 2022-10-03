@@ -1078,7 +1078,6 @@ class UCVM:
 
 #  export material properties in csv form to an external file
     def export_matprops_csv(self,jblob,fname):
-XXX
 #        print("calling export_matprops_csv")
         matpropsfile=fname
         if matpropsfile is None :
