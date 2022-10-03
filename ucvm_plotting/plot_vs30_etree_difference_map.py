@@ -3,9 +3,15 @@
 ##
 #  @file plot_vs30_etree_difference_map.py
 #  @brief Plots a Vs30 etrree differenceslice using command-line parameters.
-#  @version 14.7.0
+#  @version 22.6.0
 #
 #  Plots a Vs30 dfference slice given a set of command-line parameters.
+#  and 2 plot_s30_etree_map.py bin data files
+#
+# plot_vs30_etree_difference_map.py -s 0.01 -c cca -a dd -o diff_etree_orig.png 
+#   -i $UCVM_INSTALL_PATH -b 31.5348,-125.7804 -u 42.5153,-113.5259 
+#   -f a_etree_data.bin,another_etree_data.bin
+#
 
 from pycvm import Vs30EtreeDifferenceSlice, UCVM, VERSION, UCVM_CVMS, Point, ask_number, ask_path, ask_file, get_user_opts
 import getopt, sys, os

@@ -3,10 +3,21 @@
 ##
 #  @file plot_vs30_etree_map.py
 #  @brief Plots a Vs30 slice using command-line parameters.
-#  @author David Gill - SCEC <davidgil@usc.edu>
-#  @version 14.7.0
+#  @author SCEC 
+#  @version 22.6.0
 #
-#  Plots a Vs30 slice given a set of command-line parameters.
+#  Plots a Vs30 etree slice given a set of command-line parameters.
+#
+#  Use the fourth position of ucvm_query result,
+#
+#  ucvm_query's Output format is:
+#
+#	lon lat Z surf vs30 crustal cr_vp cr_vs cr_rho gtl gtl_vp gtl_vs gtl_rho cmb_algo 
+#       cmb_vp cmb_vs cmb_rho
+#
+# plot_vs30_etree_map.py -s 0.01 -c cca -a dd -o etree.png -i $UCVM_INSTALL_PATH
+#    -b 31.5348,-125.7804 -u 42.5153,-113.5259 -t "vs30 etree, cca"
+#
 
 from pycvm import Vs30EtreeSlice, UCVM, VERSION, UCVM_CVMS, Point, ask_number, ask_path, ask_file, get_user_opts
 import getopt, sys, os

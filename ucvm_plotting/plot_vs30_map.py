@@ -3,10 +3,13 @@
 ##
 #  @file plot_vs30_map.py
 #  @brief Plots a Vs30 slice using command-line parameters.
-#  @author David Gill - SCEC <davidgil@usc.edu>
-#  @version 14.7.0
+#  @author SCEC 
+#  @version 22.6.0
 #
 #  Plots a Vs30 slice given a set of command-line parameters.
+#
+#  vs30_query call in UCVM
+#
 
 from pycvm import Vs30Slice, UCVM, VERSION, UCVM_CVMS, Point, ask_number, ask_path, ask_file, get_user_opts
 import getopt, sys, os
