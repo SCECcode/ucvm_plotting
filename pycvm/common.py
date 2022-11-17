@@ -488,7 +488,7 @@ class UCVM:
     #  
     #  @param install_dir The base installation directory of UCVM.
     #  @param config_file The location of the UCVM configuration file.
-    def __init__(self, install_dir = None, config_file = None, z_range = None):
+    def __init__(self, install_dir = None, config_file = None, z_range = None, floors = None):
         if install_dir != None:
             ## Location of the UCVM binary directory.
             self.binary_dir = install_dir + "/bin"
@@ -517,6 +517,12 @@ class UCVM:
             self.z_range = z_range
         else:
             self.z_range= None
+
+        if floors != None:
+            self.floors = floors
+        else:
+            self.floors= None
+        
         
         if install_dir != None:
             ## List of all the installed CVMs.
@@ -572,16 +578,21 @@ class UCVM:
 #        print("CVM", cvm)
         if( elevation ) :
             if self.z_range != None :
-#                print("RANGE"+str(self.z_range))
-#                print("CVM", cvm) 
-                proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge", "-z", self.z_range], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                if self.floors != None:
+                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge", "-z", self.z_range, "-L", self.floors], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                else:
+                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge", "-z", self.z_range], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
             else :
-                proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge"], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                if self.floors != None:  ## z range is using default
+                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge", "-L", self.floors], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                else:
+                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge"], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
         else :
             if self.z_range != None :
-#                print("RANGE"+str(self.z_range))
-#                print("CVM", cvm) 
-                proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd", "-z", self.z_range], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                if self.floors != None :
+                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd", "-z", self.z_range, "-L", self.floors], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                else:
+                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd", "-z", self.z_range], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
             else:
                 proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd" ], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
         

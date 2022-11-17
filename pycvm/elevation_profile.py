@@ -63,6 +63,10 @@ class ElevationProfile:
         if 'zrange1' in self.meta and 'zrange2' in self.meta :
             self.z_range=self.meta['zrange1']+","+self.meta['zrange2']
 
+        self.floors = None
+        if 'vsfloor' in self.meta and 'vpfloor' in self.meta and 'densityfloor' in self.meta :
+            self.floors=self.meta['vsfloor']+","+self.meta['vpfloor']","+self.meta['densityfloor']
+
         ## The CVM to use (must be installed with UCVM).
         if 'cvm' in self.meta :
             self.cvm = self.meta['cvm']
@@ -124,7 +128,7 @@ class ElevationProfile:
             point_list.append(Point(self.startingpoint.longitude, self.startingpoint.latitude, elevation=i))
             self.meta['elevation'].append(i)
             
-        u = UCVM(install_dir=self.installdir, config_file=self.configfile, z_range=self.z_range)
+        u = UCVM(install_dir=self.installdir, config_file=self.configfile, z_range=self.z_range,floors=self.floors)
 
 ###MEI
         if (self.datafile != None) :
