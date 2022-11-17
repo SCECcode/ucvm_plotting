@@ -23,6 +23,7 @@ def usage():
     print("\t-v, --vertical: vertical spacing for elevation interval (meters)")
     print("\t-c, --cvm: one of the installed CVMs")
     print("\t-z, --zrange: optional Z-range for elygtl:ely (e.g. -z 0,350)")
+    print("\t-L, --floors: optional vs/vp/density floors for taper (e.g. -L 500,1700,1700)")
     print("\t-g, --threshold: optional  Vs threshold to display as gating")
     print("\t-f, --datafile: optional binary input data filename")
     print("\t-o, --outfile: optional png output filename")
@@ -39,15 +40,16 @@ ret_val = get_user_opts({"s,startingpoint":"lat1,lon1", \
 			 "c,cvm":"cvm", \
 			 "d,datatype":"data_type", \
 			 "v,vertical":"vertical_spacing", \
-                         "z,zrange,o":"zrange1,zrange2", \
+             "z,zrange,o":"zrange1,zrange2", \
+             "L,floors,o":"vsfloor,vpfloor,densityfloor", \
 			 "g,gating,o":"vs_threshold", \
-                         "f,datafile,o":"datafile", \
+             "f,datafile,o":"datafile", \
 			 "o,outfile,o":"outfile", \
-                         "t,title,o":"title", \
-                         "H,help,o":"", \
-                         "i,installdir,o":"installdir", \
-                         "n,configfile,o":"configfile", \
-                         "C,comment,o":"comment" })
+             "t,title,o":"title", \
+             "H,help,o":"", \
+             "i,installdir,o":"installdir", \
+             "n,configfile,o":"configfile", \
+             "C,comment,o":"comment" })
 
 meta = {}
 
