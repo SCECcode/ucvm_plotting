@@ -369,8 +369,12 @@ class HorizontalSlice:
           self.meta['max'] = np.asscalar(self.max_val)
           self.meta['min'] = np.asscalar(self.min_val)
           self.meta['mean'] = np.asscalar(self.mean_val)
+          ### lons and lats are off by one from earlier composition for drawing within edges, 
+          ### so need to add in the last lon2 and lat2
           self.meta['lon_list']=lons.tolist()
+          self.meta['lon_list'].append(self.meta['lon2'])
           self.meta['lat_list']=lats.tolist()
+          self.meta['lat_list'].append(self.meta['lat2'])
           if self.filename:
               u.export_metadata(self.meta,self.filename)
               u.export_np_float_array(datapoints,self.filename)
