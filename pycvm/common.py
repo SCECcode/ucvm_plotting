@@ -16,6 +16,7 @@ import math
 import struct
 import getopt
 import json
+import pdb
 
 #  Numpy is required.
 try:
@@ -174,8 +175,11 @@ def get_user_opts(options):
             if o == "-" + key.split(",")[0] or o == "--" + key.split(",")[1]:
                 opts_left.remove(key.split(",")[0])
                 if "," in value:
-                    ret_val[value.split(",")[0]] = a.split(",")[0]
-                    ret_val[value.split(",")[1]] = a.split(",")[1]
+                    vlist=value.split(",")
+                    alist=a.split(",")
+                    sz=len(vlist) 
+                    for i in range(0, sz):
+                      ret_val[vlist[i]] = alist[i]
                 else:
                     ret_val[value] = a
                 break

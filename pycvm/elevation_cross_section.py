@@ -84,7 +84,7 @@ class ElevationCrossSection:
 
         self.floors = None
         if 'vsfloor' in self.meta and 'vpfloor' in self.meta and 'densityfloor' in self.meta :
-            self.floors=self.meta['vsfloor']+","+self.meta['vpfloor']","+self.meta['densityfloor']
+            self.floors=self.meta['vsfloor']+","+self.meta['vpfloor']+","+self.meta['densityfloor']
 
         ## The CVM to use (must be installed with UCVM).
         if 'cvm' in self.meta :

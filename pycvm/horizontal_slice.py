@@ -96,7 +96,7 @@ class HorizontalSlice:
 
         self.floors = None
         if 'vsfloor' in self.meta and 'vpfloor' in self.meta and 'densityfloor' in self.meta :
-            self.floors=self.meta['vsfloor']+","+self.meta['vpfloor']","+self.meta['densityfloor']
+            self.floors=self.meta['vsfloor']+","+self.meta['vpfloor']+","+self.meta['densityfloor']
 
         if 'scalemin' in self.meta and 'scalemax' in self.meta :
             ## user supplied a fixed scale bounds
