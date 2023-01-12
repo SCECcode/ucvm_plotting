@@ -1,0 +1,44 @@
+
+python code from ucvm_plotting/pycvm/common.py and various plot types,
+
+np= numpy
+u = UCVM python class
+fp = file pointer from open() call
+
+slices, num_x, num_y
+
+  reading the .bin file
+    get 2d data,
+        u.import_np_float_array(dfile, num_x, num_y)
+                np.load(fp)
+    reshape to 1d,
+        2d.reshape([1, num_x * num_y])
+    turn into a list,
+        1d[0].tolist() 
+        
+  writing to .bin file
+        u.export_np_float_array(points, dfile) 
+                np.save(fp,points)
+     where points is,
+        np.arange(num_x * num_y,dtype=np.float32).reshape(num_y, num_x)
+
+vertical profile, 
+   blob is a json structure 
+      blob = { 'matprops' : blist }
+   and data is a list of b terms
+      b= { 'vp':float(vp), 'vs':float(vs), 'density':float(density) }
+      blist=blist.append(b)
+
+  reading the json ascii file
+     u.import_matprops(blob, dfile)
+         jblob=json.load(fp)
+         tmplist= jblob["matprops"]
+         iterate the list and break up into 3-tuple material properties
+         and recreate the b terms
+
+  writing to json ascii file
+     u.export_matprops(blob, dfile)
+        json.dump(blob, fh, indent=2, sort_keys=False)
+
+
+
