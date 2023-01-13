@@ -7,7 +7,6 @@
 #  Allows for generation of a horizontal slice, either interactively, via
 #  arguments, or through Python code in the class HorizontalSlice.
 
-
 #  Imports
 from mpl_toolkits import basemap
 from mpl_toolkits.basemap import cm
@@ -362,7 +361,9 @@ class HorizontalSlice:
 
 # very special case for showing 'difference plot'
         if 'difference' in self.meta :
-            colormap = pycvm_cmapDiscretize(basemap.cm.jet, len(BOUNDS) - 1)
+            bwr = cm.get_cmap('bwr')
+            colormap = pycvm_cmapDiscretize(bwr, len(BOUNDS) - 1)
+##            colormap = pycvm_cmapDiscretize(basemap.cm.GMT_globe, len(BOUNDS) - 1)
              
 
         if( self.datafile == None ):
