@@ -151,14 +151,17 @@ class HorizontalSlice:
 ### MEI
         if (self.datafile != None) :
             data=[]
-            if self.datafile.rfind(".raw") != -1 :
-                data = u.import_raw_data(self.datafile, self.num_x, self.num_y)
-            else:  ## with .bin file
-                data2d = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
+            if self.datafile.rfind(".binary") != -1 :
+                data = u.import_binary(self.datafile, self.num_x, self.num_y)
+            else :
+                if self.datafile.rfind(".raw") != -1 :
+                    data = u.import_raw_data(self.datafile, self.num_x, self.num_y)
+                else:  ## with .bin file
+                    data2d = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
                 ## flatten them
-                data1d = data2d.reshape([1, self.num_x * self.num_y])
+                    data1d = data2d.reshape([1, self.num_x * self.num_y])
                 ## turn first one into a list
-                data=data1d[0].tolist()
+                    data=data1d[0].tolist()
 
             print("\nUsing --> "+self.datafile) 
         else: 
