@@ -28,6 +28,8 @@ def usage():
     print("\t-a, --scale: color scale, either 's' for smooth or 'd' for discretized, without quotes")
     print("\t-A, --scalebounds: max and min of the color scale")
     print("\t-f, --datafile: binary input data filenames")
+    print("\t-x, --x: optional x steps matching the datafile")
+    print("\t-y, --y: optional y steps matching the datafile")
     print("\t-o, --outfile: optional png output filename")
     print("\t-t, --title: optional plot title")
     print("\t-H, --help: optional display usage information")
@@ -42,6 +44,8 @@ ret_val = get_user_opts({"b,bottomleft":"lat1,lon1",\
                          "a,scale": "color", \
                          "A,scalebounds,o": "scalemin,scalemax", \
                          "f,datafile":"datafile1,datafile2", \
+                         "x,nx,o":"nx", \
+                         "y,ny,o":"ny", \
                          "o,outfile,o":"outfile", \
                          "t,title,o":"title", \
                          "H,help,o":"", \

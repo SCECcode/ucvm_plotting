@@ -73,18 +73,32 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
         else:
             print("\nUsing --> "+self.datafile1)
             # print("expecting x ",self.num_x," y ",self.num_y)
-            dataA2d = u.import_np_float_array(self.datafile1, self.num_x, self.num_y)
-            ## flatten them
-            dataA1d = dataA2d.reshape([1, self.num_x * self.num_y])
-            ## turn first one into a list
-            dataA=dataA1d[0].tolist()
+            dataA=[]
+            if self.datafile1.rfind(".binary") != -1 :
+                dataA = u.import_binary(self.datafile1, self.num_x, self.num_y)
+            else :
+                if self.datafile1.rfind(".raw") != -1 :
+                    dataA = u.import_raw_data(self.datafile1, self.num_x, self.num_y)
+                else:  ## with .bin file
+                    dataA2d = u.import_np_float_array(self.datafile1, self.num_x, self.num_y)
+                       ## flatten them
+                    dataA1d = dataA2d.reshape([1, self.num_x * self.num_y])
+                       ## turn first one into a list
+                    dataA=dataA1d[0].tolist()
 
             print("\nUsing --> "+self.datafile2)
-            dataB2d = u.import_np_float_array(self.datafile2, self.num_x, self.num_y)
-            ## flatten them
-            dataB1d = dataB2d.reshape([1, self.num_x * self.num_y])
-            ## turn first one into a list
-            dataB=dataB1d[0].tolist()
+            dataB=[]
+            if self.datafile2.rfind(".binary") != -1 :
+                dataB = u.import_binary(self.datafile2, self.num_x, self.num_y)
+            else :
+                if self.datafile2.rfind(".raw") != -1 :
+                    dataB = u.import_raw_data(self.datafile2, self.num_x, self.num_y)
+                else:  ## with .bin file
+                    dataB2d = u.import_np_float_array(self.datafile2, self.num_x, self.num_y)
+                       ## flatten them
+                    dataB1d = dataB2d.reshape([1, self.num_x * self.num_y])
+                       ## turn first one into a list
+                    dataB=dataB1d[0].tolist()
 
         i = 0
         j = 0
