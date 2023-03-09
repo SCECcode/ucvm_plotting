@@ -404,7 +404,10 @@ class HorizontalSlice:
                 if(mproperty.title() == "Density") :
                   cbar.set_label(mproperty.title() + " (g/cm^3)")
                 else: 
-                  cbar.set_label(mproperty.title() + " (km/s)")
+                  if 'difference' in self.meta :
+                    cbar.set_label(mproperty.title() + " (km)")
+                  else:
+                    cbar.set_label(mproperty.title() + " (km/s)")
             else:
                 cbar.set_label(horizontal_label)
         else:
