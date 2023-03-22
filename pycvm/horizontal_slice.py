@@ -333,10 +333,10 @@ class HorizontalSlice:
 
         if color_scale == "s":
             colormap = basemap.cm.GMT_seis
-            norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
+            norm = mcolors.Normalize(vmin=BOUNDS[0],vmax=BOUNDS[len(BOUNDS) - 1])
         elif color_scale == "s_r":
             colormap = basemap.cm.GMT_seis_r
-            norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
+            norm = mcolors.Normalize(vmin=BOUNDS[0],vmax=BOUNDS[len(BOUNDS) - 1])
         elif color_scale == "sd":
             colormap = basemap.cm.GMT_seis
             BOUNDS= u.makebounds(umin, umax, 5, umean, substep=5)
