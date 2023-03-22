@@ -440,8 +440,8 @@ class CrossSection:
             else:
               if 'difference' in self.meta :
                     cbar.set_label(mproperty.title() + " (km)")
-                  else:
-                    cbar.set_label(mproperty.title() + " (km/s)")
+              else:
+                   cbar.set_label(mproperty.title() + " (km/s)")
         else:
             cbar.set_label("Poisson(Vs,Vp)")
        
