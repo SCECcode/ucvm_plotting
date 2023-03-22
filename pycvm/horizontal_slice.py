@@ -99,8 +99,8 @@ class HorizontalSlice:
 
         if 'scalemin' in self.meta and 'scalemax' in self.meta :
             ## user supplied a fixed scale bounds
-            self.scalemin=self.meta['scalemin']
-            self.scalemax=self.meta['scalemax']
+            self.scalemin=float(self.meta['scalemin'])
+            self.scalemax=float(self.meta['scalemax'])
         else:
             self.scalemin=None
             self.scalemax=None
@@ -236,13 +236,6 @@ class HorizontalSlice:
 
         u = UCVM(install_dir=self.installdir, config_file=self.configfile)
 
-        if self.scalemin != None and self.scalemax != None:
-            BOUNDS= u.makebounds(float(self.scalemin), float(self.scalemax), 5)
-            TICKS = u.maketicks(float(self.scalemin), float(self.scalemax), 5)
-        else:
-            BOUNDS = u.makebounds()
-            TICKS = u.maketicks()
-
         m = basemap.Basemap(projection='cyl', llcrnrlat=self.bottomrightpoint.latitude, \
                             urcrnrlat=self.upperleftpoint.latitude, \
                             llcrnrlon=self.upperleftpoint.longitude, \
@@ -319,22 +312,36 @@ class HorizontalSlice:
         self.min_val=np.nanmin(datapoints)
         self.mean_val=np.mean(datapoints)
 
+        if self.scalemin != None and self.scalemax != None:
+            BOUNDS= u.makebounds(float(self.scalemin), float(self.scalemax), 5)
+            TICKS = u.maketicks(float(self.scalemin), float(self.scalemax), 5)
+            umax=round(self.scalemax)
+            umin=round(self.scalemin)
+        else:
+            ## default BOUNDS are from 0 to 5
+            BOUNDS = u.makebounds()
+            TICKS = u.maketicks()
+            umax=round(newmax_val)
+            umin=round(newmn_val)
+            umean=self.newmean_val
+
+##   s, s_r   0,5 / scalemin,scalemax
+##   sd       umin,umax
+##   b        0,5 / scalemin,scalemax
+##   d, d_r   0,5 / scalemin,scalemax
+##   dd       umin,umax
+
         if color_scale == "s":
             colormap = basemap.cm.GMT_seis
-            norm = mcolors.Normalize(vmin=BOUNDS[0],vmax=BOUNDS[len(BOUNDS) - 1])
+            norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
         elif color_scale == "s_r":
             colormap = basemap.cm.GMT_seis_r
-            norm = mcolors.Normalize(vmin=BOUNDS[0],vmax=BOUNDS[len(BOUNDS) - 1])
+            norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
         elif color_scale == "sd":
-            BOUNDS= u.makebounds(newmin_val, newmax_val, 5, newmean_val, substep=5)
             colormap = basemap.cm.GMT_seis
-            TICKS = u.maketicks(newmin_val, newmax_val, 5)
-            norm = mcolors.Normalize(vmin=BOUNDS[0],vmax=BOUNDS[len(BOUNDS) - 1])
-        elif color_scale == "sd_r":
-            BOUNDS= u.makebounds(newmin_val, newmax_val, 5, newmean_val, substep=5)
-            colormap = basemap.cm.GMT_seis_r
-            TICKS = u.maketicks(newmin_val, newmax_val, 5)
-            norm = mcolors.Normalize(vmin=BOUNDS[0],vmax=BOUNDS[len(BOUNDS) - 1])
+            BOUNDS= u.makebounds(umin, umax, 5, umean, substep=5)
+            TICKS = u.maketicks(umin, umax, 5)
+            norm = mcolors.Normalize(umin,umax)
         elif color_scale == "b":
             C = []
             for bound in BOUNDS :
@@ -344,20 +351,21 @@ class HorizontalSlice:
                   C.append("red")
             colormap = mcolors.ListedColormap(C)
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
-        elif color_scale == "d":
+
+        elif color_scale == 'd':
             colormap = pycvm_cmapDiscretize(basemap.cm.GMT_seis, len(BOUNDS) - 1)
-            norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)  
-        elif color_scale == "d_r":
+            norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
+        elif color_scale == 'd_r':
             colormap = pycvm_cmapDiscretize(basemap.cm.GMT_seis_r, len(BOUNDS) - 1)
-            norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)  
+            norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
         elif color_scale == 'dd':
-            BOUNDS= u.makebounds(newmin_val, newmax_val, 5, newmean_val, substep=5,all=True)
-            TICKS = u.maketicks(newmin_val, newmax_val, 5)
+            BOUNDS= u.makebounds(umin, umax, 5, umean, substep=5)
+            TICKS = u.maketicks(umin, umax, 5)
             colormap = pycvm_cmapDiscretize(basemap.cm.GMT_seis, len(BOUNDS) - 1)
-#            colormap = pycvm_cmapDiscretize(basemap.cm.GMT_globe, len(BOUNDS) - 1)
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
         else:
             print("ERROR: unknown option for colorscale.")
+
 
 # very special case for showing 'difference plot'
         if 'difference' in self.meta :

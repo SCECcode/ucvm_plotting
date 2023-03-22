@@ -1,20 +1,20 @@
 ##
-#  @file vs30_etree_difference_slice.py
-#  @brief Take 2 slices of vs30 values, plot a difference horizontal slice
+#  @file cross_difference_section.py
+#  @brief Take 2 slices of cross sections, plot a difference plot
 #  @author Mei-Hui Su - SCEC
 #  @version 
 #
 #  Imports
-from horizontal_slice import HorizontalSlice
+from cross_section import CrossSection
 from common import Point, MaterialProperties, UCVM, UCVM_CVMS, \
                    math, pycvm_cmapDiscretize, cm, mcolors, basemap, np, plt
 
 ##
-#  @class Vs30EtreeSlice
-#  @brief Gets a horizontal slice of Vs30 data.
+#  @class CrossDifferencSection
+#  @brief Gets 2 cross section and make a difference plot
 #
-#  Retrieves 2 horizontal slices of Vs30 values and make a difference plot 
-class Vs30EtreeDifferenceSlice(HorizontalSlice):
+#  Retrieves 2 cross sections and make a difference plot 
+class CrossDifferenceSection(HorizontalSlice):
     
     ##
     #  Initializes the super class and copies the parameters over.
@@ -26,8 +26,8 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
     #  
     def __init__(self, upperleftpoint, bottomrightpoint, meta={}):
     
-        #  Initializes the base class which is a horizontal slice.
-        HorizontalSlice.__init__(self, upperleftpoint, bottomrightpoint, meta)
+        #  Initializes the base class which is a cross section.
+        CrossSection.__init__(self, upperleftpoint, bottomrightpoint, meta)
 
         if 'datafile1' in self.meta :
             self.datafile1 = self.meta['datafile1']
@@ -41,7 +41,7 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
     
     
     ##
-    #  Retrieves the values for this Vs30 slice and stores them in the class.
+    #  Retrieves the values for this cross section and stores them in the class.
     def getplotvals(self, property="vs") :
         
         #  How many y and x values will we need?
@@ -61,7 +61,7 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
         else :
            self.num_y = int(math.ceil(self.plot_height / self.spacing)) + 1
         
-        ## The 2D array of retrieved Vs30 values.
+        ## The 2D array of retrieved values.
         self.materialproperties = [[MaterialProperties(-1, -1, -1) for x in range(self.num_x)] for x in range(self.num_y)] 
         
         u = UCVM(install_dir=self.installdir, config_file=self.configfile)
@@ -102,7 +102,7 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
 
         i = 0
         j = 0
-        
+
         for idx in range(len(dataA)) :
             self.materialproperties[i][j].vs = dataA[idx]-dataB[idx]
             j = j + 1
@@ -111,8 +111,8 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
                 i = i + 1
 
     ##
-    #  Plots the Vs30 data as a horizontal slice. This code is very similar to the
-    #  HorizontalSlice routine.
+    #  Plots the Difference data as a cross section. This code is very similar to the
+    #  CrossSection routine.
     #
     #  @param filename The location to which the plot should be saved. Optional.
     #  @param title The title of the plot to use. Optional.
@@ -131,10 +131,10 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
             cvmdesc = self.cvm
         
         if 'title' not in self.meta:
-            title = "%sVs30 Etree Difference Plot For %s" % (location_text, cvmdesc)
+            title = "%sCross Section Difference Plot For %s" % (location_text, cvmdesc)
             self.meta['title'] = title
 
         self.meta['mproperty']="vs"
-        self.meta['difference']="vs30"
+        self.meta['difference']="vs"
 
-        HorizontalSlice.plot(self)
+        CrossSection.plot(self)
