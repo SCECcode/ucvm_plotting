@@ -14,7 +14,7 @@ from common import Point, MaterialProperties, UCVM, UCVM_CVMS, \
 #  @brief Gets 2 cross section and make a difference plot
 #
 #  Retrieves 2 cross sections and make a difference plot 
-class CrossDifferenceSection(HorizontalSlice):
+class CrossDifferenceSection(CrossSection):
     
     ##
     #  Initializes the super class and copies the parameters over.
