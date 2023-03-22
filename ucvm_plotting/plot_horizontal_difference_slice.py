@@ -5,10 +5,10 @@
 #  @brief Plots a difference plot from 2 horizontal slices using command-line parameters.
 #  @version 22.6.0
 #
-#  Plots a horizontal difference slice given a set of command-line parameters.
-#  and any 2 horizontal slice bin data files
+#  Plots a horizontal difference slice given a set of command-line parameters
+#  and 2 horizontal slice bin data files
 #
-# plot_horizontal_difference_slice.py -s 0.01 -c cca -a s -o diff_etree_orig.png 
+# plot_horizontal_difference_slice.py -s 0.01 -c cca -a s -o diff_horizontal.png 
 #   -i $UCVM_INSTALL_PATH -b 31.5348,-125.7804 -u 42.5153,-113.5259 
 #   -f a_horizontal_slice_data.bin,another_horizontal_slice_data.bin
 #
@@ -76,10 +76,10 @@ elif len(ret_val) > 0:
 
 else:      
     print("")
-    print("Horizontal Differene plot - UCVM %s" % VERSION)
+    print("Plot Horizontal Differene Slice - UCVM %s" % VERSION)
     print("")
     print("This utility helps you plot a Difference plot of 2 supplied horizontal slice data ")
-    print("or a text file that you can then later parse.")
+    print("and create a text file that you can then later parse.")
     print("")
     print("In order to create the plot, you must first specify the region.")
     print("")
