@@ -323,7 +323,7 @@ class HorizontalSlice:
             TICKS = u.maketicks()
             umax=round(newmax_val)
             umin=round(newmin_val)
-            umean=self.newmean_val
+            umean=round(newmean_val)
 
 ##   s, s_r   0,5 / scalemin,scalemax
 ##   sd       umin,umax

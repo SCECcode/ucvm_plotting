@@ -349,7 +349,7 @@ class CrossSection:
             TICKS = u.maketicks()
             umax=round(self.max_val)
             umin=round(self.min_val)
-            umean=self.mean_val
+            umean=round(self.mean_val)
 
         if mproperty == "vp":
             BOUNDS = [bound * 1.7 for bound in BOUNDS]
