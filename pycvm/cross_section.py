@@ -86,8 +86,15 @@ class CrossSection:
         self.floors = None
         if 'vsfloor' in self.meta and 'vpfloor' in self.meta and 'densityfloor' in self.meta :
             self.floors=self.meta['vsfloor']+","+self.meta['vpfloor']+","+self.meta['densityfloor']
-        
-        
+
+        if 'scalemin' in self.meta and 'scalemax' in self.meta :
+            ## user supplied a fixed scale bounds
+            self.scalemin=self.meta['scalemin']
+            self.scalemax=self.meta['scalemax']
+        else:
+            self.scalemin=None
+            self.scalemax=None
+
         ## The CVM to use (must be installed with UCVM).
         if 'cvm' in self.meta :
             self.cvm = self.meta['cvm']
@@ -147,7 +154,6 @@ class CrossSection:
 #        print("total lat.."+ str(len(depth_list)))
 
         u = UCVM(install_dir=self.installdir, config_file=self.configfile, z_range=self.z_range, floors=self.floors)
-
 ### MEI -- TODO, need to have separate routine that generates cross section datafile
         if (self.datafile != None) :
             ## Private number of x points.
@@ -309,6 +315,13 @@ class CrossSection:
 
         u = UCVM(install_dir=self.installdir, config_file=self.configfile)
 
+        if self.scalemin != None and self.scalemax != None:
+            BOUNDS= u.makebounds(float(self.scalemin), float(self.scalemax), 5)
+            TICKS = u.maketicks(float(self.scalemin), float(self.scalemax), 5)
+        else:
+            BOUNDS = u.makebounds()
+            TICKS = u.maketicks()
+
         myInt=1000
         if mproperty == "poisson": ## no need to reduce.. should also be using sd or dd
            myInt=1
@@ -322,9 +335,6 @@ class CrossSection:
         self.max_val=np.nanmax(newdatapoints)
         self.min_val=np.nanmin(newdatapoints)
         self.mean_val=np.mean(newdatapoints)
-
-        BOUNDS = u.makebounds()
-        TICKS = u.maketicks()
 
         if mproperty == "vp":
             BOUNDS = [bound * 1.7 for bound in BOUNDS]

@@ -26,6 +26,7 @@ def usage():
     print("\t-z, --zrange: optional Z-range for elygtl:ely (e.g. -z 0,350)")
     print("\t-L, --floors: optional vs/vp/density floors for taper (e.g. -L 500,1700,1700)")
     print("\t-a, --scale: color scale, either 's' for smooth, 'd' for discretized or 'b' for bi-color scale, without quotes")
+    print("\t-A, --scalebounds: max and min of the color scale")
     print("\t-g, --gate: optional gate value for bi-color scale gate")
     print("\t-b, --origin: origin latitude, longitude from which to start plot (e.g. 34,-118)")
     print("\t-u, --destination: destination latitude, longitude to end plot (e.g. 35,-117)")
@@ -48,6 +49,7 @@ ret_val = get_user_opts({"b,origin":"lat1,lon1", \
 			 "h,horizontal":"horizontal_spacing", \
 			 "v,vertical":"vertical_spacing", \
 			 "a,scale": "color", \
+             "A,scalebounds,o": "scalemin,scalemax", \
 			 "g,gate,o": "gate", \
 			 "f,datafile,o":"datafile", \
 			 "o,outfile,o":"outfile", \
