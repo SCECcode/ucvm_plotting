@@ -1145,7 +1145,7 @@ class UCVM:
         l=0
         nsubstep=substep
         nnstep=float(step)/nsubstep
-        if(meanval != None) :
+        if(meanval != None and step!= 0) :
           l =(meanval-minval) //step
 
         for i in range(0,nstep) :
