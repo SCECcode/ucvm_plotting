@@ -317,6 +317,7 @@ class HorizontalSlice:
             TICKS = u.maketicks(float(self.scalemin), float(self.scalemax), 5)
             umax=round(self.scalemax)
             umin=round(self.scalemin)
+            umean=round((umax+umin)/2) 
         else:
             ## default BOUNDS are from 0 to 5
             BOUNDS = u.makebounds()
