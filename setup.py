@@ -65,5 +65,5 @@ if __name__ == "__main__":
 "ucvm_plotting/plot_horizontal_difference_slice.py",
 "ucvm_plotting/plot_vs30_map.py","ucvm_plotting/plot_z10_map.py",
 "ucvm_plotting/plot_z25_map.py",
-"utilities/makegrid.sh","utilities/view_png.py"] 
+"utilities/makegrid.sh","utilities/view_png.py","utilities/extract_latlon.py" ] 
     )
