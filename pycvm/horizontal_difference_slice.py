@@ -1,6 +1,6 @@
 ##
-#  @file vs30_etree_difference_slice.py
-#  @brief Take 2 slices of vs30 values, plot a difference horizontal slice
+#  @file horizontal_difference_slice.py
+#  @brief Take 2 slices of horizontal slice values, plot a difference plot
 #  @author Mei-Hui Su - SCEC
 #  @version 
 #
@@ -10,11 +10,11 @@ from common import Point, MaterialProperties, UCVM, UCVM_CVMS, \
                    math, pycvm_cmapDiscretize, cm, mcolors, basemap, np, plt
 
 ##
-#  @class Vs30EtreeSlice
-#  @brief Gets a horizontal slice of Vs30 data.
+#  @class HorizontalDifferencSlice
+#  @brief Gets 2 horizontal slice and make a difference plot
 #
-#  Retrieves 2 horizontal slices of Vs30 values and make a difference plot 
-class Vs30EtreeDifferenceSlice(HorizontalSlice):
+#  Retrieves 2 horizontal slices and make a difference plot 
+class HorizontalDifferenceSlice(HorizontalSlice):
     
     ##
     #  Initializes the super class and copies the parameters over.
@@ -41,7 +41,7 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
     
     
     ##
-    #  Retrieves the values for this Vs30 slice and stores them in the class.
+    #  Retrieves the values for this horizontal slice and stores them in the class.
     def getplotvals(self, property="vs") :
         
         #  How many y and x values will we need?
@@ -61,7 +61,7 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
         else :
            self.num_y = int(math.ceil(self.plot_height / self.spacing)) + 1
         
-        ## The 2D array of retrieved Vs30 values.
+        ## The 2D array of retrieved values.
         self.materialproperties = [[MaterialProperties(-1, -1, -1) for x in range(self.num_x)] for x in range(self.num_y)] 
         
         u = UCVM(install_dir=self.installdir, config_file=self.configfile)
@@ -102,7 +102,7 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
 
         i = 0
         j = 0
-        
+
         for idx in range(len(dataA)) :
             self.materialproperties[i][j].vs = dataA[idx]-dataB[idx]
             j = j + 1
@@ -111,7 +111,7 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
                 i = i + 1
 
     ##
-    #  Plots the Vs30 data as a horizontal slice. This code is very similar to the
+    #  Plots the Difference data as a horizontal slice. This code is very similar to the
     #  HorizontalSlice routine.
     #
     #  @param filename The location to which the plot should be saved. Optional.
@@ -131,10 +131,10 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
             cvmdesc = self.cvm
         
         if 'title' not in self.meta:
-            title = "%sVs30 Etree Difference Plot For %s" % (location_text, cvmdesc)
+            title = "%sHorizontal Difference Plot For %s" % (location_text, cvmdesc)
             self.meta['title'] = title
 
         self.meta['mproperty']="vs"
-        self.meta['difference']="vs30"
+        self.meta['difference']="vs"
 
         HorizontalSlice.plot(self)

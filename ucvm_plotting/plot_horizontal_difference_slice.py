@@ -1,24 +1,24 @@
 #!/usr/bin/env python
 
 ##
-#  @file plot_vs30_etree_difference_map.py
-#  @brief Plots a Vs30 etrree differenceslice using command-line parameters.
+#  @file plot_horizontal_difference_slice.py
+#  @brief Plots a difference plot from 2 horizontal slices using command-line parameters.
 #  @version 22.6.0
 #
-#  Plots a Vs30 dfference slice given a set of command-line parameters.
-#  and 2 plot_s30_etree_map.py bin data files
+#  Plots a horizontal difference slice given a set of command-line parameters
+#  and 2 horizontal slice bin data files
 #
-# plot_vs30_etree_difference_map.py -s 0.01 -c cca -a dd -o diff_etree_orig.png 
+# plot_horizontal_difference_slice.py -s 0.01 -c cca -a s -o diff_horizontal.png 
 #   -i $UCVM_INSTALL_PATH -b 31.5348,-125.7804 -u 42.5153,-113.5259 
-#   -f a_etree_data.bin,another_etree_data.bin
+#   -f a_horizontal_slice_data.bin,another_horizontal_slice_data.bin
 #
 
-from pycvm import Vs30EtreeDifferenceSlice, UCVM, VERSION, UCVM_CVMS, Point, ask_number, ask_path, ask_file, get_user_opts
+from pycvm import HorizontalDifferenceSlice, UCVM, VERSION, UCVM_CVMS, Point, ask_number, ask_path, ask_file, get_user_opts
 import getopt, sys, os
 
 ## Prints usage of this utility.
 def usage():
-    print("Generates a Vs30 difference map or text file given two bounding latitude and longitude and 2 Vs30 etree data files ")
+    print("Generates a Horizontal difference slice or text file given two bounding latitude and longitude and 2 horizontal slice data files ")
     print("co-ordinates, the CVM to plot, and a couple of other settings.")
     print("\nValid arguments:")
     print("\t-b, --bottomleft: bottom-left latitude, longitude (e.g. 34,-118)")
@@ -76,18 +76,18 @@ elif len(ret_val) > 0:
 
 else:      
     print("")
-    print("Vs30 Etree - UCVM %s" % VERSION)
+    print("Plot Horizontal Differene Slice - UCVM %s" % VERSION)
     print("")
-    print("This utility helps you either plot a Vs30 etree map or save the data in a")
-    print("text file that you can then later parse.")
+    print("This utility helps you plot a Difference plot of 2 supplied horizontal slice data ")
+    print("and create a text file that you can then later parse.")
     print("")
     print("In order to create the plot, you must first specify the region.")
     print("")
 
-    lon1 = ask_number("Please enter the bottom-left longitude from which the Vs30 values should come: ")
-    lat1 = ask_number("Next, enter the bottom-left latitude from which the Vs30 values should come: ")
-    lon2 = ask_number("Enter the top-right longitude where the Vs30 values should end: ")
-    lat2 = ask_number("Enter the top-right latitude where the Vs30 values should end: ")
+    lon1 = ask_number("Please enter the bottom-left longitude from which the values should come: ")
+    lat1 = ask_number("Next, enter the bottom-left latitude from which the values should come: ")
+    lon2 = ask_number("Enter the top-right longitude where the values should end: ")
+    lat2 = ask_number("Enter the top-right latitude where the values should end: ")
 
     # Check to see that this is a valid box.
     if lon1 > lon2 or lat1 > lat2:
@@ -116,8 +116,8 @@ else:
     configfile = None
 
     # Ask for data files
-    datafile1 = ask_file("First vs30 etree data file to use")
-    datafile2 = ask_file("Second vs30 etree data file to use")
+    datafile1 = ask_file("First horizontal slice data file to use")
+    datafile2 = ask_file("Second horizontal slice data file to use")
     meta['datafile1']=datafile1
     meta['datafile2']=datafile2
 
@@ -169,6 +169,6 @@ print("Retrieving data. Please wait...")
  
 ###################################################################################
 # Generate the horizontal slice.
-v = Vs30EtreeDifferenceSlice(Point(lon1, lat2, 0), Point(lon2, lat1, 0),meta)
+v = HorizontalDifferenceSlice(Point(lon1, lat2, 0), Point(lon2, lat1, 0),meta)
 v.plot()
 

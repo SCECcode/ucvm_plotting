@@ -29,7 +29,7 @@ except Exception:
 #  @brief Plots a cross section between two @link common.Point Points @endlink.
 #
 #  Generates a cross section that can either be saved as a file or displayed
-#  to the user. 
+#  to the user or differenced with another plot. 
 class CrossSection:
     
     ##
@@ -89,8 +89,8 @@ class CrossSection:
 
         if 'scalemin' in self.meta and 'scalemax' in self.meta :
             ## user supplied a fixed scale bounds
-            self.scalemin=self.meta['scalemin']
-            self.scalemax=self.meta['scalemax']
+            self.scalemin=float(self.meta['scalemin'])
+            self.scalemax=float(self.meta['scalemax'])
         else:
             self.scalemin=None
             self.scalemax=None
@@ -163,10 +163,14 @@ class CrossSection:
             print("\nUsing -->"+self.datafile)
 ##            print("expecting x "+str(self.num_x)+" y "+str(self.num_y))
 
-            if self.datafile.rfind(".raw") != -1:
+
+            if self.datafile.rfind(".binary") != -1 :
                 data = u.import_binary(self.datafile, self.num_x, self.num_y)
-            else:  ## ends in .bin
-                data = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
+            else :
+                if self.datafile.rfind(".raw") != -1 :
+                    data = u.import_raw_data(self.datafile, self.num_x, self.num_y)
+                else:  ## with .bin file
+                    data = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
 
 ## this set of data is only for --datatype: either 'vs', 'vp', 'rho', or 'poisson'
         ## The 2D array of retrieved material properties.
@@ -184,6 +188,8 @@ class CrossSection:
                       self.materialproperties[y][x].setProperty('Poisson',tmp)
                     if(mproperty == 'vs'):
                       self.materialproperties[y][x].setProperty('Vs',tmp)
+
+            print("\nUsing --> "+self.datafile) 
         else:
             data = u.query(point_list, self.cvm)
 
@@ -315,13 +321,6 @@ class CrossSection:
 
         u = UCVM(install_dir=self.installdir, config_file=self.configfile)
 
-        if self.scalemin != None and self.scalemax != None:
-            BOUNDS= u.makebounds(float(self.scalemin), float(self.scalemax), 5)
-            TICKS = u.maketicks(float(self.scalemin), float(self.scalemax), 5)
-        else:
-            BOUNDS = u.makebounds()
-            TICKS = u.maketicks()
-
         myInt=1000
         if mproperty == "poisson": ## no need to reduce.. should also be using sd or dd
            myInt=1
@@ -336,30 +335,43 @@ class CrossSection:
         self.min_val=np.nanmin(newdatapoints)
         self.mean_val=np.mean(newdatapoints)
 
+        # Set colormap and range
+        colormap = basemap.cm.GMT_seis
+
+        if self.scalemin != None and self.scalemax != None:
+            BOUNDS= u.makebounds(float(self.scalemin), float(self.scalemax), 5)
+            TICKS = u.maketicks(float(self.scalemin), float(self.scalemax), 5)
+            umax=round(self.scalemax)
+            umin=round(self.scalemin)
+            umean=round((umax+umin)/2)
+        else:
+            ## default BOUNDS are from 0 to 5
+            BOUNDS = u.makebounds()
+            TICKS = u.maketicks()
+            umax=round(self.max_val)
+            umin=round(self.min_val)
+            umean=round(self.mean_val)
+
         if mproperty == "vp":
             BOUNDS = [bound * 1.7 for bound in BOUNDS]
             TICKS = [tick * 1.7 for tick in TICKS]
 
-        # Set default colormap and range
-        colormap = basemap.cm.GMT_seis
-        norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
-
-        umax=round(self.max_val)
-        if( umax < 5 ) :
-            umax=5 
-        umin=round(self.min_val)
-
+##   s, s_r   0,5 / scalemin,scalemax  
+##   sd       umin,umax
+##   b        0,5 / scalemin,scalemax
+##   d, d_r   0,5 / scalemin,scalemax
+##   dd       umin,umax
         if color_scale == "s":
             colormap = basemap.cm.GMT_seis
-            norm = mcolors.Normalize(vmin=0,vmax=umax)
+            norm = mcolors.Normalize(vmin=BOUNDS[0],vmax=BOUNDS[len(BOUNDS) - 1])
         elif color_scale == "s_r":
             colormap = basemap.cm.GMT_seis_r
-            norm = mcolors.Normalize(vmin=0,vmax=umax)
+            norm = mcolors.Normalize(vmin=BOUNDS[0],vmax=BOUNDS[len(BOUNDS) - 1])
         elif color_scale == "sd":
-            BOUNDS= u.makebounds(self.min_val, self.max_val, 5, self.mean_val, substep=5)
             colormap = basemap.cm.GMT_seis
-            TICKS = u.maketicks(self.min_val, self.max_val, 5)
-            norm = mcolors.Normalize(vmin=self.min_val,vmax=self.max_val)
+            BOUNDS= u.makebounds(umin, umax, 5, umean, substep=5)
+            TICKS = u.maketicks(umin, umax, 5)
+            norm = mcolors.Normalize(vmin=BOUNDS[0],vmax=BOUNDS[len(BOUNDS) - 1])
         elif color_scale == "b":
             C = []
             for bound in BOUNDS :
@@ -376,13 +388,17 @@ class CrossSection:
             colormap = pycvm_cmapDiscretize(basemap.cm.GMT_seis_r, len(BOUNDS) - 1)
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)  
         elif color_scale == 'dd':
-            BOUNDS= u.makebounds(self.min_val, self.max_val, 5, self.mean_val, substep=5)
-            TICKS = u.maketicks(self.min_val, self.max_val, 5)
+            BOUNDS= u.makebounds(umin, umax, 5, umean, substep=5)
+            TICKS = u.maketicks(umin, umax, 5)
             colormap = pycvm_cmapDiscretize(basemap.cm.GMT_seis, len(BOUNDS) - 1)
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
         else: 
             print("ERROR: unknown option for colorscale.")
-    
+
+        if 'difference' in self.meta :
+            bwr = cm.get_cmap('bwr')
+            colormap = pycvm_cmapDiscretize(bwr, len(BOUNDS) - 1)
+
 
 ## MEI, TODO this is a temporary way to generate an output of a cross_section input file
         if( self.datafile == None ):
@@ -422,7 +438,10 @@ class CrossSection:
             if(mproperty.title() == "Density") :
               cbar.set_label(mproperty.title() + " (g/cm^3)")
             else:
-              cbar.set_label(mproperty.title() + " (km/s)")
+              if 'difference' in self.meta :
+                    cbar.set_label(mproperty.title() + " (km)")
+              else:
+                   cbar.set_label(mproperty.title() + " (km/s)")
         else:
             cbar.set_label("Poisson(Vs,Vp)")
        
