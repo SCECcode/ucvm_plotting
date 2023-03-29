@@ -52,7 +52,7 @@ ret_val = get_user_opts({"b,bottomleft":"lat1,lon1",\
                          "H,help,o":"", \
                          "i,installdir,o":"installdir", \
                          "n,configfile,o":"configfile", \
-                         "D,debug,o":""})
+                         "D,debug,o":"debug"})
 
 meta={}
 

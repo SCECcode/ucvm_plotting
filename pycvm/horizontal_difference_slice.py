@@ -40,9 +40,9 @@ class HorizontalDifferenceSlice(HorizontalSlice):
             self.datafile2 = None
 
         if 'debug' in self.meta :
-            self.debug = True
+            self.debug = self.meta['debug']
         else:
-            self.debug = False
+            self.debug = None
     
     
     ##
@@ -147,10 +147,10 @@ class HorizontalDifferenceSlice(HorizontalSlice):
                 j = 0
                 i = i + 1
 
-        if(self.debug) :
+        if(self.debug != None) :
           collect_text= "{ \"max_j\": %d, \"max_i\": %d, \"max_less\":%0.5f, \"max_less_i\":%d, \"max_less_j\":%d, \"less\":%d, \"more\":%d, \"zero\":%d,\n" % (self.num_x, self.num_y, max_less, max_less_i, max_less_j, collect_less, collect_more, collect_zero)
           collect_text += " \"i\":[ %s ], \"j\": [ %s ] }\n" % (i_list,j_list)
-          fp = open("horizontal_difference_debug_points.json", 'w')
+          fp = open(self.debug, 'w')
           fp.write(collect_text);
           fp.close()
 
