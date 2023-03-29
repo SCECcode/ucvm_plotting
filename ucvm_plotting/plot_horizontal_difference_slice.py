@@ -35,6 +35,7 @@ def usage():
     print("\t-H, --help: optional display usage information")
     print("\t-i, --installdir: optional UCVM install directory")
     print("\t-n, --configfile: optional UCVM configfile")
+    print("\t-D, --debug: optional run in debug mode")
     print("UCVM %s\n" % VERSION)
 
 ret_val = get_user_opts({"b,bottomleft":"lat1,lon1",\
@@ -50,7 +51,8 @@ ret_val = get_user_opts({"b,bottomleft":"lat1,lon1",\
                          "t,title,o":"title", \
                          "H,help,o":"", \
                          "i,installdir,o":"installdir", \
-                         "n,configfile,o":"configfile" })
+                         "n,configfile,o":"configfile", \
+                         "D,debug,o":"debug"})
 
 meta={}
 
