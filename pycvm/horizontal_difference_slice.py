@@ -129,8 +129,6 @@ class HorizontalDifferenceSlice(HorizontalSlice):
             self.materialproperties[i][j].vs = tmp
 
             if(tmp < 0.0) :
-
-               if(self.debug != None) :
                collect_less += 1
                if(tmp < max_less):
                  max_less = tmp
