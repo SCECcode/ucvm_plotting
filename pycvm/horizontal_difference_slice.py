@@ -120,11 +120,24 @@ class HorizontalDifferenceSlice(HorizontalSlice):
         i_list=""
         j_list=""
 
+        if(self.debug != None) :
+           fpp = open("special_less.json","w") 
+           less_text=""
+           less_first=True
+        }
         for idx in range(len(dataA)) :
             tmp = dataA[idx]-dataB[idx]
             self.materialproperties[i][j].vs = tmp
 
             if(tmp < 0.0) :
+
+               if(self.debug != None) :
+                  if less_first :
+                    less_first = False
+                    less_text += "{ \"j\": %d, \"i\": %d \"diff\": %f }" % (i,j,tmp)
+                  else
+                    less_text += ",{ \"j\": %d, \"i\": %d \"diff\": %f }" % (i,j,tmp)
+
                collect_less += 1
                if(tmp < max_less):
                  max_less = tmp
@@ -153,6 +166,9 @@ class HorizontalDifferenceSlice(HorizontalSlice):
           fp = open(self.debug, 'w')
           fp.write(collect_text);
           fp.close()
+          tmp_text="{" + less_text + "}"
+          fpp.write(tmp_text);
+          fpp.close()
 
     ##
     #  Plots the Difference data as a horizontal slice. This code is very similar to the
