@@ -134,9 +134,9 @@ class HorizontalDifferenceSlice(HorizontalSlice):
                if(self.debug != None) :
                   if less_first :
                     less_first = False
-                    less_text += "{ \"j\": %d, \"i\": %d \"diff\": %f }" % (i,j,tmp)
-                  else
-                    less_text += ",{ \"j\": %d, \"i\": %d \"diff\": %f }" % (i,j,tmp)
+                    less_text += "{ \"j\": %d, \"i\": %d, \"A\": %f, \"B\": %f, \"diff\": %f }" % (i,j,dataA[idx],dataB[idx],tmp)
+                  else :
+                    less_text += ",{ \"j\": %d, \"i\": %d, \"A\": %f, \"B\": %f, \"diff\": %f }" % (i,j,dataA[idx],dataB[idx],tmp)
 
                collect_less += 1
                if(tmp < max_less):
