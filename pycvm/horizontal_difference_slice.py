@@ -117,13 +117,12 @@ class HorizontalDifferenceSlice(HorizontalSlice):
         max_less_j=0
         collect_more=0
         collect_zero=0
+
         i_list=""
         j_list=""
-
-        if(self.debug != None) :
-           fpp = open("special_less.json","w") 
-           less_text=""
-           less_first=True
+        A_list=""
+        B_list=""
+        diff_list=""
 
         for idx in range(len(dataA)) :
             tmp = dataA[idx]-dataB[idx]
@@ -132,23 +131,23 @@ class HorizontalDifferenceSlice(HorizontalSlice):
             if(tmp < 0.0) :
 
                if(self.debug != None) :
-                  if less_first :
-                    less_first = False
-                    less_text += "{ \"j\": %d, \"i\": %d, \"A\": %f, \"B\": %f, \"diff\": %f }\n" % (i,j,dataA[idx],dataB[idx],tmp)
-                  else :
-                    less_text += ",{ \"j\": %d, \"i\": %d, \"A\": %f, \"B\": %f, \"diff\": %f }\n" % (i,j,dataA[idx],dataB[idx],tmp)
-
                collect_less += 1
                if(tmp < max_less):
                  max_less = tmp
                  max_less_i = i
                  max_less_j = j
                if( collect_cnt == 0 ) : 
-                 i_list += "%.5f" %i
-                 j_list += "%.5f" %j
+                 i_list += "%d" %i
+                 j_list += "%d" %j
+                 A_list += "%0.4f" %dataA[idx] 
+                 B_list += "%0.4f" %dataB[idx] 
+                 diff_list += "%0.4f" %tmp
                else:
-                 i_list += ",%.5f" %i
-                 j_list += ",%.5f" %j
+                 i_list += ",d" %i
+                 j_list += ",d" %j
+                 A_list += ",%0.4f" %dataA[idx] 
+                 B_list += ",%0.4f" %dataB[idx] 
+                 diff_list += ",%0.4f" %tmp
                collect_cnt += 1 
             elif ( tmp > 0.0 ) :
                collect_more += 1
@@ -162,13 +161,11 @@ class HorizontalDifferenceSlice(HorizontalSlice):
 
         if(self.debug != None) :
           collect_text= "{ \"max_j\": %d, \"max_i\": %d, \"max_less\":%0.5f, \"max_less_i\":%d, \"max_less_j\":%d, \"less\":%d, \"more\":%d, \"zero\":%d,\n" % (self.num_x, self.num_y, max_less, max_less_i, max_less_j, collect_less, collect_more, collect_zero)
+          collect_text += " \"A\":[ %s ], \"B\": [ %s ], \"D\": [ %s ], \n" % (A_list,B_list, diff_list)
           collect_text += " \"i\":[ %s ], \"j\": [ %s ] }\n" % (i_list,j_list)
           fp = open(self.debug, 'w')
           fp.write(collect_text);
           fp.close()
-          tmp_text="{" + less_text + "}"
-          fpp.write(tmp_text);
-          fpp.close()
 
     ##
     #  Plots the Difference data as a horizontal slice. This code is very similar to the
