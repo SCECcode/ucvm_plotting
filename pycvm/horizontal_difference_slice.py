@@ -124,7 +124,7 @@ class HorizontalDifferenceSlice(HorizontalSlice):
            fpp = open("special_less.json","w") 
            less_text=""
            less_first=True
-        }
+
         for idx in range(len(dataA)) :
             tmp = dataA[idx]-dataB[idx]
             self.materialproperties[i][j].vs = tmp
