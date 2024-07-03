@@ -12,7 +12,7 @@ from mpl_toolkits import basemap
 #XXX from mpl_toolkits.basemap import cm
 from matplotlib import cm
 
-from common import Plot, Point, MaterialProperties, UCVM, UCVM_CVMS, \
+from .common import Plot, Point, MaterialProperties, UCVM, UCVM_CVMS, \
                    math, pycvm_cmapDiscretize, cm, mcolors, np, plt
 
 import random

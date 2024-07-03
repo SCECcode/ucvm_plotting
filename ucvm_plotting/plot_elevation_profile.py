@@ -61,7 +61,7 @@ elif ret_val == "help":
     exit(0)
 elif len(ret_val) > 0:
     print("Using parameters:\n")
-    for key, value in ret_val.iteritems():
+    for key, value in ret_val.items():
         print(key +" = "+ value)
         meta[key] = value
         try:

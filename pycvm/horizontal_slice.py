@@ -10,7 +10,7 @@
 #  Imports
 from mpl_toolkits import basemap
 from mpl_toolkits.basemap import cm
-from common import Plot, Point, MaterialProperties, UCVM, UCVM_CVMS, \
+from .common import Plot, Point, MaterialProperties, UCVM, UCVM_CVMS, \
                    math, pycvm_cmapDiscretize, cm, mcolors, basemap, np, plt
 
 ##

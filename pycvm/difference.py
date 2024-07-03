@@ -10,7 +10,7 @@
 #  Imports
 from mpl_toolkits import basemap
 from mpl_toolkits.basemap import cm
-from common import MaterialProperties, Plot, cm, np, basemap, plt
+from .common import MaterialProperties, Plot, cm, np, basemap, plt
 
 ##
 #  @class Difference

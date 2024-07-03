@@ -5,8 +5,8 @@
 #  @version 
 #
 #  Imports
-from cross_section import CrossSection
-from common import Point, MaterialProperties, UCVM, UCVM_CVMS, \
+from .cross_section import CrossSection
+from .common import Point, MaterialProperties, UCVM, UCVM_CVMS, \
                    math, pycvm_cmapDiscretize, cm, mcolors, basemap, np, plt
 
 ##

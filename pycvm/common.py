@@ -583,22 +583,22 @@ class UCVM:
         if( elevation ) :
             if self.z_range != None :
                 if self.floors != None:
-                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge", "-z", self.z_range, "-L", self.floors], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge", "-z", self.z_range, "-L", self.floors], stdout=PIPE, stdin=PIPE, stderr=STDOUT, encoding='utf8')
                 else:
-                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge", "-z", self.z_range], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge", "-z", self.z_range], stdout=PIPE, stdin=PIPE, stderr=STDOUT, encoding='utf8')
             else :
                 if self.floors != None:  ## z range is using default
-                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge", "-L", self.floors], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge", "-L", self.floors], stdout=PIPE, stdin=PIPE, stderr=STDOUT, encoding='utf8')
                 else:
-                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge"], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "ge"], stdout=PIPE, stdin=PIPE, stderr=STDOUT, encoding='utf8')
         else :
             if self.z_range != None :
                 if self.floors != None :
-                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd", "-z", self.z_range, "-L", self.floors], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd", "-z", self.z_range, "-L", self.floors], stdout=PIPE, stdin=PIPE, stderr=STDOUT, encoding='utf8')
                 else:
-                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd", "-z", self.z_range], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd", "-z", self.z_range], stdout=PIPE, stdin=PIPE, stderr=STDOUT, encoding='utf8')
             else:
-                proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd" ], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd" ], stdout=PIPE, stdin=PIPE, stderr=STDOUT, encoding='utf8')
         
         text_points = ""
         
@@ -676,7 +676,7 @@ class UCVM:
     #  @return An array of floats which correspond to the points provided.
     def vs30(self, point_list, cvm):
 
-        proc = Popen([self.binary_dir + "/vs30_query", "-f", self.config, "-m", cvm], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+        proc = Popen([self.binary_dir + "/vs30_query", "-f", self.config, "-m", cvm], stdout=PIPE, stdin=PIPE, stderr=STDOUT, encoding='utf8')
         
         text_points = ""
         floats = []
@@ -720,7 +720,7 @@ class UCVM:
     def basin_depth(self, point_list, cvm, vs_threshold):
 
         proc = Popen([self.binary_dir + "/basin_query", "-f", self.config, "-m", \
-                      cvm, "-v", "%.0f" % vs_threshold], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                      cvm, "-v", "%.0f" % vs_threshold], stdout=PIPE, stdin=PIPE, stderr=STDOUT, encoding='utf8')
 
         text_points = ""
         floats = []
@@ -817,7 +817,7 @@ class UCVM:
         #obj = ctypes.cdll.LoadLibrary(shared_object)
         #print(obj)
         
-        proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+        proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm], stdout=PIPE, stdin=PIPE, stderr=STDOUT, encoding='utf8')
         
         text_points = ""
         
@@ -856,7 +856,7 @@ class UCVM:
     def vs30_etree(self, point_list, cvm):
         properties = []
         
-        proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+        proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm], stdout=PIPE, stdin=PIPE, stderr=STDOUT, encoding='utf8')
         
         text_points = ""
         

@@ -9,8 +9,8 @@
 #  @link horizontal_slice.HorizontalSlice HorizontalSlice @endlink.
 
 #  Imports
-from horizontal_slice import HorizontalSlice
-from common import Point, MaterialProperties, UCVM, UCVM_CVMS, \
+from .horizontal_slice import HorizontalSlice
+from .common import Point, MaterialProperties, UCVM, UCVM_CVMS, \
                    math, pycvm_cmapDiscretize, cm, mcolors, basemap, np, plt
 
 ##

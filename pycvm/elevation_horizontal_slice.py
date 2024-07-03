@@ -10,7 +10,7 @@
 #  Imports
 from mpl_toolkits import basemap
 from mpl_toolkits.basemap import cm
-from common import Plot, Point, MaterialProperties, UCVM, UCVM_CVMS, \
+from .common import Plot, Point, MaterialProperties, UCVM, UCVM_CVMS, \
                    math, pycvm_cmapDiscretize, cm, mcolors, basemap, np, plt
 
 ##
@@ -151,7 +151,7 @@ class ElevationHorizontalSlice:
                 data=data1d[0].tolist()
             print("\nUsing --> "+self.datafile) 
  
-	else: 
+        else: 
             #  Generate a list of points to pass to UCVM.
             ucvmpoints = []
             for y in xrange(0, self.num_y):

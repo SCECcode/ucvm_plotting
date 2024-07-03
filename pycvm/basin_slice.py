@@ -11,8 +11,8 @@
 #  inherits from @link horizontal_slice.HorizontalSlice @endlink.
 
 #  Imports
-from horizontal_slice import HorizontalSlice
-from common import Point, MaterialProperties, UCVM, UCVM_CVMS, \
+from .horizontal_slice import HorizontalSlice
+from .common import Point, MaterialProperties, UCVM, UCVM_CVMS, \
                    math, pycvm_cmapDiscretize, cm, mcolors, np, plt
 ##
 #  @class BasinSlice
