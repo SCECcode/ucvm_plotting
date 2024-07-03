@@ -141,8 +141,8 @@ class HorizontalDifferenceSlice(HorizontalSlice):
                  B_list += "%0.4f" %dataB[idx] 
                  diff_list += "%0.4f" %tmp
                else:
-                 i_list += ",d" %i
-                 j_list += ",d" %j
+                 i_list += ",%d" %i
+                 j_list += ",%d" %j
                  A_list += ",%0.4f" %dataA[idx] 
                  B_list += ",%0.4f" %dataB[idx] 
                  diff_list += ",%0.4f" %tmp
