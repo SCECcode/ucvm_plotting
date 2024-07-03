@@ -962,7 +962,7 @@ class UCVM:
         if( k != -1) : 
             rawfile = rawfile[:k] + "_data.bin"
         try :
-            fh = open(rawfile, 'r') 
+            fh = open(rawfile, 'rb') 
         except:
             print("ERROR: binary data does not exist.")
             exit(1)
@@ -973,15 +973,21 @@ class UCVM:
         if len(floats) == 2 * (num_x * num_y) :
           fh.seek(0,0)
           floats = np.fromfile(fh, dtype=np.float)
+        fh.close()
+
+## maybe it is a np array
+        if len(floats) != (num_x * num_y) :
+          ffh = open(rawfile, 'rb') 
+          ffloats = np.load(ffh)
+          ffh.close()
+          floats=ffloats.reshape([num_x * num_y]);
 
         print("TOTAL number of binary data read:"+str(len(floats))+"\n")
 
         # sanity check,  
         if len(floats) != (num_x * num_y) :
-            print("import_binary(), wrong size !!!"+ str(len(floats))+ " expecting "+ str(num_x * num_y))
+            print("import_binary(), wrong size !!!"+ str(len(floats)) + " expecting "+ str(num_x * num_y))
             exit(1)
-
-        fh.close()
 
         if len(floats) == 1:
             return floats[0]
@@ -991,7 +997,7 @@ class UCVM:
 #  export np float array to an exernal file
 #  
     def export_np_float_array(self, floats, fname):
-#        print("calling export_np_float_array")
+#       print("calling export_np_float_array -",len(floats))
         rawfile = fname
         if rawfile is None :
             rawfile="data.bin"
@@ -1005,11 +1011,13 @@ class UCVM:
             exit(1)
 
         np.save(fh, floats)
-        fh.close
+        fh.close()
+
+   
 
 #  export raw floats nxy ndarray  to an external file 
     def export_binary(self, floats, fname):
-#        print("calling export_binary")
+        print("calling export_binary -",len(floats))
         rawfile = fname
         if rawfile is None :
             rawfile="data.bin"
@@ -1044,7 +1052,7 @@ class UCVM:
 
 #  export ascii meta data to an external file 
     def export_metadata(self,meta,fname):
-#        print("calling export_metadata")
+        print("calling export_metadata")
         metafile=fname
         if metafile is None:
           metafile = "meta.json"
@@ -1075,7 +1083,7 @@ class UCVM:
 
 #  export material properties in JSON form to an external file 
     def export_matprops(self,blob,fname):
-#        print("calling export_matprops")
+        print("calling export_matprops")
         matpropsfile=fname
         if matpropsfile is None :
             matpropsfile="matprops.json"
