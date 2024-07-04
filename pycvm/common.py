@@ -1017,7 +1017,7 @@ class UCVM:
 
 #  export raw floats nxy ndarray  to an external file 
     def export_binary(self, floats, fname):
-        print("calling export_binary -",len(floats))
+#       print("calling export_binary -",len(floats))
         rawfile = fname
         if rawfile is None :
             rawfile="data.bin"
@@ -1052,7 +1052,7 @@ class UCVM:
 
 #  export ascii meta data to an external file 
     def export_metadata(self,meta,fname):
-        print("calling export_metadata")
+#       print("calling export_metadata")
         metafile=fname
         if metafile is None:
           metafile = "meta.json"
@@ -1083,7 +1083,7 @@ class UCVM:
 
 #  export material properties in JSON form to an external file 
     def export_matprops(self,blob,fname):
-        print("calling export_matprops")
+#       print("calling export_matprops")
         matpropsfile=fname
         if matpropsfile is None :
             matpropsfile="matprops.json"
