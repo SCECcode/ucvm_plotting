@@ -380,9 +380,9 @@ class ElevationCrossSection:
           self.meta['num_x'] = self.num_x
           self.meta['num_y'] = self.num_y
           self.meta['datapoints'] = datapoints.size
-          self.meta['max'] = np.asscalar(self.max_val)
-          self.meta['min'] = np.asscalar(self.min_val)
-          self.meta['mean'] = np.asscalar(self.mean_val)
+          self.meta['max'] = self.max_val.item()
+          self.meta['min'] = self.min_val.item()
+          self.meta['mean'] = self.mean_val.item()
           self.meta['lon_list'] = self.lon_list
           self.meta['lat_list'] = self.lat_list
           self.meta['elevation_list'] = self.elevation_list
@@ -407,7 +407,7 @@ class ElevationCrossSection:
         plt.title(title)
 
         cax = plt.axes([0.1, 0.1, 0.8, 0.02])
-        cbar = plt.colorbar(img, cax=cax, orientation='horizontal',ticks=TICKS,spacing='regular')
+        cbar = plt.colorbar(img, cax=cax, orientation='horizontal',ticks=TICKS,spacing='proportional')
         if mproperty != "poisson":
             if(mproperty.title() == "Density") :
               cbar.set_label(mproperty.title() + " (g/cm^3)")

@@ -8,7 +8,7 @@
 #  arguments, or through Python code in the class DepthProfile.
 
 #  Imports
-from .common import Plot, Point, MaterialProperties, UCVM, UCVM_CVMS, plt
+from .common import Plot, Point, MaterialProperties, UCVM, UCVM_CVMS, plt, math
 ##from scipy.interpolate import spline, splprep, splev
 ##from scipy.interpolate import Rbf, InterpolatedUnivariateSpline
 ##import scipy.interpolate as interpolate
