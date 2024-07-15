@@ -215,8 +215,9 @@ class Plot:
     #  @param width The width of the plot in inches (dpi = 100).
     #  @param height The height of the plot in inches (dpi = 100).
     def __init__(self, title = None, xlabel = None, ylabel = None, legend = None, width = 10, height = 10):
-        ## Defines the figure object to which we can add subplots.
+        ## Defines the figure and axes object to which we can add subplots.
         self.figure = plt.figure(figsize=(width, height), dpi=100)
+        self.plot = self.figure.add_subplot(1, 1, 1)
         
         if ylabel != None:
             plt.ylabel(ylabel, fontsize=14)
@@ -238,9 +239,8 @@ class Plot:
     # 
     #  @return The subplot that has been added to the already generated plot.
     def addsubplot(self):
-        retval = self.figure.add_subplot(1, 1, 1)
         self.subplotcounter += 1;
-        return retval
+        return self.plot;
     
     ## 
     #  Shows the plot.
