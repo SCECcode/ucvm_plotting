@@ -9,8 +9,8 @@
 #  Imports
 
 from mpl_toolkits import basemap
-#XXX from mpl_toolkits.basemap import cm
 from matplotlib import cm
+import math
 
 from .common import Plot, Point, MaterialProperties, UCVM, UCVM_CVMS, \
                    math, pycvm_cmapDiscretize, cm, mcolors, np, plt
@@ -159,7 +159,7 @@ class CrossSection:
             ## Private number of x points.
             self.num_x = num_prof +1
             ## Private number of y points.
-            self.num_y = int ((int(self.todepth) - int(self.startingdepth)) / int(self.vspacing)) +1
+            self.num_y = math.ceil((self.todepth - self.startingdepth) / self.vspacing) +1
             print("\nUsing -->"+self.datafile)
 ##            print("expecting x "+str(self.num_x)+" y "+str(self.num_y))
 
@@ -197,10 +197,11 @@ class CrossSection:
             ## Private number of x points.
             self.num_x = num_prof + 1
             ## Private number of y points.
-            self.num_y = int((int(self.todepth) - int(self.startingdepth)) / int(self.vspacing)) + 1
-        
+            self.num_y = math.ceil((self.todepth - self.startingdepth) / self.vspacing) + 1
+          
+
         ## The 2D array of retrieved material properties.
-            self.materialproperties = [[MaterialProperties(-1, -1, -1) for i in range(self.num_x)] for j in range(self.num_y)] 
+            self.materialproperties = [[MaterialProperties(-1, -1, -1) for x in range(self.num_x)] for y in range(self.num_y)] 
 
         
             for y in range(0, self.num_y):

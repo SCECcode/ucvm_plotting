@@ -8,10 +8,11 @@
 #  arguments, or through Python code in the class DepthProfile.
 
 #  Imports
-from .common import Plot, Point, MaterialProperties, UCVM, UCVM_CVMS, plt, math
+from .common import Plot, Point, MaterialProperties, UCVM, UCVM_CVMS, plt
 ##from scipy.interpolate import spline, splprep, splev
 ##from scipy.interpolate import Rbf, InterpolatedUnivariateSpline
 ##import scipy.interpolate as interpolate
+import math
 import numpy as np
 import json
 
@@ -223,6 +224,7 @@ class DepthProfile:
             max_x = max(max_x, max(newvplist))
             plot.addsubplot().plot(newvplist, yvals, "-", color=vpcolor, label=vplabel)
 
+
         if "vs" in self.properties:
             myInt=1000
             newvslist=np.array(self.vslist)/myInt
@@ -262,6 +264,7 @@ class DepthProfile:
             plt.xlim(0, math.ceil(max_x / 0.5) * 0.5)
 
         plt.axis([0, max_x, int(self.todepth), int(self.startingdepth)])
+
     
     ##
     #  Plots a new depth profile using all the default plotting options.

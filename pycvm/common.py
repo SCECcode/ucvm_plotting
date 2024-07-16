@@ -16,7 +16,6 @@ import math
 import struct
 import getopt
 import json
-import pdb
 
 #  Numpy is required.
 try:
@@ -215,10 +214,11 @@ class Plot:
     #  @param width The width of the plot in inches (dpi = 100).
     #  @param height The height of the plot in inches (dpi = 100).
     def __init__(self, title = None, xlabel = None, ylabel = None, legend = None, width = 10, height = 10):
-        ## Defines the figure and axes object to which we can add subplots.
+        ## Defines the figure and plot object to which we can add subplots.
+
         self.figure = plt.figure(figsize=(width, height), dpi=100)
         self.plot = self.figure.add_subplot(1, 1, 1)
-        
+
         if ylabel != None:
             plt.ylabel(ylabel, fontsize=14)
         
@@ -241,7 +241,7 @@ class Plot:
     def addsubplot(self):
         self.subplotcounter += 1;
         return self.plot;
-    
+
     ## 
     #  Shows the plot.
     def show(self):
@@ -1017,7 +1017,7 @@ class UCVM:
 
 #  export raw floats nxy ndarray  to an external file 
     def export_binary(self, floats, fname):
-#       print("calling export_binary -",len(floats))
+        print("calling export_binary -",len(floats))
         rawfile = fname
         if rawfile is None :
             rawfile="data.bin"
@@ -1052,7 +1052,7 @@ class UCVM:
 
 #  export ascii meta data to an external file 
     def export_metadata(self,meta,fname):
-#       print("calling export_metadata")
+        print("calling export_metadata")
         metafile=fname
         if metafile is None:
           metafile = "meta.json"
@@ -1083,7 +1083,7 @@ class UCVM:
 
 #  export material properties in JSON form to an external file 
     def export_matprops(self,blob,fname):
-#       print("calling export_matprops")
+        print("calling export_matprops")
         matpropsfile=fname
         if matpropsfile is None :
             matpropsfile="matprops.json"

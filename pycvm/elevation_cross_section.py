@@ -149,7 +149,7 @@ class ElevationCrossSection:
             ## Private number of x points.
             self.num_x = num_prof +1
             ## Private number of y points.
-            self.num_y = abs((int(self.toelevation) - int(self.startelevation)) / int(self.vspacing)) +1
+            self.num_y =  math.ceil((self.toelevation - self.startelevation) / self.vspacing) +1
 
             print("\nUsing -->"+self.datafile)
 ##            print("expecting x "+str(self.num_x)+" y "+str(self.num_y))
@@ -181,7 +181,7 @@ class ElevationCrossSection:
             ## Private number of x points.
             self.num_x = num_prof + 1
             ## Private number of y points.
-            self.num_y = abs((int(self.toelevation) - int(self.startelevation)) / int(self.vspacing)) + 1
+            self.num_y = math.ceil((self.toelevation - self.startelevation) / self.vspacing) + 1
 
         
         ## The 2D array of retrieved material properties.
@@ -407,7 +407,7 @@ class ElevationCrossSection:
         plt.title(title)
 
         cax = plt.axes([0.1, 0.1, 0.8, 0.02])
-        cbar = plt.colorbar(img, cax=cax, orientation='horizontal',ticks=TICKS,spacing='proportional')
+        cbar = plt.colorbar(img, cax=cax, orientation='horizontal',ticks=TICKS,spacing='regular')
         if mproperty != "poisson":
             if(mproperty.title() == "Density") :
               cbar.set_label(mproperty.title() + " (g/cm^3)")
