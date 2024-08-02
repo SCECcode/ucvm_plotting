@@ -598,7 +598,12 @@ class UCVM:
                 else:
                   proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd", "-z", self.z_range], stdout=PIPE, stdin=PIPE, stderr=STDOUT, encoding='utf8')
             else:
-                proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd" ], stdout=PIPE, stdin=PIPE, stderr=STDOUT, encoding='utf8')
+                if self.floors != None:  ## z range is using default
+
+                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd", "-L", self.floors ], stdout=PIPE, stdin=PIPE, stderr=STDOUT, encoding='utf8')
+                else:
+                  proc = Popen([self.utility_dir + "/run_ucvm_query.sh", "-f", self.config, "-m", cvm, "-c", "gd" ], stdout=PIPE, stdin=PIPE, stderr=STDOUT, encoding='utf8')
+
         
         text_points = ""
         
