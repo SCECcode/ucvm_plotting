@@ -1,20 +1,26 @@
 #!/usr/bin/env python
 
 ##
-#  @file plot_cross_section.py
-#  @brief Plots a cross section using command-line parameters.
-#  @author David Gill - SCEC <davidgil@usc.edu>
-#  @version 14.7.0
+#  @file plot_cross_difference_section.py
+#  @brief Plots a difference plot from 2 cross sections using command-line parameters.
+#  @version 22.6.0
 #
-#  Plots a cross section given a set of command-line parameters.
+#  Plots a cross difference section given a set of command-line parameters and 
+#  2 cross section bin data files
+#
+#  XXX
+#  plot_cross_difference_section.py -s 0.01 -c cca -a s -o diff_cross.png
+#    -i $UCVM_INSTALL_PATH -b 31.5348,-125.7804 -u 42.5153,-113.5259
+#    -f a_cross_section_data.bin,another_cross_section_data.bin
+#
 
-from pycvm import CrossSection, UCVM, VERSION, UCVM_CVMS, Point, ask_number, ask_path, ask_file, get_user_opts
+from pycvm import CrossDifferenceSection, UCVM, VERSION, UCVM_CVMS, Point, ask_number, ask_path, ask_file, get_user_opts
 import getopt, sys, os
 import json
 
 ## Prints usage statement.
 def usage():
-    print("Plots a cross-section given two latitude, longitude points, a depth,")
+    print("Plots a cross difference section given two latitude, longitude points, a depth,")
     print("the CVM to plot, and a couple of other settings.")
     print("\nValid arguments:")
     print("\t-s, --starting: starting depth for cross-section (meters)")
@@ -81,10 +87,10 @@ elif len(ret_val) > 0:
                 exec("%s = '%s'" % (key, value))
 else: 
     print("")
-    print("Plot Cross-Section - UCVM %s" % VERSION)
+    print("Plot Cross Difference Section - UCVM %s" % VERSION)
     print("")
-    print("This utility helps you plot a cross-section across the earth for one of the CVMs")
-    print("that you installed with UCVM.")
+    print("This utility helps you plot a  Differene plot of 2 supplied cross-section data")
+    print("and create a text file that you can then later parse.")
     print("")
     print("In order to create the plot, you must first specify the starting point.")
     print("")
@@ -199,5 +205,5 @@ print("Retrieving data. Please wait...")
  
 ###################################################################################
 # Generate the horizontal slice.
-d = CrossSection(Point(lon1, lat1, starting_depth), Point(lon2, lat2, starting_depth),meta)
+d = CrossDifferenceSection(Point(lon1, lat1, starting_depth), Point(lon2, lat2, starting_depth),meta)
 d.plot()

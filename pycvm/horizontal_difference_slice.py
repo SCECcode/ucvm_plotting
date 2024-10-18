@@ -1,6 +1,6 @@
 ##
-#  @file vs30_etree_difference_slice.py
-#  @brief Take 2 slices of vs30 values, plot a difference horizontal slice
+#  @file horizontal_difference_slice.py
+#  @brief Take 2 slices of horizontal slice values, plot a difference plot
 #  @author Mei-Hui Su - SCEC
 #  @version 
 #
@@ -10,11 +10,11 @@ from common import Point, MaterialProperties, UCVM, UCVM_CVMS, \
                    math, pycvm_cmapDiscretize, cm, mcolors, basemap, np, plt
 
 ##
-#  @class Vs30EtreeSlice
-#  @brief Gets a horizontal slice of Vs30 data.
+#  @class HorizontalDifferencSlice
+#  @brief Gets 2 horizontal slice and make a difference plot
 #
-#  Retrieves 2 horizontal slices of Vs30 values and make a difference plot 
-class Vs30EtreeDifferenceSlice(HorizontalSlice):
+#  Retrieves 2 horizontal slices and make a difference plot 
+class HorizontalDifferenceSlice(HorizontalSlice):
     
     ##
     #  Initializes the super class and copies the parameters over.
@@ -38,10 +38,15 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
             self.datafile2 = self.meta['datafile2']
         else:
             self.datafile2 = None
+
+        if 'debug' in self.meta :
+            self.debug = self.meta['debug']
+        else:
+            self.debug = None
     
     
     ##
-    #  Retrieves the values for this Vs30 slice and stores them in the class.
+    #  Retrieves the values for this horizontal slice and stores them in the class.
     def getplotvals(self, property="vs") :
         
         #  How many y and x values will we need?
@@ -61,7 +66,7 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
         else :
            self.num_y = int(math.ceil(self.plot_height / self.spacing)) + 1
         
-        ## The 2D array of retrieved Vs30 values.
+        ## The 2D array of retrieved values.
         self.materialproperties = [[MaterialProperties(-1, -1, -1) for x in range(self.num_x)] for x in range(self.num_y)] 
         
         u = UCVM(install_dir=self.installdir, config_file=self.configfile)
@@ -102,16 +107,66 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
 
         i = 0
         j = 0
-        
+
+        collect_text=""
+        collect_points=""
+        collect_cnt=0
+        collect_less=0
+        max_less = 0.0
+        max_less_i=0
+        max_less_j=0
+        collect_more=0
+        collect_zero=0
+
+        i_list=""
+        j_list=""
+        A_list=""
+        B_list=""
+        diff_list=""
+
         for idx in range(len(dataA)) :
-            self.materialproperties[i][j].vs = dataA[idx]-dataB[idx]
+            tmp = dataA[idx]-dataB[idx]
+            self.materialproperties[i][j].vs = tmp
+
+            if(tmp < 0.0) :
+               collect_less += 1
+               if(tmp < max_less):
+                 max_less = tmp
+                 max_less_i = i
+                 max_less_j = j
+               if( collect_cnt == 0 ) : 
+                 i_list += "%d" %i
+                 j_list += "%d" %j
+                 A_list += "%0.4f" %dataA[idx] 
+                 B_list += "%0.4f" %dataB[idx] 
+                 diff_list += "%0.4f" %tmp
+               else:
+                 i_list += ",%d" %i
+                 j_list += ",%d" %j
+                 A_list += ",%0.4f" %dataA[idx] 
+                 B_list += ",%0.4f" %dataB[idx] 
+                 diff_list += ",%0.4f" %tmp
+               collect_cnt += 1 
+            elif ( tmp > 0.0 ) :
+               collect_more += 1
+            else :
+               collect_zero += 1
+
             j = j + 1
             if j >= self.num_x:
                 j = 0
                 i = i + 1
 
+        if(self.debug != None) :
+          collect_text= "{ \"max_j\": %d, \"max_i\": %d, \"max_less\":%0.5f, \"max_less_i\":%d, \"max_less_j\":%d, \"less\":%d, \"more\":%d, \"zero\":%d,\n" % (self.num_x, self.num_y, max_less, max_less_i, max_less_j, collect_less, collect_more, collect_zero)
+          collect_text += " \"A\":[ %s ], \"B\": [ %s ], \"D\": [ %s ], \n" % (A_list,B_list, diff_list)
+          collect_text += " \"i\":[ %s ], \"j\": [ %s ] }\n" % (i_list,j_list)
+          fp = open(self.debug, 'w')
+          fp.write(collect_text);
+          fp.close()
+
     ##
-    #  Plots the Vs30 data as a horizontal slice. This code is very similar to the
+    #  Plots the Difference data as a horizontal slice. This code is very similar to the
     #  HorizontalSlice routine.
     #
     #  @param filename The location to which the plot should be saved. Optional.
@@ -131,10 +186,10 @@ class Vs30EtreeDifferenceSlice(HorizontalSlice):
             cvmdesc = self.cvm
         
         if 'title' not in self.meta:
-            title = "%sVs30 Etree Difference Plot For %s" % (location_text, cvmdesc)
+            title = "%sHorizontal Difference Plot For %s" % (location_text, cvmdesc)
             self.meta['title'] = title
 
         self.meta['mproperty']="vs"
-        self.meta['difference']="vs30"
+        self.meta['difference']="vs"
 
         HorizontalSlice.plot(self)
