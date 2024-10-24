@@ -31,8 +31,9 @@ def usage():
     print("\t-o, --outfile: optional png output filename")
     print("\t-t, --title: optional plot title")
     print("\t-H, --help: optional display usage information")
-    print("\t-i, --installdir: optional UCVM isntall directory")
+    print("\t-i, --installdir: optional UCVM install directory")
     print("\t-n, --configfile: optional UCVM configfile")
+    print("\t-S, --skip: optional skip generating plot")
     print("UCVM %s\n" % VERSION)
 
 ret_val = get_user_opts({"b,bottomleft":"lat1,lon1", \
@@ -43,15 +44,17 @@ ret_val = get_user_opts({"b,bottomleft":"lat1,lon1", \
                          "c,cvm":"cvm", \
                          "z,zrange,o":"zrange1,zrange2", \
                          "L,floors,o":"vsfloor,vpfloor,densityfloor", \
-                         "a,scale": "color", \
-                         "A,scalebounds,o": "scalemin,scalemax", \
-                         "g,gate,o": "gate", \
+                         "a,scale":"color", \
+                         "A,scalebounds,o":"scalemin,scalemax", \
+                         "g,gate,o":"gate", \
                          "f,datafile,o":"datafile",
                          "o,outfile,o":"outfile", \
                          "t,title,o":"title", \
                          "H,help,o":"", \
                          "i,installdir,o":"installdir", \
-                         "n,configfile,o":"configfile" })
+                         "n,configfile,o":"configfile", \
+                         "S,skip,o":"" \
+                         })
 
 
 meta = {}
@@ -180,6 +183,7 @@ else:
             print("marks) for a smooth color scale and 'b' (without quotation marks) for bi-color scale.")
     meta['gate']=gate
     meta['color']=color
+    meta['skip']=0
 
 
 # Now we have all the information so we can actually plot the data.
@@ -189,4 +193,7 @@ print("Retrieving data. Please wait...")
 ###################################################################################
 # Generate the horizontal slice.
 h = HorizontalSlice(Point(lon1, lat2, depth), Point(lon2, lat1, depth), meta)
-h.plot()
+if('skip' in meta.keys()) :
+  h.plot_skip()
+else:
+  h.plot()

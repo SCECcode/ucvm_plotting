@@ -1,5 +1,9 @@
 
-pip install dist/ucvm_plotting-0.0.5.tar.gz
+#pip install dist/ucvm_plotting-0.0.6.tar.gz
 
 ## for moho
-#sudo /usr/local/share/anaconda3/bin/pip install dist/ucvm_plotting-0.0.5.tar.gz
+#
+#sudo pip3 install dist/ucvm_plotting-0.0.6.tar.gz
+pip3 install --user dist/ucvm_plotting-0.0.6.tar.gz
+#
+#/usr/local/share/anaconda3/bin/pip

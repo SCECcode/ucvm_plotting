@@ -6,8 +6,9 @@
 #
 #  Imports
 from .cross_section import CrossSection
-from .common import Point, MaterialProperties, UCVM, UCVM_CVMS, \
-                   math, pycvm_cmapDiscretize, cm, mcolors, basemap, np, plt
+from .cvm_ucvm import Point, MaterialProperties, UCVM, UCVM_CVMS
+from .cvm_plot import Plot, math, plot_cmapDiscretize, cm, mcolors, basemap, plt, np
+from .cvm_common import VERSION
 
 ##
 #  @class CrossDifferencSection

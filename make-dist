@@ -1,5 +1,5 @@
 ### this are steps to build the dist of ucvm_plotting
-### to install ==>>>   pip install dist/ucvm_plotting-0.0.5.tar.gz
+### to install ==>>>   pip install dist/ucvm_plotting-0.0.6.tar.gz
 
 #rm -rf dist build
 #mkdir dist

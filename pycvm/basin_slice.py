@@ -12,8 +12,9 @@
 
 #  Imports
 from .horizontal_slice import HorizontalSlice
-from .common import Point, MaterialProperties, UCVM, UCVM_CVMS, \
-                   math, pycvm_cmapDiscretize, cm, mcolors, np, plt
+from .cvm_ucvm import Point, MaterialProperties, UCVM, UCVM_CVMS
+from .cvm_plot import Plot, math, plot_cmapDiscretize, cm, mcolors, basemap, plt, np
+from .cvm_common import VERSION
 ##
 #  @class BasinSlice
 #  @brief Gets a horizontal slice of the basin data.
@@ -65,17 +66,16 @@ class BasinSlice(HorizontalSlice):
         ## The 2D array of retrieved Vs30 values.
         self.materialproperties = [[MaterialProperties(-1, -1, -1) for x in range(self.num_x)] for x in range(self.num_y)] 
         
-        u = UCVM(install_dir=self.installdir, config_file=self.configfile)
-### MEI
+        ucvm=self.ucvm
         if (self.datafile != None) :
             data=[]
             if self.datafile.rfind(".binary") != -1 :
-                data = u.import_binary(self.datafile, self.num_x, self.num_y)
+                data = ucvm.import_binary(self.datafile, self.num_x, self.num_y)
             else :
                 if self.datafile.rfind(".raw") != -1 :
-                    data = u.import_raw_data(self.datafile, self.num_x, self.num_y)
+                    data = ucvm.import_raw_data(self.datafile, self.num_x, self.num_y)
                 else:  ## with .bin file
-                    data2d = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
+                    data2d = ucvm.import_np_float_array(self.datafile, self.num_x, self.num_y)
                 ## flatten them
                     data1d = data2d.reshape([1, self.num_x * self.num_y])
                 ## turn first one into a list
@@ -89,7 +89,7 @@ class BasinSlice(HorizontalSlice):
                                             self.bottomrightpoint.latitude + y * self.spacing, \
                                             self.upperleftpoint.depth))
 #            print("Total points extracted is ", len(ucvmpoints), "for ", self.num_x, " and ", self.num_y)
-            data = u.basin_depth(ucvmpoints, self.cvm, self.vs_threshold)
+            data = ucvm.basin_depth(ucvmpoints, self.cvm, self.vs_threshold)
 
         i = 0
         j = 0
@@ -130,6 +130,32 @@ class BasinSlice(HorizontalSlice):
         self.meta['mproperty']="vs"
 
         HorizontalSlice.plot(self, horizontal_label)
+        
+    ##
+    #  Output the basin depth data as a horizontal slice. This code is very similar to the
+    #  HorizontalSlice routine.
+    #
+    #  @param horizontal_label The horizontal label of the plot. Optional.
+    def plot_skip(self, horizontal_label = "Depth (km)") :
+
+        if self.upperleftpoint.description == None:
+            location_text = ""
+        else:
+            location_text = self.upperleftpoint.description + " "
+
+        # Gets the better CVM description if it exists.
+        try:
+            cvmdesc = UCVM_CVMS[self.cvm]
+        except: 
+            cvmdesc = self.cvm
+
+        if 'title' not in self.meta:
+            self.title = "%sBasin Depth Map For %s" % (location_text, cvmdesc)
+            self.meta['title'] = self.title;
+ 
+        self.meta['mproperty']="vs"
+
+        HorizontalSlice.plot_skip(self, horizontal_label)
         
 ##
 #  @class Z10Slice

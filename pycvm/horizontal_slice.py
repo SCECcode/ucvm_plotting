@@ -8,10 +8,9 @@
 #  arguments, or through Python code in the class HorizontalSlice.
 
 #  Imports
-from mpl_toolkits import basemap
-from mpl_toolkits.basemap import cm
-from .common import Plot, Point, MaterialProperties, UCVM, UCVM_CVMS, \
-                   math, pycvm_cmapDiscretize, cm, mcolors, basemap, np, plt
+from .cvm_ucvm import Point, MaterialProperties, UCVM, UCVM_CVMS
+from .cvm_plot import Plot, math, plot_cmapDiscretize, cm, mcolors, basemap, plt, np
+from .cvm_common import VERSION
 
 ##
 #  @class HorizontalSlice
@@ -35,6 +34,9 @@ class HorizontalSlice:
     def __init__(self, upperleftpoint, bottomrightpoint, meta={}) :
       
         self.meta = meta
+
+        self.lons=[]
+        self.lats=[]
 
         if 'nx' in self.meta :
             self.xsteps = self.meta['nx']
@@ -120,6 +122,7 @@ class HorizontalSlice:
         else:
            self.title = None;
     
+        self.ucvm = UCVM(install_dir=self.installdir, config_file=self.configfile, z_range=self.z_range, floors=self.floors)
     ##
     #  Retrieves the values for this horizontal slice and stores them in the class.
     def getplotvals(self, mproperty="vs"):
@@ -145,18 +148,17 @@ class HorizontalSlice:
         ## The 2D array of retrieved material properties.
         self.materialproperties = [[MaterialProperties(-1, -1, -1) for x in range(self.num_x)] for x in range(self.num_y)] 
         
-        u = UCVM(install_dir=self.installdir, config_file=self.configfile, z_range=self.z_range, floors=self.floors)
+        ucvm=self.ucvm
 
-### MEI
         if (self.datafile != None) :
             data=[]
             if self.datafile.rfind(".binary") != -1 :
-                data = u.import_binary(self.datafile, self.num_x, self.num_y)
+                data = ucvm.import_binary(self.datafile, self.num_x, self.num_y)
             else :
                 if self.datafile.rfind(".raw") != -1 :
-                    data = u.import_raw_data(self.datafile, self.num_x, self.num_y)
+                    data = ucvm.import_raw_data(self.datafile, self.num_x, self.num_y)
                 else:  ## with .bin file
-                    data2d = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
+                    data2d = ucvm.import_np_float_array(self.datafile, self.num_x, self.num_y)
                 ## flatten them
                     data1d = data2d.reshape([1, self.num_x * self.num_y])
                 ## turn first one into a list
@@ -168,10 +170,14 @@ class HorizontalSlice:
             ucvmpoints = []
             for y in range(0, self.num_y):
                 for x in range(0, self.num_x):
-                    ucvmpoints.append(Point(self.upperleftpoint.longitude + x * self.spacing, \
-                                            self.bottomrightpoint.latitude + y * self.spacing, \
-                                            self.upperleftpoint.depth))
-            data = u.query(ucvmpoints, self.cvm)
+                    lon = float('%.4f' % (self.upperleftpoint.longitude + x * self.spacing))
+                    lat = float('%.4f' % (self.bottomrightpoint.latitude + y * self.spacing))
+                    if(y == 0) :
+                      self.lons.append(lon)
+                    if(x == 0) :
+                      self.lats.append(lat)
+                    ucvmpoints.append(Point(lon, lat, self.upperleftpoint.depth))
+            data = ucvm.query(ucvmpoints, self.cvm)
 
         i = 0
         j = 0
@@ -234,7 +240,8 @@ class HorizontalSlice:
         # Call the plot object.
         p = Plot(title, "", "", None, 10, 10)
 
-        u = UCVM(install_dir=self.installdir, config_file=self.configfile)
+        ucvm = self.ucvm
+#        UCVM(install_dir=self.installdir, config_file=self.configfile)
 
         m = basemap.Basemap(projection='cyl', llcrnrlat=self.bottomrightpoint.latitude, \
                             urcrnrlat=self.upperleftpoint.latitude, \
@@ -250,10 +257,8 @@ class HorizontalSlice:
         m.drawstates()
         m.drawcountries()
     
-        alons = np.arange(self.upperleftpoint.longitude, self.bottomrightpoint.longitude, self.spacing)
-        alats = np.arange(self.bottomrightpoint.latitude, self.upperleftpoint.latitude, self.spacing)
-        lons = np.linspace(self.upperleftpoint.longitude, self.bottomrightpoint.longitude - self.spacing, self.num_x-1)
-        lats = np.linspace(self.bottomrightpoint.latitude, self.upperleftpoint.latitude - self.spacing, self.num_y-1)
+##        lons = np.linspace(self.upperleftpoint.longitude, self.bottomrightpoint.longitude - self.spacing, self.num_x-1)
+##        lats = np.linspace(self.bottomrightpoint.latitude, self.upperleftpoint.latitude - self.spacing, self.num_y-1)
     
         # Get the properties.
         datapoints = np.arange(self.num_x * self.num_y,dtype=np.float32).reshape(self.num_y, self.num_x)
@@ -288,7 +293,7 @@ class HorizontalSlice:
                            datapoints[i][j]=np.nan
                            nancnt=nancnt+1
                 else :
-                    datapoints[i][j] = u.poisson(self.materialproperties[i][j].vs, self.materialproperties[i][j].vp) 
+                    datapoints[i][j] = ucvm.poisson(self.materialproperties[i][j].vs, self.materialproperties[i][j].vp) 
 
 #        print(" total number of nancnt is "+str(nancnt))
 #        print(" total number of zerocnt is "+str(zerocnt))
@@ -306,22 +311,22 @@ class HorizontalSlice:
 
         newmax_val=np.nanmax(newdatapoints)
         newmin_val=np.nanmin(newdatapoints)
-        newmean_val=np.mean(newdatapoints)
+        newmean_val=np.nanmean(newdatapoints)
 
         self.max_val=np.nanmax(datapoints)
         self.min_val=np.nanmin(datapoints)
-        self.mean_val=np.mean(datapoints)
+        self.mean_val=np.nanmean(datapoints)
 
         if self.scalemin != None and self.scalemax != None:
-            BOUNDS= u.makebounds(float(self.scalemin), float(self.scalemax), 5)
-            TICKS = u.maketicks(float(self.scalemin), float(self.scalemax), 5)
+            BOUNDS= ucvm.makebounds(float(self.scalemin), float(self.scalemax), 5)
+            TICKS = ucvm.aketicks(float(self.scalemin), float(self.scalemax), 5)
             umax=round(self.scalemax)
             umin=round(self.scalemin)
             umean=round((umax+umin)/2) 
         else:
             ## default BOUNDS are from 0 to 5
-            BOUNDS = u.makebounds()
-            TICKS = u.maketicks()
+            BOUNDS = ucvm.makebounds()
+            TICKS = ucvm.maketicks()
             umax=round(newmax_val)
             umin=round(newmin_val)
             umean=round(newmean_val)
@@ -340,8 +345,8 @@ class HorizontalSlice:
             norm = mcolors.Normalize(vmin=BOUNDS[0],vmax=BOUNDS[len(BOUNDS) - 1])
         elif color_scale == "sd":
             colormap = basemap.cm.GMT_seis
-            BOUNDS= u.makebounds(umin, umax, 5, umean, substep=5)
-            TICKS = u.maketicks(umin, umax, 5)
+            BOUNDS= ucvm.makebounds(umin, umax, 5, umean, substep=5)
+            TICKS = ucvm.maketicks(umin, umax, 5)
             norm = mcolors.Normalize(vmin=BOUNDS[0],vmax=BOUNDS[len(BOUNDS) - 1])
         elif color_scale == "b":
             C = []
@@ -354,15 +359,15 @@ class HorizontalSlice:
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
 
         elif color_scale == 'd':
-            colormap = pycvm_cmapDiscretize(basemap.cm.GMT_seis, len(BOUNDS) - 1)
+            colormap = plot_cmapDiscretize(basemap.cm.GMT_seis, len(BOUNDS) - 1)
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
         elif color_scale == 'd_r':
-            colormap = pycvm_cmapDiscretize(basemap.cm.GMT_seis_r, len(BOUNDS) - 1)
+            colormap = plot_cmapDiscretize(basemap.cm.GMT_seis_r, len(BOUNDS) - 1)
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
         elif color_scale == 'dd':
-            BOUNDS= u.makebounds(umin, umax, 5, umean, substep=5)
-            TICKS = u.maketicks(umin, umax, 5)
-            colormap = pycvm_cmapDiscretize(basemap.cm.GMT_seis, len(BOUNDS) - 1)
+            BOUNDS= ucvm.makebounds(umin, umax, 5, umean, substep=5)
+            TICKS = ucvm.maketicks(umin, umax, 5)
+            colormap = plot_cmapDiscretize(basemap.cm.GMT_seis, len(BOUNDS) - 1)
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
         else:
             print("ERROR: unknown option for colorscale.")
@@ -371,8 +376,8 @@ class HorizontalSlice:
 # very special case for showing 'difference plot'
         if 'difference' in self.meta :
             bwr = cm.get_cmap('bwr')
-            colormap = pycvm_cmapDiscretize(bwr, len(BOUNDS) - 1)
-##            colormap = pycvm_cmapDiscretize(basemap.cm.GMT_globe, len(BOUNDS) - 1)
+            colormap = plot_cmapDiscretize(bwr, len(BOUNDS) - 1)
+##            colormap = plot_cmapDiscretize(basemap.cm.GMT_globe, len(BOUNDS) - 1)
              
 
         if( self.datafile == None ):
@@ -382,19 +387,22 @@ class HorizontalSlice:
           self.meta['max'] = self.max_val.item()
           self.meta['min'] = self.min_val.item()
           self.meta['mean'] = self.mean_val.item()
-          ### lons and lats are off by one from earlier composition for drawing within edges, 
+          ### slons and lats are off by one from earlier composition for drawing within edges, 
           ### so need to add in the last lon2 and lat2
-          self.meta['lon_list']=lons.tolist()
-          self.meta['lon_list'].append(self.meta['lon2'])
-          self.meta['lat_list']=lats.tolist()
-          self.meta['lat_list'].append(self.meta['lat2'])
+          self.meta['lon_list']=self.lons
+#          self.meta['lon_list'].append(float(self.meta['lon2']))
+          self.meta['lat_list']=self.lats
+#          self.meta['lat_list'].append(float(self.meta['lat2']))
           if self.filename:
-              u.export_metadata(self.meta,self.filename)
-              u.export_np_float_array(datapoints,self.filename)
+              ucvm.export_metadata(self.meta,self.filename)
+              ucvm.export_np_float_array(datapoints,self.filename)
                     
 
         ## reduce the datapoints before passing in..
+        lons = np.linspace(self.upperleftpoint.longitude, self.bottomrightpoint.longitude - self.spacing, self.num_x-1)
+        lats = np.linspace(self.bottomrightpoint.latitude, self.upperleftpoint.latitude - self.spacing, self.num_y-1)
 
+#        t = m.transform_scalar(newdatapoints, self.lons, self.lats, len(self.lons), len(self.lats))
         t = m.transform_scalar(newdatapoints, lons, lats, len(lons), len(lats))
         img = m.imshow(t, cmap=colormap, norm=norm)
 
@@ -427,3 +435,92 @@ class HorizontalSlice:
 ## MEI, TODO p.savehtml("show.html")
         else:
             plt.show()
+
+    ## 
+    #  Create the horizontal slice data
+    # 
+    def plot_skip(self, horizontal_label = None):
+
+        if self.upperleftpoint.description == None:
+            location_text = ""
+        else:
+            location_text = self.upperleftpoint.description + " "
+
+        if 'data_type' in self.meta :
+           mproperty = self.meta['data_type']
+        else:
+           mproperty = "vs"
+
+        scale_gate = None
+        if 'color' in self.meta :
+           color_scale = self.meta['color']
+
+        if 'gate' in self.meta :
+           scale_gate = float(self.meta['gate'])
+        
+        if color_scale == "b" and scale_gate is None:
+           scale_gate=2.5
+
+        # Gets the better CVM description if it exists.
+        try:
+            cvmdesc = UCVM_CVMS[self.cvm]
+        except: 
+            cvmdesc = self.cvm
+
+        if 'title' in self.meta :
+            title =  self.meta['title']
+        else:
+            title = "%s%s Horizontal Slice at %.0fm" % (location_text, cvmdesc, self.upperleftpoint.depth)
+            self.meta['title'] = title
+
+        self.getplotvals(mproperty)
+
+        # Get the properties.
+        datapoints = np.arange(self.num_x * self.num_y,dtype=np.float32).reshape(self.num_y, self.num_x)
+
+        nancnt=0
+        zerocnt=0
+        negcnt=0
+##        print("total cnt is %d"%(self.num_x * self.num_y))
+        for i in range(0, self.num_y):
+            for j in range(0, self.num_x):
+                if (self.datafile != None) :
+                    datapoints[i][j] = self.materialproperties[i][j].getProperty(mproperty)
+                elif mproperty != "poisson":
+                    datapoints[i][j] = self.materialproperties[i][j].getProperty(mproperty)
+                    if (datapoints[i][j] == 0) :
+                        zerocnt=zerocnt+1
+                    if (datapoints[i][j] < 0) :
+                        negcnt=negcnt+1
+                    if(datapoints[i][j] == -1 ) :
+                        datapoints[i][j]=np.nan
+                        nancnt=nancnt+1
+                else :
+                    datapoints[i][j] = ucvm.poisson(self.materialproperties[i][j].vs, self.materialproperties[i][j].vp) 
+
+#        print(" total number of nancnt is "+str(nancnt))
+#        print(" total number of zerocnt is "+str(zerocnt))
+#        print(" total number of negcnt is "+str(negcnt))
+
+        self.max_val= np.nanmax(datapoints)
+        self.min_val=np.nanmin(datapoints)
+        self.mean_val=np.mean(datapoints)
+
+        ucvm = self.ucvm 
+
+        if( self.datafile == None ):
+          self.meta['num_x'] = self.num_x
+          self.meta['num_y'] = self.num_y
+          self.meta['datapoints'] = datapoints.size
+          self.meta['max'] = self.max_val.item()
+          self.meta['min'] = self.min_val.item()
+          self.meta['mean'] = self.mean_val.item()
+          ### lons and lats are off by one from earlier composition for drawing within edges, 
+          ### so need to add in the last lon2 and lat2
+          self.meta['lon_list']=self.lons
+#          self.meta['lon_list'].append(float(self.meta['lon2']))
+          self.meta['lat_list']=self.lats
+#          self.meta['lat_list'].append(float(self.meta['lat2']))
+          if self.filename:
+              ucvm.export_metadata(self.meta,self.filename)
+              ucvm.export_np_float_array(datapoints,self.filename)

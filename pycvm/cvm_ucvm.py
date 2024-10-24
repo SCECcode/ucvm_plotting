@@ -7,6 +7,7 @@
 #  Provides access and manipulation function to UCVM via command line
 
 #  Imports
+from .cvm_common import pycvm_is_num
 from subprocess import call, Popen, PIPE, STDOUT
 import sys
 import os
@@ -35,18 +36,6 @@ UCVM_CVMS = {"1d":"1D(1d)", \
              "cvmh1511":"CVM-H 15.1.1(cvmh)", \
              "albacore":"ALBACORE(albacore)", \
              "cencal":"USGS Bay Area Model(cencal)"}
-
-## Constant for all material properties.
-ALL_PROPERTIES = ["vp", "vs", "density"]
-## Constant for just Vs.
-VS = ["vs"]
-## Constant for just Vp.
-VP = ["vp"]
-## Constant for just density.
-DENSITY = ["density"]
-
-## Version string.
-VERSION = "24.1.0"
 
 ##
 #  @class Point
@@ -789,7 +778,7 @@ class UCVM:
 #  export np float array to an exernal file
 #  
     def export_np_float_array(self, floats, fname):
-#       print("calling export_np_float_array -",len(floats))
+#        print("calling export_np_float_array -",len(floats))
         rawfile = fname
         if rawfile is None :
             rawfile="data.bin"
@@ -844,7 +833,7 @@ class UCVM:
 
 #  export ascii meta data to an external file 
     def export_metadata(self,meta,fname):
-        print("calling export_metadata")
+#        print("calling export_metadata")
         metafile=fname
         if metafile is None:
           metafile = "meta.json"

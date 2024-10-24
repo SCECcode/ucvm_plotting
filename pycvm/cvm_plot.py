@@ -7,13 +7,11 @@
 #  Provides functions used by  plotting scripts. 
 
 #  Imports
-from subprocess import call, Popen, PIPE, STDOUT
 import sys
 import os
 import multiprocessing
 import math
 import struct
-import getopt
 import json
 
 #  Numpy is required.
@@ -29,7 +27,6 @@ try:
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     import matplotlib.colors as mcolors
-    import matplotlib.cm as cm
 except:
     print("ERROR: Matplotlib must be installed on your system in order to generate these plots.")
     exit(1)    
@@ -37,24 +34,11 @@ except:
 #  Basemap is required.
 try:
     from mpl_toolkits import basemap
+    from mpl_toolkits.basemap import cm
 except Exception as e:
     print("ERROR: Basemap must be installed on your system in order to generate these plots.")
     print(e)
     exit(1)
-
-#  Constants
-
-## Constant for all material properties.
-ALL_PROPERTIES = ["vp", "vs", "density"]
-## Constant for just Vs.
-VS = ["vs"]
-## Constant for just Vp.
-VP = ["vp"]
-## Constant for just density.
-DENSITY = ["density"]
-
-## Version string.
-VERSION = "19.4.0"
 
 #  Class Definitions
 
@@ -123,4 +107,37 @@ class Plot:
 #        mpld3.save_html(self.figure,filename)
 #        mpld3.save_json(self.figure, filename)
         mpld3.fig_to_dict(self.figure)
+
+
+#  Function Definitions
+    
+##
+#  Returns the discrete colormap.
+#
+#  @param cmap The colormap to use.
+#  @param N The number of discretized intervals.
+def plot_cmapDiscretize(cmap, N):
+    cdict = cmap._segmentdata.copy()
+    # N colors
+    colors_i = np.linspace(0,1.,N)
+    # N+1 indices
+    indices = np.linspace(0,1.,N+1)
+    for key in ('red','green','blue'):
+        # Find the N colors
+        D = np.array(cdict[key])
+        colors = np.interp(colors_i, D[:,0], D[:,1])
+        #I = sp.interpolate.interp1d(D[:,0], D[:,1])
+        #colors = I(colors_i)
+        # Place these colors at the correct indices.
+        A = np.zeros((N+1,3), float)
+        A[:,0] = indices
+        A[1:,1] = colors
+        A[:-1,2] = colors
+        # Create a tuple for the dictionary.
+        L = []
+        for l in A:
+            L.append(tuple(l))
+        cdict[key] = tuple(L)
+    # Return colormap object.
+    return mcolors.LinearSegmentedColormap('colormap',cdict,1024)
 

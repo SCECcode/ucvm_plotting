@@ -15,17 +15,18 @@ import multiprocessing
 import math
 import struct
 import getopt
-import json
 
-#  Numpy is required.
-try:
-    import numpy as np
-except:
-    print("ERROR: NumPy must be installed on your system in order to generate these plots.")
-    exit(1)
-    
 ## Version string.
-VERSION = "19.4.0"
+VERSION = "25.1.0"
+
+## Constant for all material properties.
+ALL_PROPERTIES = ["vp", "vs", "density"]
+## Constant for just Vs.
+VS = ["vs"]
+## Constant for just Vp.
+VP = ["vp"]
+## Constant for just density.
+DENSITY = ["density"]
 
 #  Class Definitions
 
@@ -125,6 +126,9 @@ def get_user_opts(options):
 ## special case
         if o == "-H" or o == "--help" :
             return "help"
+        if o == "-S" or o == "--skip" :
+            ret_val['skip'] = '1'
+            continue
 ## regular case
         for key, value in options.items():
             if o == "-" + key.split(",")[0] or o == "--" + key.split(",")[1]:

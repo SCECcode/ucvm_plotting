@@ -9,7 +9,7 @@
 #  questions like: what are the Vs30 values for all CyberShake sites, or
 #  what are the basin depths for precarious rock sites?
 
-from .common import Point
+from .common_ucvm import Point
 
 ##
 #  @class CyberShake

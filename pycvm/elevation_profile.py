@@ -8,11 +8,12 @@
 #  arguments, or through Python code in the class ElevationProfile.
 
 #  Imports
-from .common import Plot, Point, MaterialProperties, UCVM, UCVM_CVMS, plt, math
 ##from scipy.interpolate import spline, splprep, splev
 ##from scipy.interpolate import Rbf, InterpolatedUnivariateSpline
 ##import scipy.interpolate as interpolate
-import numpy as np
+from .cvm_ucvm import Point, MaterialProperties, UCVM, UCVM_CVMS
+from .cvm_plot import Plot, math, plot_cmapDiscretize, cm, mcolors, basemap, plt, np
+from .cvm_common import VERSION
 import json
 
 ##

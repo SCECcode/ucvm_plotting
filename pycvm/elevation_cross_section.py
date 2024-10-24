@@ -7,10 +7,9 @@
 #  Allows for generation of a elevation cross section between two points.
 
 #  Imports
-from mpl_toolkits import basemap
-from mpl_toolkits.basemap import cm
-from .common import Plot, Point, MaterialProperties, UCVM, UCVM_CVMS, \
-                   math, pycvm_cmapDiscretize, cm, mcolors, basemap, np, plt
+from .cvm_ucvm import Point, MaterialProperties, UCVM, UCVM_CVMS
+from .cvm_plot import Plot, math, plot_cmapDiscretize, cm, mcolors, basemap, plt, np
+from .cvm_common import VERSION
 
 import random
 import string
@@ -360,16 +359,16 @@ class ElevationCrossSection:
             colormap = mcolors.ListedColormap(C)
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
         elif color_scale == 'd':
-            colormap = pycvm_cmapDiscretize(basemap.cm.GMT_seis, len(BOUNDS) - 1)
+            colormap = plot_cmapDiscretize(basemap.cm.GMT_seis, len(BOUNDS) - 1)
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)  
         elif color_scale == 'd_r':
-            colormap = pycvm_cmapDiscretize(basemap.cm.GMT_seis_r, len(BOUNDS) - 1)
+            colormap = plot_cmapDiscretize(basemap.cm.GMT_seis_r, len(BOUNDS) - 1)
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)  
         elif color_scale == 'dd':
             BOUNDS= u.makebounds(self.min_val, self.max_val, 5, self.mean_val, substep=5, all=True)
             TICKS = u.maketicks(self.min_val, self.max_val, 5)
-#            colormap = pycvm_cmapDiscretize(basemap.cm.GMT_globe, len(BOUNDS) - 1)
-            colormap = pycvm_cmapDiscretize(basemap.cm.GMT_seis, len(BOUNDS) - 1)
+#            colormap = plot_cmapDiscretize(basemap.cm.GMT_globe, len(BOUNDS) - 1)
+            colormap = plot_cmapDiscretize(basemap.cm.GMT_seis, len(BOUNDS) - 1)
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)  
         else:
             print("ERROR: unknown option for colorscale.")

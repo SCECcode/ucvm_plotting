@@ -8,9 +8,9 @@
 #  and can either save or plot the difference.
 
 #  Imports
-from mpl_toolkits import basemap
-from mpl_toolkits.basemap import cm
-from .common import MaterialProperties, Plot, cm, np, basemap, plt
+from .cvm_ucvm import Point, MaterialProperties, UCVM, UCVM_CVMS
+from .cvm_plot import Plot, math, plot_cmapDiscretize, cm, mcolors, basemap, plt, np
+from .cvm_common import VERSION
 
 ##
 #  @class Difference

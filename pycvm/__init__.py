@@ -1,7 +1,7 @@
-from .common import Plot, Point, UCVM, MaterialProperties, \
-                   ALL_PROPERTIES, VP, VS, DENSITY, VERSION, \
-                   UCVM_CVMS, get_user_opts, \
-                   ask_number, ask_path, ask_file
+from .cvm_ucvm import UCVM_CVMS, Point, UCVM, MaterialProperties
+from .cvm_plot import Plot
+from .cvm_common import ALL_PROPERTIES, VP, VS, DENSITY, VERSION, \
+                   get_user_opts, ask_number, ask_path, ask_file
 
 from .elevation_horizontal_slice import ElevationHorizontalSlice
 from .horizontal_slice import HorizontalSlice

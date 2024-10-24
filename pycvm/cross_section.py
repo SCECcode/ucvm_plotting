@@ -7,13 +7,9 @@
 #  Allows for generation of a cross section between two points.
 
 #  Imports
-
-from mpl_toolkits import basemap
-from matplotlib import cm
-import math
-
-from .common import Plot, Point, MaterialProperties, UCVM, UCVM_CVMS, \
-                   math, pycvm_cmapDiscretize, cm, mcolors, np, plt
+from .cvm_ucvm import Point, MaterialProperties, UCVM, UCVM_CVMS
+from .cvm_plot import Plot, math, plot_cmapDiscretize, cm, mcolors, basemap, plt, np
+from .cvm_common import VERSION
 
 import random
 import string
@@ -383,22 +379,22 @@ class CrossSection:
             colormap = mcolors.ListedColormap(C)
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
         elif color_scale == 'd':
-            colormap = pycvm_cmapDiscretize(basemap.cm.GMT_seis, len(BOUNDS) - 1)
+            colormap = plot_cmapDiscretize(basemap.cm.GMT_seis, len(BOUNDS) - 1)
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)  
         elif color_scale == 'd_r':
-            colormap = pycvm_cmapDiscretize(basemap.cm.GMT_seis_r, len(BOUNDS) - 1)
+            colormap = plot_cmapDiscretize(basemap.cm.GMT_seis_r, len(BOUNDS) - 1)
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)  
         elif color_scale == 'dd':
             BOUNDS= u.makebounds(umin, umax, 5, umean, substep=5)
             TICKS = u.maketicks(umin, umax, 5)
-            colormap = pycvm_cmapDiscretize(basemap.cm.GMT_seis, len(BOUNDS) - 1)
+            colormap = plot_cmapDiscretize(basemap.cm.GMT_seis, len(BOUNDS) - 1)
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
         else: 
             print("ERROR: unknown option for colorscale.")
 
         if 'difference' in self.meta :
             bwr = cm.get_cmap('bwr')
-            colormap = pycvm_cmapDiscretize(bwr, len(BOUNDS) - 1)
+            colormap = plot_cmapDiscretize(bwr, len(BOUNDS) - 1)
 
 
 ## MEI, TODO this is a temporary way to generate an output of a cross_section input file
