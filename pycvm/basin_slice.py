@@ -106,8 +106,8 @@ class BasinSlice(HorizontalSlice):
                 i = i + 1
 
     ##
-    #  Plots the basin depth data as a horizontal slice. This code is very similar to the
-    #  HorizontalSlice routine.
+    #  Plots the basin depth data as a horizontal slice. 
+    #  Output the basin depth data as a horizontal slice. 
     #
     #  @param horizontal_label The horizontal label of the plot. Optional.
     def plot(self, horizontal_label = "Depth (km)") :
@@ -130,33 +130,7 @@ class BasinSlice(HorizontalSlice):
         self.meta['mproperty']="vs"
 
         HorizontalSlice.plot(self, horizontal_label)
-        
-    ##
-    #  Output the basin depth data as a horizontal slice. This code is very similar to the
-    #  HorizontalSlice routine.
-    #
-    #  @param horizontal_label The horizontal label of the plot. Optional.
-    def plot_skip(self, horizontal_label = "Depth (km)") :
-
-        if self.upperleftpoint.description == None:
-            location_text = ""
-        else:
-            location_text = self.upperleftpoint.description + " "
-
-        # Gets the better CVM description if it exists.
-        try:
-            cvmdesc = UCVM_CVMS[self.cvm]
-        except: 
-            cvmdesc = self.cvm
-
-        if 'title' not in self.meta:
-            self.title = "%sBasin Depth Map For %s" % (location_text, cvmdesc)
-            self.meta['title'] = self.title;
- 
-        self.meta['mproperty']="vs"
-
-        HorizontalSlice.plot_skip(self, horizontal_label)
-        
+      
 ##
 #  @class Z10Slice
 #  @brief Gets a Z1.0 data map.
@@ -184,6 +158,7 @@ class Z10Slice(BasinSlice):
     
     ##
     #  Plots the Z1.0 slice.
+    #  Output the basin depth data as a horizontal slice.
     #
     def plot(self) :
 
@@ -203,8 +178,9 @@ class Z10Slice(BasinSlice):
         else:
             self.title = "%sZ1.0 Map For %s" % (location_text, cvmdesc)
             self.meta['title'] = self.title
-  
+         
         BasinSlice.plot(self)
+
         
 ##
 #  @class Z25Slice

@@ -15,6 +15,7 @@ import multiprocessing
 import math
 import struct
 import json
+import pdb
 
 #  Numpy is required.
 try:

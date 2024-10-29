@@ -33,7 +33,7 @@ def usage():
     print("\t-H, --help: optional display usage information")
     print("\t-i, --installdir: optional UCVM install directory")
     print("\t-n, --configfile: optional UCVM configfile")
-    print("\t-S, --skip: optional skip generating plot")
+    print("\t-S, --skip: optional skip generating matplotlib plot")
     print("UCVM %s\n" % VERSION)
 
 ret_val = get_user_opts({"b,bottomleft":"lat1,lon1", \
@@ -193,7 +193,4 @@ print("Retrieving data. Please wait...")
 ###################################################################################
 # Generate the horizontal slice.
 h = HorizontalSlice(Point(lon1, lat2, depth), Point(lon2, lat1, depth), meta)
-if('skip' in meta.keys()) :
-  h.plot_skip()
-else:
-  h.plot()
+h.plot()

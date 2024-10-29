@@ -96,6 +96,11 @@ class CrossSection:
             self.cvm = self.meta['cvm']
         else:
             self.cvm = None
+        
+        if 'data_type' in self.meta :
+           self.mproperty = self.meta['data_type']
+        else:
+           self.mproperty = "vs"
 
         if 'datafile' in self.meta :
             self.datafile = self.meta['datafile']
@@ -106,6 +111,42 @@ class CrossSection:
             self.filename = self.meta['outfile']
         else:
             self.filename = None
+
+        if 'installdir' in self.meta :
+           self.installdir = self.meta['installdir']
+        else:
+           self.installdir = None
+
+        if 'configfile' in self.meta :
+           self.configfile = self.meta['configfile']
+        else:
+           self.configfile = None
+
+# Gets the better CVM description if it exists.
+        try:
+            cvmdesc = UCVM_CVMS[self.cvm]
+        except:
+            cvmdesc = self.cvm
+
+        if self.startingpoint.description == None:
+            location_text = ""
+        else:
+            location_text = self.startingpoint.description + " "
+
+        if 'title' in self.meta :
+            title = self.meta['title']
+        else:
+            title = "%s%s Cross Section from (%.2f, %.2f) to (%.2f, %.2f)" % (location_text, cvmdesc, self.startingpoint.longitude, \
+                        self.startingpoint.latitude, self.endingpoint.longitude, self.endingpoint.latitude)
+            self.meta['title']=title
+
+        if 'skip' in self.meta:
+            self.skip= True;
+        else
+            self.skip = None
+
+        self.ucvm = UCVM(install_dir=self.installdir, config_file=self.configfile, z_range=self.z_range, floors=self.floors)
+
 
 
     ## 
@@ -125,7 +166,6 @@ class CrossSection:
         num_prof = int(math.sqrt((x2-x1)*(x2-x1) + \
                                  (y2-y1)*(y2-y1))/self.hspacing)
         
-#        cnt=0
         jstart = self.startingdepth
         for j in range(int(self.startingdepth), int(self.todepth) + 1, int(self.vspacing)):
             depth_list.append( round(j,3))
@@ -137,9 +177,6 @@ class CrossSection:
                 if ( j == jstart) :
                   lon_list.append( round(lon,5))
                   lat_list.append( round(lat,5))
-#                if(cnt < 10) :
-#                   print("point.. lon "+str(lon)+" lat "+str(lat)+" j "+str(j))
-#                   cnt += 1
                 
         self.lon_list=lon_list
         self.lat_list=lat_list
@@ -161,12 +198,12 @@ class CrossSection:
 
 
             if self.datafile.rfind(".binary") != -1 :
-                data = u.import_binary(self.datafile, self.num_x, self.num_y)
+                data = ucvm.import_binary(self.datafile, self.num_x, self.num_y)
             else :
                 if self.datafile.rfind(".raw") != -1 :
-                    data = u.import_raw_data(self.datafile, self.num_x, self.num_y)
+                    data = ucvm.import_raw_data(self.datafile, self.num_x, self.num_y)
                 else:  ## with .bin file
-                    data = u.import_np_float_array(self.datafile, self.num_x, self.num_y)
+                    data = ucvm.import_np_float_array(self.datafile, self.num_x, self.num_y)
 
 ## this set of data is only for --datatype: either 'vs', 'vp', 'rho', or 'poisson'
         ## The 2D array of retrieved material properties.
@@ -187,7 +224,7 @@ class CrossSection:
 
             print("\nUsing --> "+self.datafile) 
         else:
-            data = u.query(point_list, self.cvm)
+            data = ucvm.query(point_list, self.cvm)
 
 
             ## Private number of x points.
@@ -204,18 +241,21 @@ class CrossSection:
                 for x in range(0, self.num_x):   
                     self.materialproperties[y][x] = data[y * self.num_x + x]     
     ## 
-    #  Plots the horizontal slice either to an image or a file name.
+    #  Plots the cross section slice either to an image or a file name.
     # 
-    def plot(self) :
+    def plot(self):
 
-        self.installdir = None
-        if 'installdir' in self.meta :
-           self.installdir = self.meta['installdir']
+        self.skip :
+            this._file(self)
+        else:
+            this._plot_file(self)
 
-        self.configfile = None
-        if 'configfile' in self.meta :
-           self.configfile = self.meta['configfile']
+    ## 
+    #  Plots the cross section slice to an image and save a data file.
+    #
+    def _plot_file(self) :
 
+        color_scale = None
         if 'color' in self.meta :
            color_scale = self.meta['color']
 
@@ -226,30 +266,7 @@ class CrossSection:
         if color_scale == "b" and scale_gate is None:
            scale_gate=2.5
         
-        if self.startingpoint.description == None:
-            location_text = ""
-        else:
-            location_text = self.startingpoint.description + " "
-
-        if 'data_type' in self.meta :
-           mproperty = self.meta['data_type']
-        else:
-           mproperty = "vs"
-
-        # Gets the better CVM description if it exists.
-        try:
-            cvmdesc = UCVM_CVMS[self.cvm]
-        except: 
-            cvmdesc = self.cvm
-
-        if 'title' in self.meta :
-            title = self.meta['title']
-        else:
-            title = "%s%s Cross Section from (%.2f, %.2f) to (%.2f, %.2f)" % (location_text, cvmdesc, self.startingpoint.longitude, \
-                        self.startingpoint.latitude, self.endingpoint.longitude, self.endingpoint.latitude)
-            self.meta['title']=title
-            
-        self.getplotvals(mproperty)
+        self.getplotvals(self.mproperty)
         
         # Call the plot object.
         p = Plot(None, None, None, None, 10, 10)
@@ -313,7 +330,7 @@ class CrossSection:
                 elif mproperty != "poisson" :
                     datapoints[y][x] = self.materialproperties[y][x].getProperty(mproperty)
                 else:
-                    datapoints[y][x] = u.poisson(self.materialproperties[y][x].getProperty("vs"), self.materialproperties[y][x].getProperty("vp")) 
+                    datapoints[y][x] = ucvm.poisson(self.materialproperties[y][x].getProperty("vs"), self.materialproperties[y][x].getProperty("vp")) 
 
 
         u = UCVM(install_dir=self.installdir, config_file=self.configfile)
@@ -336,15 +353,15 @@ class CrossSection:
         colormap = basemap.cm.GMT_seis
 
         if self.scalemin != None and self.scalemax != None:
-            BOUNDS= u.makebounds(float(self.scalemin), float(self.scalemax), 5)
-            TICKS = u.maketicks(float(self.scalemin), float(self.scalemax), 5)
+            BOUNDS= ucvm.makebounds(float(self.scalemin), float(self.scalemax), 5)
+            TICKS = ucvm.maketicks(float(self.scalemin), float(self.scalemax), 5)
             umax=round(self.scalemax)
             umin=round(self.scalemin)
             umean=round((umax+umin)/2)
         else:
             ## default BOUNDS are from 0 to 5
-            BOUNDS = u.makebounds()
-            TICKS = u.maketicks()
+            BOUNDS = ucvm.makebounds()
+            TICKS = ucvm.maketicks()
             umax=round(self.max_val)
             umin=round(self.min_val)
             umean=round(self.mean_val)
@@ -366,8 +383,8 @@ class CrossSection:
             norm = mcolors.Normalize(vmin=BOUNDS[0],vmax=BOUNDS[len(BOUNDS) - 1])
         elif color_scale == "sd":
             colormap = basemap.cm.GMT_seis
-            BOUNDS= u.makebounds(umin, umax, 5, umean, substep=5)
-            TICKS = u.maketicks(umin, umax, 5)
+            BOUNDS= ucvm.makebounds(umin, umax, 5, umean, substep=5)
+            TICKS = ucvm.maketicks(umin, umax, 5)
             norm = mcolors.Normalize(vmin=BOUNDS[0],vmax=BOUNDS[len(BOUNDS) - 1])
         elif color_scale == "b":
             C = []
@@ -385,8 +402,8 @@ class CrossSection:
             colormap = plot_cmapDiscretize(basemap.cm.GMT_seis_r, len(BOUNDS) - 1)
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)  
         elif color_scale == 'dd':
-            BOUNDS= u.makebounds(umin, umax, 5, umean, substep=5)
-            TICKS = u.maketicks(umin, umax, 5)
+            BOUNDS= ucvm.makebounds(umin, umax, 5, umean, substep=5)
+            TICKS = ucvm.maketicks(umin, umax, 5)
             colormap = plot_cmapDiscretize(basemap.cm.GMT_seis, len(BOUNDS) - 1)
             norm = mcolors.BoundaryNorm(BOUNDS, colormap.N)
         else: 
@@ -395,6 +412,9 @@ class CrossSection:
         if 'difference' in self.meta :
             bwr = cm.get_cmap('bwr')
             colormap = plot_cmapDiscretize(bwr, len(BOUNDS) - 1)
+
+
+        ucvm = self.ucvm
 
 
 ## MEI, TODO this is a temporary way to generate an output of a cross_section input file
@@ -409,14 +429,14 @@ class CrossSection:
           self.meta['lat_list'] = self.lat_list
           self.meta['depth_list'] = self.depth_list
           if self.filename:
-              u.export_metadata(self.meta,self.filename)
-              u.export_np_float_array(datapoints,self.filename)
+              ucvm.export_metadata(self.meta,self.filename)
+              ucvm.export_np_float_array(datapoints,self.filename)
           else:
 #https://stackoverflow.com/questions/2257441/random-string-generation-with-upper-case-letters-and-digits-in-python
               rnd=''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
               f = "cross_section"+rnd
-              u.export_metadata(self.meta,f)
-              u.export_np_float_array(datapoints,f)
+              ucvm.export_metadata(self.meta,f)
+              ucvm.export_np_float_array(datapoints,f)
 
 
         img = plt.imshow(newdatapoints, cmap=colormap, norm=norm)
@@ -427,7 +447,7 @@ class CrossSection:
                                                  "%.2f" % (self.startingdepth+ ((self.todepth-self.startingdepth)/2)/1000), \
                                                  "%.2f" % (self.todepth / 1000)])
     
-        plt.title(title)
+        plt.title(this.title)
     
         cax = plt.axes([0.1, 0.1, 0.8, 0.02])
         cbar = plt.colorbar(img, cax=cax, orientation='horizontal',ticks=TICKS,spacing='proportional')
@@ -446,3 +466,57 @@ class CrossSection:
             plt.savefig(self.filename)
         else:
             plt.show() 
+
+    ## 
+    #  Create the cross section slice data file only
+    #
+    def _file(self) :
+
+        self.getplotvals(self.mproperty)
+        
+        datapoints = np.arange(self.num_x * self.num_y,dtype=np.float32).reshape(self.num_y, self.num_x)
+            
+        nancnt=0
+        zerocnt=0
+        negcnt=0
+        for i in range(0, self.num_y):
+            for j in range(0, self.num_x):
+                if (self.datafile != None) :
+                    datapoints[i][j] = self.materialproperties[i][j].getProperty(self.mproperty)
+                elif self.mproperty != "poisson":
+                    datapoints[i][j] = self.materialproperties[i][j].getProperty(self.mproperty)
+                    if (datapoints[i][j] == 0) :
+                        zerocnt=zerocnt+1
+                    if (datapoints[i][j] < 0) :
+                        negcnt=negcnt+1
+                    if(datapoints[i][j] == -1 ) :
+                        datapoints[i][j]=np.nan
+                        nancnt=nancnt+1
+                else :
+                    datapoints[i][j] = ucvm.poisson(self.materialproperties[i][j].vs, self.materialproperties[i][j].vp)
+
+        self.max_val= np.nanmax(datapoints)
+        self.min_val=np.nanmin(datapoints)
+        self.mean_val=np.mean(datapoints)
+
+        ucvm = self.ucvm
+
+        if( self.datafile == None ):
+          self.meta['num_x'] = self.num_x
+          self.meta['num_y'] = self.num_y
+          self.meta['datapoints'] = datapoints.size
+          self.meta['max'] = self.max_val.item()
+          self.meta['min'] = self.min_val.item()
+          self.meta['mean'] = self.mean_val.item()
+          self.meta['lon_list'] = self.lon_list
+          self.meta['lat_list'] = self.lat_list
+          self.meta['depth_list'] = self.depth_list
+          if self.filename:
+              ucvm.export_metadata(self.meta,self.filename)
+              ucvm.export_np_float_array(datapoints,self.filename)
+          else:
+#https://stackoverflow.com/questions/2257441/random-string-generation-with-upper-case-letters-and-digits-in-python
+              rnd=''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
+              f = "cross_section"+rnd
+              ucvm.export_metadata(self.meta,f)
+              ucvm.export_np_float_array(datapoints,f)

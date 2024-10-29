@@ -117,10 +117,32 @@ class HorizontalSlice:
         else:
             self.configfile = None
 
-        if 'title' in self.meta :
-           self.title =  self.meta['title']
+        # Gets the better CVM description if it exists.
+        try:
+            cvmdesc = UCVM_CVMS[self.cvm]
+        except:
+            cvmdesc = self.cvm
+
+        if self.upperleftpoint.description == None:
+            location_text = ""
         else:
-           self.title = None;
+            location_text = self.upperleftpoint.description + " "
+
+        if 'title' in self.meta :
+            title =  self.meta['title']
+        else:
+            title = "%s%s Horizontal Slice at %.0fm" % (location_text, cvmdesc, self.upperleftpoint.depth)
+            self.meta['title'] = title
+
+        if 'data_type' in self.meta :
+           self.mproperty = self.meta['data_type']
+        else:
+           self.mproperty = "vs"
+
+        if 'skip' in self.meta:
+           self.skip =  self.meta['skip']
+        else:
+           self.skip = None;
     
         self.ucvm = UCVM(install_dir=self.installdir, config_file=self.configfile, z_range=self.z_range, floors=self.floors)
     ##
@@ -199,46 +221,35 @@ class HorizontalSlice:
 #        fp.close()
 
     ## 
-    #  Plots the horizontal slice either to an image or a file name.
+    #  Plots the horizontal slice either to an image or a file name or both
     # 
     def plot(self, horizontal_label = None):
 
-        if self.upperleftpoint.description == None:
-            location_text = ""
-        else:
-            location_text = self.upperleftpoint.description + " "
+        this.skip :
+            this._file(self, horizontal_label)
+        else: 
+            this._plot_file(self,horizontal_label) 
 
-        if 'data_type' in self.meta :
-           mproperty = self.meta['data_type']
-        else:
-           mproperty = "vs"
+    ## 
+    #  Plots the horizontal slice to an image and save a data file.
+    # 
+    def _plot_file(self, horizontal_label = None):
 
-        scale_gate = None
+        color_scale = None
         if 'color' in self.meta :
            color_scale = self.meta['color']
 
+        scale_gate = None
         if 'gate' in self.meta :
            scale_gate = float(self.meta['gate'])
         
         if color_scale == "b" and scale_gate is None:
            scale_gate=2.5
 
-        # Gets the better CVM description if it exists.
-        try:
-            cvmdesc = UCVM_CVMS[self.cvm]
-        except: 
-            cvmdesc = self.cvm
-
-        if 'title' in self.meta :
-            title =  self.meta['title']
-        else:
-            title = "%s%s Horizontal Slice at %.0fm" % (location_text, cvmdesc, self.upperleftpoint.depth)
-            self.meta['title'] = title
-
-        self.getplotvals(mproperty)
+        self.getplotvals(self.mproperty)
 
         # Call the plot object.
-        p = Plot(title, "", "", None, 10, 10)
+        p = Plot(self.title, "", "", None, 10, 10)
 
         ucvm = self.ucvm
 #        UCVM(install_dir=self.installdir, config_file=self.configfile)
@@ -437,43 +448,11 @@ class HorizontalSlice:
             plt.show()
 
     ## 
-    #  Create the horizontal slice data
+    #  Create the horizontal slice data file only
     # 
-    def plot_skip(self, horizontal_label = None):
+    def _file(self, horizontal_label = None):
 
-        if self.upperleftpoint.description == None:
-            location_text = ""
-        else:
-            location_text = self.upperleftpoint.description + " "
-
-        if 'data_type' in self.meta :
-           mproperty = self.meta['data_type']
-        else:
-           mproperty = "vs"
-
-        scale_gate = None
-        if 'color' in self.meta :
-           color_scale = self.meta['color']
-
-        if 'gate' in self.meta :
-           scale_gate = float(self.meta['gate'])
-        
-        if color_scale == "b" and scale_gate is None:
-           scale_gate=2.5
-
-        # Gets the better CVM description if it exists.
-        try:
-            cvmdesc = UCVM_CVMS[self.cvm]
-        except: 
-            cvmdesc = self.cvm
-
-        if 'title' in self.meta :
-            title =  self.meta['title']
-        else:
-            title = "%s%s Horizontal Slice at %.0fm" % (location_text, cvmdesc, self.upperleftpoint.depth)
-            self.meta['title'] = title
-
-        self.getplotvals(mproperty)
+        self.getplotvals(self.mproperty)
 
         # Get the properties.
         datapoints = np.arange(self.num_x * self.num_y,dtype=np.float32).reshape(self.num_y, self.num_x)
@@ -515,12 +494,15 @@ class HorizontalSlice:
           self.meta['max'] = self.max_val.item()
           self.meta['min'] = self.min_val.item()
           self.meta['mean'] = self.mean_val.item()
-          ### lons and lats are off by one from earlier composition for drawing within edges, 
-          ### so need to add in the last lon2 and lat2
           self.meta['lon_list']=self.lons
-#          self.meta['lon_list'].append(float(self.meta['lon2']))
           self.meta['lat_list']=self.lats
-#          self.meta['lat_list'].append(float(self.meta['lat2']))
           if self.filename:
               ucvm.export_metadata(self.meta,self.filename)
               ucvm.export_np_float_array(datapoints,self.filename)
+          else:
+              #https://stackoverflow.com/questions/2257441/random-string-generation-with-upper-case-letters-and-digits-in-python
+              rnd=''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
+              f = "horizontal_slice"+rnd
+              ucvm.export_metadata(self.meta,f)
+              ucvm.export_np_float_array(datapoints,f)
+
