@@ -134,15 +134,15 @@ class CrossSection:
             location_text = self.startingpoint.description + " "
 
         if 'title' in self.meta :
-            title = self.meta['title']
+            self.title = self.meta['title']
         else:
-            title = "%s%s Cross Section from (%.2f, %.2f) to (%.2f, %.2f)" % (location_text, cvmdesc, self.startingpoint.longitude, \
+            self.title = "%s%s Cross Section from (%.2f, %.2f) to (%.2f, %.2f)" % (location_text, cvmdesc, self.startingpoint.longitude, \
                         self.startingpoint.latitude, self.endingpoint.longitude, self.endingpoint.latitude)
             self.meta['title']=title
 
         if 'skip' in self.meta:
             self.skip= True;
-        else
+        else:
             self.skip = None
 
         self.ucvm = UCVM(install_dir=self.installdir, config_file=self.configfile, z_range=self.z_range, floors=self.floors)
@@ -245,10 +245,10 @@ class CrossSection:
     # 
     def plot(self):
 
-        self.skip :
-            this._file(self)
+        if self.skip :
+            self._file()
         else:
-            this._plot_file(self)
+            self._plot_file()
 
     ## 
     #  Plots the cross section slice to an image and save a data file.
@@ -266,7 +266,9 @@ class CrossSection:
         if color_scale == "b" and scale_gate is None:
            scale_gate=2.5
         
-        self.getplotvals(self.mproperty)
+        mproperty=self.mproperty
+
+        self.getplotvals(mproperty)
         
         # Call the plot object.
         p = Plot(None, None, None, None, 10, 10)
@@ -327,7 +329,7 @@ class CrossSection:
             for x in range(0, self.num_x):
                 if self.datafile != None : 
                     datapoints[y][x] = self.materialproperties[y][x].getProperty(mproperty)
-                elif mproperty != "poisson" :
+                elif self.property != "poisson" :
                     datapoints[y][x] = self.materialproperties[y][x].getProperty(mproperty)
                 else:
                     datapoints[y][x] = ucvm.poisson(self.materialproperties[y][x].getProperty("vs"), self.materialproperties[y][x].getProperty("vp")) 
@@ -472,7 +474,9 @@ class CrossSection:
     #
     def _file(self) :
 
-        self.getplotvals(self.mproperty)
+        mproperty=self.mproperty
+
+        self.getplotvals(mproperty)
         
         datapoints = np.arange(self.num_x * self.num_y,dtype=np.float32).reshape(self.num_y, self.num_x)
             
@@ -482,9 +486,9 @@ class CrossSection:
         for i in range(0, self.num_y):
             for j in range(0, self.num_x):
                 if (self.datafile != None) :
-                    datapoints[i][j] = self.materialproperties[i][j].getProperty(self.mproperty)
-                elif self.mproperty != "poisson":
-                    datapoints[i][j] = self.materialproperties[i][j].getProperty(self.mproperty)
+                    datapoints[i][j] = self.materialproperties[i][j].getProperty(mproperty)
+                elif mproperty != "poisson":
+                    datapoints[i][j] = self.materialproperties[i][j].getProperty(mproperty)
                     if (datapoints[i][j] == 0) :
                         zerocnt=zerocnt+1
                     if (datapoints[i][j] < 0) :

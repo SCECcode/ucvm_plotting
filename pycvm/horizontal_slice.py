@@ -129,9 +129,9 @@ class HorizontalSlice:
             location_text = self.upperleftpoint.description + " "
 
         if 'title' in self.meta :
-            title =  self.meta['title']
+            self.title =  self.meta['title']
         else:
-            title = "%s%s Horizontal Slice at %.0fm" % (location_text, cvmdesc, self.upperleftpoint.depth)
+            self.title = "%s%s Horizontal Slice at %.0fm" % (location_text, cvmdesc, self.upperleftpoint.depth)
             self.meta['title'] = title
 
         if 'data_type' in self.meta :
@@ -145,6 +145,7 @@ class HorizontalSlice:
            self.skip = None;
     
         self.ucvm = UCVM(install_dir=self.installdir, config_file=self.configfile, z_range=self.z_range, floors=self.floors)
+
     ##
     #  Retrieves the values for this horizontal slice and stores them in the class.
     def getplotvals(self, mproperty="vs"):
@@ -225,10 +226,10 @@ class HorizontalSlice:
     # 
     def plot(self, horizontal_label = None):
 
-        this.skip :
-            this._file(self, horizontal_label)
+        if self.skip :
+            self._file(horizontal_label)
         else: 
-            this._plot_file(self,horizontal_label) 
+            self._plot_file(horizontal_label) 
 
     ## 
     #  Plots the horizontal slice to an image and save a data file.
@@ -246,7 +247,9 @@ class HorizontalSlice:
         if color_scale == "b" and scale_gate is None:
            scale_gate=2.5
 
-        self.getplotvals(self.mproperty)
+        mproperty = self.mproperty
+
+        self.getplotvals(mproperty)
 
         # Call the plot object.
         p = Plot(self.title, "", "", None, 10, 10)
@@ -452,7 +455,9 @@ class HorizontalSlice:
     # 
     def _file(self, horizontal_label = None):
 
-        self.getplotvals(self.mproperty)
+        mproperty = self.mproperty
+
+        self.getplotvals(mproperty)
 
         # Get the properties.
         datapoints = np.arange(self.num_x * self.num_y,dtype=np.float32).reshape(self.num_y, self.num_x)
