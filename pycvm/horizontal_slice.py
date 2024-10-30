@@ -132,7 +132,7 @@ class HorizontalSlice:
             self.title =  self.meta['title']
         else:
             self.title = "%s%s Horizontal Slice at %.0fm" % (location_text, cvmdesc, self.upperleftpoint.depth)
-            self.meta['title'] = title
+            self.meta['title'] = self.title
 
         if 'data_type' in self.meta :
            self.mproperty = self.meta['data_type']
