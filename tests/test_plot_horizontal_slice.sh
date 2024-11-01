@@ -1,5 +1,5 @@
 #
-# test_plot_horizontal_slice.py
+# test_plot_horizontal_slice.sh
 #
 
 MODEL=sfcvm

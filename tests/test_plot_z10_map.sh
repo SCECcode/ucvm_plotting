@@ -1,4 +1,5 @@
 #
+# test_plot_z10_map.sh 
 #
 
 LAT1=35.02
