@@ -186,8 +186,8 @@ class CrossSection:
 #        print("total lat.."+ str(len(lat_list)))
 #        print("total lat.."+ str(len(depth_list)))
 
-        u = UCVM(install_dir=self.installdir, config_file=self.configfile, z_range=self.z_range, floors=self.floors)
-### MEI -- TODO, need to have separate routine that generates cross section datafile
+        ucvm=self.ucvm
+
         if (self.datafile != None) :
             ## Private number of x points.
             self.num_x = num_prof +1
