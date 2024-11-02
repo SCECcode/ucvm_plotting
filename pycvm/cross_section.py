@@ -138,7 +138,7 @@ class CrossSection:
         else:
             self.title = "%s%s Cross Section from (%.2f, %.2f) to (%.2f, %.2f)" % (location_text, cvmdesc, self.startingpoint.longitude, \
                         self.startingpoint.latitude, self.endingpoint.longitude, self.endingpoint.latitude)
-            self.meta['title']=title
+            self.meta['title']=self.title
 
         if 'skip' in self.meta:
             self.skip= True;
