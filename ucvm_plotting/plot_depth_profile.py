@@ -33,6 +33,7 @@ def usage():
     print("\t-i, --installdir: optional UCVM install directory")
     print("\t-n, --configfile: optional UCVM configfile")
     print("\t-C, --comment: optional comment for this profile")
+    print("\t-S, --skip: optional skip generating matplotlib plot")
     print("UCVM %s\n" % VERSION)
 
 ret_val = get_user_opts({"s,startingpoint":"lat1,lon1", \
@@ -51,7 +52,8 @@ ret_val = get_user_opts({"s,startingpoint":"lat1,lon1", \
              "H,help,o":"", \
              "i,installdir,o":"installdir", \
              "n,configfile,o":"configfile", \
-             "C,comment,o":"comment" })
+             "C,comment,o":"comment", \
+             "S,skip,o":"" })
 
 meta = {}
 
@@ -166,6 +168,7 @@ else:
             print("Error: the number you selected must be between 1 and %d" % counter)
     cvm_selected = corresponding_cvm[cvm_selected]
     meta['cvm']=cvm_selected
+    meta['skip']=0 
 
 # Now we have all the information so we can actually plot the data.
 print("")

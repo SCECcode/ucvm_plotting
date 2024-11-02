@@ -110,6 +110,11 @@ class DepthProfile:
         if 'data_type' in self.meta :
            self.properties = self.meta['data_type']
 
+        if 'skip' in self.meta:
+           self.skip =  self.meta['skip']
+        else:
+           self.skip = None;
+
         ## Private holding place for returned Vp data.        
         self.vplist = []
         ## Private holding place for returned Vs data.
@@ -125,6 +130,9 @@ class DepthProfile:
             self.threshold = self.meta['vs_threshold']
         else:
             self.threshold = None
+
+        self.ucvm = UCVM(install_dir=self.installdir, config_file=self.configfile, z_range=self.z_range, floors=self.floors)
+
     
     ## 
     #  Generates the depth profile in a format that is ready to plot.
@@ -139,18 +147,18 @@ class DepthProfile:
             point_list.append(Point(self.startingpoint.longitude, self.startingpoint.latitude, i))
             self.meta['depth'].append(i)
             
-        u = UCVM(install_dir=self.installdir, config_file=self.configfile, z_range=self.z_range, floors=self.floors)
+        ucvm = self.ucvm
 
         if (self.datafile != None) :
             print("\nUsing --> "+self.datafile)
-            data = u.import_matprops(self.datafile)
+            data = ucvm.import_matprops(self.datafile)
             if len(data) == 0 :
                 print("ERROR: no matprops plot data.")
                 exit(1)
         else:
-            data = u.query(point_list, self.cvm)
+            data = ucvm.query(point_list, self.cvm)
 #        print("NUMBER of data found ", len(data))
-        
+
         tmp = []
         for matprop in data:
             self.vplist.append(matprop.vp)
@@ -163,8 +171,8 @@ class DepthProfile:
     
         if(self.datafile == None) :
               blob = { 'matprops' : tmp }
-              u.export_matprops(blob,self.filename)
-              u.export_metadata(self.meta,self.filename)
+              ucvm.export_matprops(blob,self.filename)
+              ucvm.export_metadata(self.meta,self.filename)
            
     ##
     #  Adds the depth profile to a pre-existing plot.
@@ -275,6 +283,12 @@ class DepthProfile:
     #  @param properties An array of material properties. Can be one or more of vp, vs, and/or density.
     #  @param filename If this is set, the plot will not be shown but rather saved to this location.
     def plot(self):
+        if self.skip :
+            self._file()
+        else:
+            self._plot_file()
+
+    def _plot_file(self):
 
         if self.startingpoint.description == None:
             location_text = ""
@@ -302,3 +316,10 @@ class DepthProfile:
             plt.show()
         else:
             plt.savefig(self.filename)
+
+
+    def _file(self):
+
+       # Get the material properties.
+        self.getplotvals()
+
