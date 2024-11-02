@@ -329,13 +329,13 @@ class CrossSection:
             for x in range(0, self.num_x):
                 if self.datafile != None : 
                     datapoints[y][x] = self.materialproperties[y][x].getProperty(mproperty)
-                elif self.property != "poisson" :
+                elif mproperty != "poisson" :
                     datapoints[y][x] = self.materialproperties[y][x].getProperty(mproperty)
                 else:
                     datapoints[y][x] = ucvm.poisson(self.materialproperties[y][x].getProperty("vs"), self.materialproperties[y][x].getProperty("vp")) 
 
 
-        u = UCVM(install_dir=self.installdir, config_file=self.configfile)
+        ucvm=self.ucvm
 
         myInt=1000
         if mproperty == "poisson": ## no need to reduce.. should also be using sd or dd
@@ -347,9 +347,13 @@ class CrossSection:
 
         newdatapoints=datapoints/myInt
 
-        self.max_val=np.nanmax(newdatapoints)
-        self.min_val=np.nanmin(newdatapoints)
-        self.mean_val=np.mean(newdatapoints)
+        newmax_val=np.nanmax(newdatapoints)
+        newmin_val=np.nanmin(newdatapoints)
+        newmean_val=np.nanmean(newdatapoints)
+
+        self.max_val=np.nanmax(datapoints)
+        self.min_val=np.nanmin(datapoints)
+        self.mean_val=np.nanmean(datapoints)
 
         # Set colormap and range
         colormap = basemap.cm.GMT_seis
@@ -364,9 +368,9 @@ class CrossSection:
             ## default BOUNDS are from 0 to 5
             BOUNDS = ucvm.makebounds()
             TICKS = ucvm.maketicks()
-            umax=round(self.max_val)
-            umin=round(self.min_val)
-            umean=round(self.mean_val)
+            umax=round(newmax_val)
+            umin=round(newmin_val)
+            umean=round(newmean_val)
 
         if mproperty == "vp":
             BOUNDS = [bound * 1.7 for bound in BOUNDS]
@@ -449,7 +453,7 @@ class CrossSection:
                                                  "%.2f" % (self.startingdepth+ ((self.todepth-self.startingdepth)/2)/1000), \
                                                  "%.2f" % (self.todepth / 1000)])
     
-        plt.title(this.title)
+        plt.title(self.title)
     
         cax = plt.axes([0.1, 0.1, 0.8, 0.02])
         cbar = plt.colorbar(img, cax=cax, orientation='horizontal',ticks=TICKS,spacing='proportional')
