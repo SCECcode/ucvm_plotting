@@ -164,7 +164,7 @@ else:
     meta['skip']=0
 
 meta['depth']=0
-meta['data_type']=vs
+meta['data_type']='vs'
 
 
 # Now we have all the information so we can actually plot the data.
