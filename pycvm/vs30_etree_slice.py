@@ -30,6 +30,11 @@ class Vs30EtreeSlice(HorizontalSlice):
     #  @param cvm The community velocity model from which this data should come.
     #  
     def __init__(self, upperleftpoint, bottomrightpoint, meta={}):
+
+        if 'title' in meta :
+            pass
+        else:
+            meta['title'] = "Thompson Caliornia vs30 Model v2020 thru UCVM"
     
         #  Initializes the base class which is a horizontal slice.
         HorizontalSlice.__init__(self, upperleftpoint, bottomrightpoint, meta)

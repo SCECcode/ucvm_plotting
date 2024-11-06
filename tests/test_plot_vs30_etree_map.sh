@@ -13,6 +13,8 @@ rm -rf ${MODEL}_vs30_data.bin ${MODEL}_vs30_d_data.bin
 rm -rf ${MODEL}_vs30_meta.json ${MODEL}_vs30_d_meta.json 
 
 ## generate data and plot
+time plot_vs30_etree_map.py -s 0.1 -c ${MODEL} -a sd -o ${MODEL}_vs30.png -i $UCVM_INSTALL_PATH  -b ${LAT1},${LON1} -u ${LAT2},${LON2}
+
 time plot_vs30_etree_map.py -s 0.1 -c ${MODEL} -a sd -o ${MODEL}_vs30.png -i $UCVM_INSTALL_PATH -t "Thompson Caliornia vs30 Model v2020 thru UCVM" -b ${LAT1},${LON1} -u ${LAT2},${LON2}
 
 ## generate data only
