@@ -39,6 +39,7 @@ def usage():
     print("\t-H, --help: optional display usage information")
     print("\t-i, --installdir: optional UCVM install directory")
     print("\t-n, --configfile: optional UCVM configfile")
+    print("\t-S, --skip: optional skip generating matplotlib plot")
     print("UCVM %s\n" % VERSION)
 
 ret_val = get_user_opts({"b,bottomleft":"lat1,lon1",\
@@ -52,7 +53,9 @@ ret_val = get_user_opts({"b,bottomleft":"lat1,lon1",\
                          "t,title,o":"title", \
                          "H,help,o":"", \
                          "i,installdir,o":"installdir", \
-                         "n,configfile,o":"configfile" })
+                         "n,configfile,o":"configfile", \
+                         "S,skip,o":"" \
+                         })
 
 meta={}
 
@@ -158,6 +161,9 @@ else:
             print("Please enter 'd' (without quotation marks) for a discrete color bar and 's' (without quotation")
             print("marks) for a smooth color scale.")
     meta['color']=color
+    meta['skip']=0
+
+meta['depth']=0
 
 
 # Now we have all the information so we can actually plot the data.

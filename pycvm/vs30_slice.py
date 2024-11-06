@@ -74,9 +74,14 @@ class Vs30Slice(HorizontalSlice):
             ucvmpoints = []
             for y in range(0, self.num_y):
                 for x in range(0, self.num_x):
-                    ucvmpoints.append(Point(self.upperleftpoint.longitude + x * self.spacing, \
-                                            self.bottomrightpoint.latitude + y * self.spacing, \
-                                            self.upperleftpoint.depth))
+                    lon = float('%.4f' % (self.upperleftpoint.longitude + x * self.spacing))
+                    lat = float('%.4f' % (self.bottomrightpoint.latitude + y * self.spacing))
+                    if(y == 0) :
+                      self.lons.append(lon)
+                    if(x == 0) :
+                      self.lats.append(lat)
+                    ucvmpoints.append(Point(lon, lat, self.upperleftpoint.depth))
+
             data = u.vs30(ucvmpoints, self.cvm)
         
         i = 0
