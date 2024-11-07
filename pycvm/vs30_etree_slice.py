@@ -35,6 +35,16 @@ class Vs30EtreeSlice(HorizontalSlice):
             pass
         else:
             meta['title'] = "Thompson Caliornia vs30 Model v2020 thru UCVM"
+
+        if 'title' in meta :
+            pass
+        else:
+            meta['depth'] = 0
+
+        if 'data_type' in meta :
+            pass
+        else:
+            meta['data_type'] = 'vs'
     
         #  Initializes the base class which is a horizontal slice.
         HorizontalSlice.__init__(self, upperleftpoint, bottomrightpoint, meta)
