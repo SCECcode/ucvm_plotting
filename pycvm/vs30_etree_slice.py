@@ -36,7 +36,7 @@ class Vs30EtreeSlice(HorizontalSlice):
         else:
             meta['title'] = "Thompson Caliornia vs30 Model v2020 thru UCVM"
 
-        if 'title' in meta :
+        if 'depth' in meta :
             pass
         else:
             meta['depth'] = 0
@@ -128,10 +128,4 @@ class Vs30EtreeSlice(HorizontalSlice):
         except: 
             cvmdesc = self.cvm
         
-        if 'title' not in self.meta:
-            title = "%sVs30 Etree Data For %s" % (location_text, cvmdesc)
-            self.meta['title'] = title
-
-        self.meta['mproperty']="vs"
-
         HorizontalSlice.plot(self)
