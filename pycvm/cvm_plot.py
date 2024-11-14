@@ -64,7 +64,7 @@ class Plot:
         ## Defines the figure and plot object to which we can add subplots.
 
         self.figure = plt.figure(figsize=(width, height), dpi=100)
-        self.plot = self.figure.add_subplot(1, 1, 1)
+        self.plot = None
 
         if ylabel != None:
             plt.ylabel(ylabel, fontsize=14)
@@ -79,14 +79,18 @@ class Plot:
             plt.legend(legend, loc='lower left')
             
         ## Internal counter for how many subplots we have.
-        self.subplotcounter = 1
+        self.subplotcounter = 0
             
     ##
     #  Adds a subplot to the figure and returns it.
     # 
     #  @return The subplot that has been added to the already generated plot.
     def addsubplot(self):
-        self.subplotcounter += 1;
+        if(self.plot == None) :
+          self.plot = self.figure.add_subplot(1, 1, 1)
+          self.subplotcounter = 1
+        else:
+          self.subplotcounter += 1;
         return self.plot;
 
     ## 
