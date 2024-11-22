@@ -172,6 +172,8 @@ class MaterialProperties:
     @classmethod
     def fromUCVMOutput(cls, line):
         new_line = line.split()
+        if(new_line[14] == 0 and new_line[15]== 0 and new_line[16] == 0):
+            return(-1, -1, -1)
         return cls(new_line[14], new_line[15], new_line[16])
 
     ##

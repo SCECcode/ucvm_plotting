@@ -34,7 +34,7 @@ Prerequisite :  anaconda with python3 virtual environment. The python3 environme
 * This will build the ucvm_plotting utilities, and add the ucvm_plotting scripts to the users path.
 
 * If needs to repackage the ucvm_plotting (./make-dist), need addictional python pkg  
-*    conda install setuptools
+*    conda install setuptools wheel
 
 # Usage:
 Once both ucvm and ucvm_plotting are installed, users can run ucvm_plotting scripts like this:

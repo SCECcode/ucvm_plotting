@@ -361,8 +361,10 @@ class CrossSection:
         if self.scalemin != None and self.scalemax != None:
             BOUNDS= ucvm.makebounds(float(self.scalemin), float(self.scalemax), 5)
             TICKS = ucvm.maketicks(float(self.scalemin), float(self.scalemax), 5)
-            umax=round(self.scalemax)
-            umin=round(self.scalemin)
+            umax=(self.scalemax)
+            umin=(self.scalemin)
+#            umax=round(self.scalemax)
+#            umin=round(self.scalemin)
             umean=round((umax+umin)/2)
         else:
             ## default BOUNDS are from 0 to 5
