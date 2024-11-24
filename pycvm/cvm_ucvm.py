@@ -172,8 +172,9 @@ class MaterialProperties:
     @classmethod
     def fromUCVMOutput(cls, line):
         new_line = line.split()
-        if(new_line[14] == 0 and new_line[15]== 0 and new_line[16] == 0):
-            return(-1, -1, -1)
+        
+        if(float(new_line[14]) == 0.0 and float(new_line[15])== 0.0 and float(new_line[16]) == 0.0):
+            return cls(-1, -1, -1)
         return cls(new_line[14], new_line[15], new_line[16])
 
     ##

@@ -296,9 +296,7 @@ class ElevationCrossSection:
             
         for y in range(0, self.num_y):
             for x in range(0, self.num_x):
-                if self.datafile != None :
-                    datapoints[y][x] = self.materialproperties[y][x].getProperty(mproperty)
-                elif mproperty != "poisson" :
+                if mproperty != "poisson" :
                     datapoints[y][x] = self.materialproperties[y][x].getProperty(mproperty)
                 else:
                     datapoints[y][x] = u.poisson(self.materialproperties[y][x].getProperty("vs"), self.materialproperties[y][x].getProperty("vp"))    

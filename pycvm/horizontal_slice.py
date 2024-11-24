@@ -277,41 +277,13 @@ class HorizontalSlice:
         # Get the properties.
         datapoints = np.arange(self.num_x * self.num_y,dtype=np.float32).reshape(self.num_y, self.num_x)
 
-        nancnt=0
-        zerocnt=0
-        negcnt=0
 ##        print("total cnt is %d"%(self.num_x * self.num_y))
         for i in range(0, self.num_y):
             for j in range(0, self.num_x):
-                if (self.datafile != None) :
+                if mproperty != "poisson":
                     datapoints[i][j] = self.materialproperties[i][j].getProperty(mproperty)
-                elif mproperty != "poisson":
-                    if color_scale == "sd" or color_scale == "sd_r":
-                        datapoints[i][j] = self.materialproperties[i][j].getProperty(mproperty)
-                        if(datapoints[i][j] == -1 ) :
-                            datapoints[i][j]=np.nan
-                            nancnt=nancnt+1
-##to have blank background
-##                        if (datapoints[i][j] == 0) :
-##                            datapoints[i][j]=np.nan
-##                            zerocnt=zerocnt+1
-##
-                    else:
-                        datapoints[i][j] = self.materialproperties[i][j].getProperty(mproperty)
-                        if (datapoints[i][j] == 0) :
-# KEEP 0 as 0                           datapoints[i][j]=np.nan
-                           zerocnt=zerocnt+1
-                        if (datapoints[i][j] < 0) :
-                           negcnt=negcnt+1
-                        if(datapoints[i][j] == -1 ) :
-                           datapoints[i][j]=np.nan
-                           nancnt=nancnt+1
                 else :
                     datapoints[i][j] = ucvm.poisson(self.materialproperties[i][j].vs, self.materialproperties[i][j].vp) 
-
-#        print(" total number of nancnt is "+str(nancnt))
-#        print(" total number of zerocnt is "+str(zerocnt))
-#        print(" total number of negcnt is "+str(negcnt))
 
         myInt=1000
         if mproperty == "poisson": ## no need to reduce.. should also be using sd or dd
@@ -462,29 +434,13 @@ class HorizontalSlice:
         # Get the properties.
         datapoints = np.arange(self.num_x * self.num_y,dtype=np.float32).reshape(self.num_y, self.num_x)
 
-        nancnt=0
-        zerocnt=0
-        negcnt=0
 ##        print("total cnt is %d"%(self.num_x * self.num_y))
         for i in range(0, self.num_y):
             for j in range(0, self.num_x):
-                if (self.datafile != None) :
+                if mproperty != "poisson":
                     datapoints[i][j] = self.materialproperties[i][j].getProperty(mproperty)
-                elif mproperty != "poisson":
-                    datapoints[i][j] = self.materialproperties[i][j].getProperty(mproperty)
-                    if (datapoints[i][j] == 0) :
-                        zerocnt=zerocnt+1
-                    if (datapoints[i][j] < 0) :
-                        negcnt=negcnt+1
-                    if(datapoints[i][j] == -1 ) :
-                        datapoints[i][j]=np.nan
-                        nancnt=nancnt+1
                 else :
                     datapoints[i][j] = ucvm.poisson(self.materialproperties[i][j].vs, self.materialproperties[i][j].vp) 
-
-#        print(" total number of nancnt is "+str(nancnt))
-#        print(" total number of zerocnt is "+str(zerocnt))
-#        print(" total number of negcnt is "+str(negcnt))
 
         self.max_val= np.nanmax(datapoints)
         self.min_val=np.nanmin(datapoints)

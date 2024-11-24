@@ -327,9 +327,7 @@ class CrossSection:
 
         for y in range(0, self.num_y):
             for x in range(0, self.num_x):
-                if self.datafile != None : 
-                    datapoints[y][x] = self.materialproperties[y][x].getProperty(mproperty)
-                elif mproperty != "poisson" :
+                if mproperty != "poisson" :
                     datapoints[y][x] = self.materialproperties[y][x].getProperty(mproperty)
                 else:
                     datapoints[y][x] = ucvm.poisson(self.materialproperties[y][x].getProperty("vs"), self.materialproperties[y][x].getProperty("vp")) 
@@ -361,10 +359,8 @@ class CrossSection:
         if self.scalemin != None and self.scalemax != None:
             BOUNDS= ucvm.makebounds(float(self.scalemin), float(self.scalemax), 5)
             TICKS = ucvm.maketicks(float(self.scalemin), float(self.scalemax), 5)
-            umax=(self.scalemax)
-            umin=(self.scalemin)
-#            umax=round(self.scalemax)
-#            umin=round(self.scalemin)
+            umax=round(self.scalemax)
+            umin=round(self.scalemin)
             umean=round((umax+umin)/2)
         else:
             ## default BOUNDS are from 0 to 5
@@ -486,22 +482,10 @@ class CrossSection:
         
         datapoints = np.arange(self.num_x * self.num_y,dtype=np.float32).reshape(self.num_y, self.num_x)
             
-        nancnt=0
-        zerocnt=0
-        negcnt=0
         for i in range(0, self.num_y):
             for j in range(0, self.num_x):
-                if (self.datafile != None) :
+                if mproperty != "poisson":
                     datapoints[i][j] = self.materialproperties[i][j].getProperty(mproperty)
-                elif mproperty != "poisson":
-                    datapoints[i][j] = self.materialproperties[i][j].getProperty(mproperty)
-                    if (datapoints[i][j] == 0) :
-                        zerocnt=zerocnt+1
-                    if (datapoints[i][j] < 0) :
-                        negcnt=negcnt+1
-                    if(datapoints[i][j] == -1 ) :
-                        datapoints[i][j]=np.nan
-                        nancnt=nancnt+1
                 else :
                     datapoints[i][j] = ucvm.poisson(self.materialproperties[i][j].vs, self.materialproperties[i][j].vp)
 
