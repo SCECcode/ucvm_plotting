@@ -94,6 +94,10 @@ class ElevationProfile:
         if 'data_type' in self.meta :
            self.properties = self.meta['data_type']
 
+        if 'skip' in self.meta:
+           self.skip =  self.meta['skip']
+        else:
+           self.skip = None;
 
         ## Private holding place for returned Vp data.        
         self.vplist = []
@@ -111,6 +115,9 @@ class ElevationProfile:
         else:
             self.threshold = None
     
+        self.ucvm = UCVM(install_dir=self.installdir, config_file=self.configfile, z_range=self.z_range,floors=self.floors)
+
+
     ## 
     #  Generates the elevation profile in a format that is ready to plot.
     def getplotvals(self) :
@@ -129,17 +136,17 @@ class ElevationProfile:
             point_list.append(Point(self.startingpoint.longitude, self.startingpoint.latitude, elevation=i))
             self.meta['elevation'].append(i)
             
-        u = UCVM(install_dir=self.installdir, config_file=self.configfile, z_range=self.z_range,floors=self.floors)
+        ucvm = self.ucvm
 
 ###MEI
         if (self.datafile != None) :
             print("\nUsing --> "+self.datafile)
-            data = u.import_matprops(self.datafile)
+            data = ucvm.import_matprops(self.datafile)
             if len(data) == 0 :
                 print("ERROR: no matprops plot data.")
                 exit(1)
         else:
-            data = u.query(point_list, self.cvm, elevation=1)
+            data = ucvm.query(point_list, self.cvm, elevation=1)
         
         tmp = []
         for matprop in data:
@@ -153,8 +160,8 @@ class ElevationProfile:
 
         if(self.datafile == None) :
               blob = { 'matprops' : tmp }
-              u.export_matprops(blob,self.filename)
-              u.export_metadata(self.meta,self.filename)
+              ucvm.export_matprops(blob,self.filename)
+              ucvm.export_metadata(self.meta,self.filename)
     
     ##
     #  Adds the elevation profile to a pre-existing plot.
@@ -265,7 +272,13 @@ class ElevationProfile:
     ##
     #  Plots a new elevation profile using all the default plotting options.
     #
-    def plot(self) :
+    def plot(self):
+        if self.skip :
+            self._file()
+        else:
+            self._plot_file()
+
+    def _plot_file(self):
 
         if self.startingpoint.description == None:
             location_text = ""
@@ -293,3 +306,8 @@ class ElevationProfile:
             plt.show()
         else:
             plt.savefig(self.filename)
+
+    def _file(self):
+            
+       # Get the material properties.
+        self.getplotvals()
