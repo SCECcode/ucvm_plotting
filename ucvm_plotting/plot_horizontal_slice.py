@@ -20,7 +20,7 @@ def usage():
     print("\t-u, --upperright: upper-right latitude, longitude (e.g. 35,-117)")
     print("\t-s, --spacing: grid spacing in degrees (typically 0.01)")
     print("\t-e, --depth: depth for horizontal slice in meters (e.g. 1000)")
-    print("\t-d, --datatype: either 'vs', 'vp', 'density', or 'poisson', without quotation marks")
+    print("\t-d, --datatype: either 'vs', 'vp', 'density', 'all', or 'poisson', without quotation marks")
     print("\t-c, --cvm: one of the installed velocity models")
     print("\t-z, --zrange: optional Z-range for elygtl:ely (e.g. -z 0,350)")
     print("\t-L, --floors: optional vs/vp/density floors for taper (e.g. -L 500,1700,1700)")

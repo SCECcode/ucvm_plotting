@@ -10,7 +10,7 @@
 #  Imports
 from .cvm_ucvm import Point, MaterialProperties, UCVM, UCVM_CVMS
 from .cvm_plot import Plot, math, plot_cmapDiscretize, cm, mcolors, basemap, plt, np
-from .cvm_common import VERSION
+from .cvm_common import VERSION, pycvm_filestub
 
 ##
 #  @class HorizontalSlice
@@ -134,16 +134,18 @@ class HorizontalSlice:
             self.title = "%s%s Horizontal Slice at %.0fm" % (location_text, cvmdesc, self.upperleftpoint.depth)
             self.meta['title'] = self.title
 
+        self.skip = None
+        if ('skip' in self.meta) and (self.meta['skip'] == '1'):
+           self.skip = True
+
         if 'data_type' in self.meta :
            self.mproperty = self.meta['data_type']
+           if self.meta['data_type'] == 'all' :
+               if self.skip == None:
+                   self.mproperty = "vs"
         else:
            self.mproperty = "vs"
 
-        if 'skip' in self.meta:
-           self.skip =  self.meta['skip']
-        else:
-           self.skip = None;
-    
         self.ucvm = UCVM(install_dir=self.installdir, config_file=self.configfile, z_range=self.z_range, floors=self.floors)
 
     ##
@@ -227,7 +229,10 @@ class HorizontalSlice:
     def plot(self, horizontal_label = None):
 
         if self.skip :
-            self._file(horizontal_label)
+           if self.mproperty == "all" :
+                self._file_all(horizontal_label)
+           else:
+                self._file(horizontal_label)
         else: 
             self._plot_file(horizontal_label) 
 
@@ -466,4 +471,51 @@ class HorizontalSlice:
               f = "horizontal_slice"+rnd
               ucvm.export_metadata(self.meta,f)
               ucvm.export_np_float_array(datapoints,f)
+
+
+    ## 
+    #  Create the horizontal slice data file only and one of each of vs, vp, density
+    # 
+    def _file_all(self, horizontal_label = None):
+
+        self.datafile = None
+
+        self.getplotvals()
+
+        #label_uid_something.png
+        if self.filename != None:
+            fstub=pycvm_filestub(self.filename)
+        else:
+            rnd=''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
+            fstub = "horizontal_slice_"+rnd
+
+        # Get the properties.
+        datapoints = np.arange(self.num_x * self.num_y,dtype=np.float32).reshape(self.num_y, self.num_x)
+        for mproperty in ['vs', 'vp', 'density' ] :
+
+          self.meta['data_type']=mproperty
+          # process for label + UID
+          f = fstub+"_"+mproperty
+
+          for i in range(0, self.num_y):
+            for j in range(0, self.num_x):
+                datapoints[i][j] = self.materialproperties[i][j].getProperty(mproperty)
+
+          self.max_val= np.nanmax(datapoints)
+          self.min_val=np.nanmin(datapoints)
+          self.mean_val=np.mean(datapoints)
+
+          ucvm = self.ucvm 
+
+          self.meta['num_x'] = self.num_x
+          self.meta['num_y'] = self.num_y
+          self.meta['datapoints'] = datapoints.size
+          self.meta['max'] = self.max_val.item()
+          self.meta['min'] = self.min_val.item()
+          self.meta['mean'] = self.mean_val.item()
+          self.meta['lon_list']=self.lons
+          self.meta['lat_list']=self.lats
+
+          ucvm.export_metadata(self.meta,f+"_meta.json")
+          ucvm.export_np_float_array(datapoints,f+"_data.bin")
 

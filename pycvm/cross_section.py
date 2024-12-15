@@ -9,10 +9,11 @@
 #  Imports
 from .cvm_ucvm import Point, MaterialProperties, UCVM, UCVM_CVMS
 from .cvm_plot import Plot, math, plot_cmapDiscretize, cm, mcolors, basemap, plt, np
-from .cvm_common import VERSION
+from .cvm_common import VERSION, pycvm_filestub
 
 import random
 import string
+import pdb
 
 try:
     import pyproj
@@ -96,9 +97,16 @@ class CrossSection:
             self.cvm = self.meta['cvm']
         else:
             self.cvm = None
-        
+
+        self.skip = None
+        if ('skip' in self.meta) and (self.meta['skip'] == '1') :
+            self.skip = True
+
         if 'data_type' in self.meta :
            self.mproperty = self.meta['data_type']
+           if self.meta['data_type'] == 'all' :
+               if self.skip == None:
+                  self.mproperty = "vs"
         else:
            self.mproperty = "vs"
 
@@ -139,11 +147,6 @@ class CrossSection:
             self.title = "%s%s Cross Section from (%.2f, %.2f) to (%.2f, %.2f)" % (location_text, cvmdesc, self.startingpoint.longitude, \
                         self.startingpoint.latitude, self.endingpoint.longitude, self.endingpoint.latitude)
             self.meta['title']=self.title
-
-        if 'skip' in self.meta:
-            self.skip= True;
-        else:
-            self.skip = None
 
         self.ucvm = UCVM(install_dir=self.installdir, config_file=self.configfile, z_range=self.z_range, floors=self.floors)
 
@@ -235,18 +238,19 @@ class CrossSection:
 
         ## The 2D array of retrieved material properties.
             self.materialproperties = [[MaterialProperties(-1, -1, -1) for x in range(self.num_x)] for y in range(self.num_y)] 
-
-        
             for y in range(0, self.num_y):
                 for x in range(0, self.num_x):   
                     self.materialproperties[y][x] = data[y * self.num_x + x]     
+
     ## 
     #  Plots the cross section slice either to an image or a file name.
     # 
     def plot(self):
-
         if self.skip :
-            self._file()
+            if self.mproperty == "all" :
+                self._file_all()
+            else:
+                self._file()
         else:
             self._plot_file()
 
@@ -514,3 +518,53 @@ class CrossSection:
               f = "cross_section"+rnd
               ucvm.export_metadata(self.meta,f)
               ucvm.export_np_float_array(datapoints,f)
+
+
+    ## 
+    #  Create the cross section slice data files for vs, vp and density
+    #
+    def _file_all(self) :
+
+        # make sure meta.datafile is None
+        self.datafile = None
+
+        #label_uid_something.png
+        if self.filename != None:
+            fstub=pycvm_filestub(self.filename)
+        else:
+            rnd=''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
+            fstub = "cross_section_"+rnd
+
+        self.getplotvals()
+        
+        datapoints = np.arange(self.num_x * self.num_y,dtype=np.float32).reshape(self.num_y, self.num_x)
+            
+        for mproperty in ['vs', 'vp', 'density' ] :
+
+            self.meta['data_type']=mproperty
+            # process for label + UID
+            f = fstub+"_"+mproperty
+
+            for i in range(0, self.num_y):
+                for j in range(0, self.num_x):
+                    datapoints[i][j] = self.materialproperties[i][j].getProperty(mproperty)
+
+            self.max_val= np.nanmax(datapoints)
+            self.min_val=np.nanmin(datapoints)
+            self.mean_val=np.mean(datapoints)
+
+            ucvm = self.ucvm
+
+            self.meta['num_x'] = self.num_x
+            self.meta['num_y'] = self.num_y
+            self.meta['datapoints'] = datapoints.size
+            self.meta['max'] = self.max_val.item()
+            self.meta['min'] = self.min_val.item()
+            self.meta['mean'] = self.mean_val.item()
+            self.meta['lon_list'] = self.lon_list
+            self.meta['lat_list'] = self.lat_list
+            self.meta['depth_list'] = self.depth_list
+
+            ucvm.export_metadata(self.meta,f+"_meta.json")
+            ucvm.export_np_float_array(datapoints,f+"_data.bin")
+

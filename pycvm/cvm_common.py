@@ -175,3 +175,13 @@ def pycvm_is_num(value):
         return True
     except Exception:
         return False
+##
+#  Returns file stub that is made of label_uid
+#
+#  @param filename The string to extract label and uid from
+#  @return file_uid string
+def pycvm_filestub(fname):
+    tokens = fname.split("_")
+    label=tokens[0]
+    uid=tokens[1]
+    return label+"_"+uid
