@@ -21,7 +21,7 @@ plot_cross_section.py -s 0 -h ${HSTEP} -d density -c ${MODEL} -a sd -o ${LABEL_V
 ./ucvm_cross_section2csv_line.py ${LABEL_VP}_data.bin ${LABEL_VP}_meta.json
 
 ## generate data only
-plot_cross_section.py -S -s 0 -h ${HSTEP}.4 -d all -c ${MODEL} -a sd -o ${LABEL_ALL}_all.png -i ${UCVM_INSTALL_PATH} -v ${VSTEP} -b${Lat1},${Lon1}, -u ${Lat2},${Lon2} -e 5000
+plot_cross_section.py -S -s 0 -h ${HSTEP} -d all -c ${MODEL} -a sd -o ${LABEL_ALL}_all.png -i ${UCVM_INSTALL_PATH} -v ${VSTEP} -b${Lat1},${Lon1}, -u ${Lat2},${Lon2} -e 5000
 ./ucvm_cross_section2csv_all.py ${LABEL_ALL}_vp_data.bin ${LABEL_ALL}_vp_meta.json ${LABEL_ALL}_vs_data.bin ${LABEL_ALL}_vs_meta.json ${LABEL_ALL}_density_data.bin ${LABEL_ALL}_density_meta.json 
 
 ### run on docker container
