@@ -1,16 +1,24 @@
-# test_plot_horizontal_slice.sh
+# test_plot_horizontal_slice_all.sh
+#
 #
 
 MODEL=sfcvm
-LAT1=37.2635
-LON1=-122.1945
-LAT2=38.3315
-LON2=-121.1536
-LABEL=taper2_1734139660226
+LAT1=38.35
+LON1=-122.9064
+LAT2=39.0291
+LON2=-122.0213
+LABEL_VP=CVM_4132_h_vp
+LABEL_ALL=CVM_4132
 
-## generate data only
-time plot_horizontal_slice.py -s 0.1 -c ${MODEL} -a sd -o ${LABEL}_ALL.png -i $UCVM_INSTALL_PATH -t "horizontal vs ${MODEL}" -d all -b ${LAT1},${LON1} -u ${LAT2},${LON2} -e 1000 -S
+#baseline test data
+plot_horizontal_slice.py -d vp -c ${MODEL} -s 0.0078 -a sd -o ${LABEL_VP}.png -i $UCVM_INSTALL_PATH  -b 38.35,-122.9064 -u 39.0291,-122.0213 -e 1000
+./ucvm_horizontal_slice2csv_line.py ${LABEL_VP}_data.bin ${LABEL_VP}_meta.json 
 
-./ucvm_horizontal_slice2csv_line.py taper2_1734139660226_vp_data.bin taper2_1734139660226_vp_meta.json 
+#generate data files only
+plot_horizontal_slice.py -S -d all -c ${MODEL} -s 0.0078 -a sd -o ${LABEL_ALL}_all.png -i $UCVM_INSTALL_PATH  -b 38.35,-122.9064 -u 39.0291,-122.0213 -e 1000
+./ucvm_horizontal_slice2csv_all.py ${LABEL_ALL}_vp_data.bin ${LABEL_ALL}_vp_meta.json ${LABEL_ALL}_vs_data.bin ${LABEL_ALL}_vs_meta.json ${LABEL_ALL}_density_data.bin ${LABEL_ALL}_density_meta.json
 
-./ucvm_horizontal_slice2csv_all.py taper2_1734139660226_vp_data.bin taper2_1734139660226_vp_meta.json taper2_1734139660226_vs_data.bin taper2_1734139660226_vs_meta.json taper2_1734139660226_density_data.bin taper2_1734139660226_density_meta.json
+## on docker
+#./plotCVM-horzSlice2.pl CVM_4132_all_data.csv 1 0 0 0 1 0
+#./plotCVM-horzSlice.pl CVM_4132_h_vp_data.csv 0 0 0 1 0
+
