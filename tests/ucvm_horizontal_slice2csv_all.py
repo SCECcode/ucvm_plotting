@@ -1,1 +1,0 @@
-/home/mei/ucvm_metadata_utilities/bin/ucvm_horizontal_slice2csv_all.py
