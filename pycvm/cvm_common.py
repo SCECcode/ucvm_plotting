@@ -182,6 +182,13 @@ def pycvm_is_num(value):
 #  @return file_uid string
 def pycvm_filestub(fname):
     tokens = fname.split("_")
-    label=tokens[0]
-    uid=tokens[1]
-    return label+"_"+uid
+    if (len(tokens) > 2) :
+      label=tokens[0]
+      uid=tokens[1]
+      return label+"_"+uid
+    else :  # foo.png
+      k = fname.rfind(".png")
+      if( k != -1) :
+          return fname[:k]
+      return "foo"
+
