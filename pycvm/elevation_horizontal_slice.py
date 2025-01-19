@@ -151,7 +151,7 @@ class ElevationHorizontalSlice:
                 data=data1d[0].tolist()
             print("\nUsing --> "+self.datafile) 
  
-	else: 
+        else: 
             #  Generate a list of points to pass to UCVM.
             ucvmpoints = []
             for y in xrange(0, self.num_y):
