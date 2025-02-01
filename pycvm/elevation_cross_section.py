@@ -241,7 +241,7 @@ class ElevationCrossSection:
         self.getplotvals(mproperty)
         
         # Call the plot object.
-        p = Plot(None, None, None, None, 10, 10)
+        p = Plot(False,None, None, None, None, 10, 10)
 
         plt.axes([0.1,0.7,0.8,0.25])
     

@@ -235,7 +235,6 @@ class DepthProfile:
             max_x = max(max_x, max(newvplist))
             plot.addsubplot().plot(newvplist, yvals, "-", color=vpcolor, label=vplabel)
 
-
         if "vs" in self.properties:
             myInt=1000
             newvslist=np.array(self.vslist)/myInt
@@ -307,11 +306,11 @@ class DepthProfile:
             title = "%s%s Depth Profile From %sm To %sm at (%.6f,%.6f)" % (location_text, cvmdesc, self.startingpoint.depth, self.todepth, self.startingpoint.longitude, self.startingpoint.latitude)
 
         # Call the plot object.
-        p = Plot(title, "Units (see legend)", "Depth (m)", None, 7, 10)
+        p = Plot(True, title, "Units (see legend)", "Depth (m)", None, 7, 10)
 
         # Add to plot.
         self.addtoplot(p)
-                
+
         if self.filename == None:
             plt.show()
         else:

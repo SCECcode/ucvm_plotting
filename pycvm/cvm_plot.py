@@ -54,17 +54,23 @@ class Plot:
     #  Initializes the Plot with a set of basic parameters. Use the
     #  addsubplot() method to add a sub-plot to the plot.
     #
+    #  @param subplots The plot can contain subplots
     #  @param title The title for the plot.
     #  @param xlabel The label to be displayed on the x-axis.
     #  @param ylabel The label for the y-axis.
     #  @param legend A legend to be displayed on the lower left of the plot.
     #  @param width The width of the plot in inches (dpi = 100).
     #  @param height The height of the plot in inches (dpi = 100).
-    def __init__(self, title = None, xlabel = None, ylabel = None, legend = None, width = 10, height = 10):
+    def __init__(self, subplots = True, title = None, xlabel = None, ylabel = None, legend = None, width = 10, height = 10):
         ## Defines the figure and plot object to which we can add subplots.
 
-        self.figure = plt.figure(figsize=(width, height), dpi=100)
-        self.plot = None
+        ## For depth profile with subplots
+        if subplots :
+          self.figure, self.plot = plt.subplots(figsize=(width, height), dpi=100)
+        else :
+          ## For cross section/horizontal slice -- no subplots
+          self.figure = plt.figure(figsize=(width, height), dpi=100)
+          self.plot = None
 
         if ylabel != None:
             plt.ylabel(ylabel, fontsize=14)
@@ -87,8 +93,8 @@ class Plot:
     #  @return The subplot that has been added to the already generated plot.
     def addsubplot(self):
         if(self.plot == None) :
-          self.plot = self.figure.add_subplot(1, 1, 1)
-          self.subplotcounter = 1
+          print("ERROR: PLOT is not setup to take subplots.")
+          exit(1)
         else:
           self.subplotcounter += 1;
         return self.plot;

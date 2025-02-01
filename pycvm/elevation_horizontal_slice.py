@@ -218,7 +218,7 @@ class ElevationHorizontalSlice:
         self.getplotvals(mproperty)
 
         # Call the plot object.
-        p = Plot(title, "", "", None, 10, 10)
+        p = Plot(False,title, "", "", None, 10, 10)
 
         u = UCVM(install_dir=self.installdir, config_file=self.configfile)
 

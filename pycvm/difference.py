@@ -85,7 +85,7 @@ class Difference:
                 title = "Horizontal Slice Difference Plot"
 
             # Call the plot object.
-            p = Plot(title, "", "", None, 10, 10)
+            p = Plot(False,title, "", "", None, 10, 10)
             
             colormap = basemap.cm.GMT_seis
         
@@ -137,7 +137,7 @@ class Difference:
                 title = "Horizontal Slice Difference Plot"
                 
             # Call the plot object.
-            p = Plot(None, None, None, None, 10, 10)
+            p = Plot(False,None, None, None, None, 10, 10)
 
             colormap = basemap.cm.GMT_seis
 

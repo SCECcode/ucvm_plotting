@@ -297,7 +297,7 @@ class ElevationProfile:
             title = "%s%s Elevation Profile From %sm To %sm at (%.2f,%.2f)" % (location_text, cvmdesc, self.startelevation, self.toelevation, self.startingpoint.longitude, self.startingpoint.latitude)
 
         # Call the plot object.
-        p = Plot(title, "Units (see legend)", "Elevation (m)", None, 7, 10)
+        p = Plot(True,title, "Units (see legend)", "Elevation (m)", None, 7, 10)
 
         # Add to plot.
         self.addtoplot(p)
