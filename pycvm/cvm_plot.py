@@ -66,11 +66,11 @@ class Plot:
 
         ## For depth profile with subplots
         if subplots :
-          self.figure, self.plot = plt.subplots(figsize=(width, height), dpi=100)
+          self.figure, self.axs = plt.subplots(figsize=(width, height), dpi=100)
         else :
           ## For cross section/horizontal slice -- no subplots
           self.figure = plt.figure(figsize=(width, height), dpi=100)
-          self.plot = None
+          self.axs = None
 
         if ylabel != None:
             plt.ylabel(ylabel, fontsize=14)
@@ -92,12 +92,12 @@ class Plot:
     # 
     #  @return The subplot that has been added to the already generated plot.
     def addsubplot(self):
-        if(self.plot == None) :
+        if(self.axs == None) :
           print("ERROR: PLOT is not setup to take subplots.")
           exit(1)
         else:
           self.subplotcounter += 1;
-        return self.plot;
+        return self.axs;
 
     ## 
     #  Shows the plot.
