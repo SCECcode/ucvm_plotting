@@ -257,7 +257,7 @@ class HorizontalSlice:
         self.getplotvals(mproperty)
 
         # Call the plot object.
-        p = Plot(self.title, "", "", None, 10, 10)
+        p = Plot(False,self.title, "", "", None, 10, 10)
 
         ucvm = self.ucvm
 #        UCVM(install_dir=self.installdir, config_file=self.configfile)
