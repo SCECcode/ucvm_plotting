@@ -1,3 +1,4 @@
+
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 ![GitHub repo size](https://img.shields.io/github/repo-size/sceccode/ucvm_plotting)
 [![ucvm_plotting-ci Actions Status](https://github.com/SCECcode/ucvm_plotting/workflows/ucvm_plotting-ci/badge.svg)](https://github.com/SCECcode/ucvm_plotting/actions)
@@ -7,9 +8,10 @@
 <a href="http://www.scec.org/research"><img src="https://github.com/sceccode/ucvm_plotting/wiki/images/ucvm_plotting_logo.png"></a>
 
 # Description: 
-This ucvm_plotting software was originally included in UCVM v19.4.0 which was released in June 2019. In 2021, the plotting utilities in UCVM v19.4 were moved into this standalone repository. 
-
-The UCVM plotting utilities make use of Python2 libraries which will must be converted to Python3 for continued development. The current plotting utilities rely on Python2, which must be installed on systems using these utilities.
+This ucvm_plotting software was originally included in UCVM v19.4.0 which was released in June 2019. 
+In 2021, the plotting utilities in UCVM v19.4 were moved into this standalone repository. The Python2 
+has be removed with newer python3 based basemap modules. Current version of ucvm plotting has been tested
+agains UCVM v 25.7.
 
 UCVM_plotting is distributed as open-source scientific software. It can be installed compiled and run on most Linux-based computer systems if the system includes software development tools including Python, C, and Fortran compilers, and other software tools. The UCVM v19.4.0 source code is distributed using a github repository. On Github, users can find the source code, installation directions for Linux, and a wiki that provide examples and the expected results from UCVM.
 
@@ -23,8 +25,11 @@ UCVM_plotting is distributed as open-source scientific software. It can be insta
 7. [License](#license)
 
 # Installation: 
-Prerequisite :  anaconda with python3 virtual environment. The python3 environment should include the following libraries. The required python2 environment can be added to an anaconda python3 installation with this command
-* conda create -n python3 python>3.0 scipy pip numpy matplotlib basemap basemap-data-hires
+Prerequisite :  anaconda with python3 virtual environment. The python3 environment should include the 
+following libraries. It is highly recommended to create an environment with this command to bring in 
+the required python basemap modules
+ 
+* conda create -n python3 python>3.0 scipy pip numpy matplotlib basemap basemap-data-hires 
 
 * install UCVM per instruction, https://github.com/SCECcode/ucvm/wiki
 * source ucvm's install_loc/conf/ucvm_env.sh
