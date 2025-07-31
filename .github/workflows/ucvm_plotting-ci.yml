@@ -8,9 +8,9 @@ jobs:
     name: A job to build ucvm_plotting
     steps:
     - name: set UCVM_SRC_PATH 
-      run: echo "UCVM_SRC_PATH=$RUNNER_WORKSPACE/UCVM/ucvm" >> $GITHUB_ENV
+      run: echo "UCVM_SRC_PATH=$RUNNER_WORKSPACE/plotting/ucvm" >> $GITHUB_ENV
     - name: set UCVM_INSTALL_PATH 
-      run: echo "UCVM_INSTALL_PATH=$RUNNER_WORKSPACE/UCVM/target" >> $GITHUB_ENV
+      run: echo "UCVM_INSTALL_PATH=$RUNNER_WORKSPACE/plotting/target" >> $GITHUB_ENV
 ### build ucvm(main) first 
     - id: get-ucvm 
       uses: actions/checkout@v2
@@ -24,27 +24,26 @@ jobs:
          initiating-repo: 'cvmh'
          target-model: 'cvmh'
          target-branch: 'main'
-    - uses: actions/checkout@v2
-    - run: ( echo "UCVM_PLOTTING_PATH=$RUNNER_WORKSPACE/ucvm_plotting" >> $GITHUB_ENV )
+#   - name: Start SSH debug with tmate
+#     uses: mxschmitt/action-tmate@v3
+#     with:
+#       limit-access-to-actor: true
+#   - name: sleep to keep runner alive
+#     run: sleep 3600
+    - name: get  ucvm_plotting
+      uses: actions/checkout@v2
+    - name:  set up path to ucvm_plotting
+      run: ( echo "UCVM_PLOTTING_PATH=$RUNNER_WORKSPACE/ucvm_plotting" >> $GITHUB_ENV )
       shell: bash
-    - run: echo build-log ${{ steps.build-ucvm.outputs.build-log }}
+    - name : echo build-log
+      run: echo build-log ${{ steps.build-ucvm.outputs.build-log }}
       shell: bash
-    - run: which python
-    - run: which conda
-    - run: python -V
     - name: Set up Conda
       uses: s-weigand/setup-conda@v1
       with:
         update-conda: false
         activate-conda: true
         conda-channels: conda-forge
-    - run: conda --version
-    - run: which python
-    - run: which conda
-    - run: python -V
-    - run: which python3
-    - run: python3 -V
-    - run: pip -V
     - name: bring in basemap
       run: conda install matplotlib basemap basemap-data-hires
     - name: test basemap
