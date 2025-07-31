@@ -23,6 +23,7 @@ jobs:
       with:
          initiating-repo: 'cvmh'
          target-model: 'cvmh'
+         target-branch: 'main'
     - uses: actions/checkout@v2
     - run: ( echo "UCVM_PLOTTING_PATH=$RUNNER_WORKSPACE/ucvm_plotting" >> $GITHUB_ENV )
       shell: bash
