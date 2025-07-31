@@ -10,40 +10,35 @@ jobs:
     - uses: actions/checkout@v2
     - run: ( echo "UCVM_PLOTTING_PATH=$RUNNER_WORKSPACE/ucvm_plotting" >> $GITHUB_ENV )
       shell: bash
-#    - id: build-ucvm
-#      uses: SCECcode/UCVM/.github/actions@action
-#      with:
-#        target-models: 'cvmh'
+    - id: build-ucvm
+      uses: SCECcode/UCVM/.github/actions@action
+      with:
+        target-models: 'cvmh'
     - run: echo build-log ${{ steps.build-ucvm.outputs.build-log }}
       shell: bash
     - run: which python
     - run: which conda
     - run: python -V
-#    - name: Set up Python 2.7.17
-#      uses: actions/setup-python@v2
-#      with:
-#        python-version: '2.7.17'
     - name: Set up Conda
       uses: s-weigand/setup-conda@v1
       with:
         update-conda: false
         activate-conda: true
-#        python-version: '2.7.17'
         conda-channels: conda-forge
     - run: conda --version
     - run: which python
     - run: which conda
     - run: python -V
-    - run: which python2
-    - run: python2 -V
+    - run: which python3
+    - run: python3 -V
     - run: pip -V
-#    - name: bring in basemap
-#      run: conda install matplotlib basemap basemap-data-hires
-#    - name: test basemap
-#      run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/test_basemap.py)
-#    - name: build-self
-#      run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/ucvm_plotting-build.sh)
-#      shell: bash
-#    - name: test plotting
-#      run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/ucvm_plotting-test.sh)
-#      shell: bash
+    - name: bring in basemap
+      run: conda install matplotlib basemap basemap-data-hires
+    - name: test basemap
+      run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/test_basemap.py)
+    - name: build-self
+      run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/ucvm_plotting-build.sh)
+      shell: bash
+    - name: test plotting
+      run: (cd $UCVM_PLOTTING_PATH; ./.github/scripts/ucvm_plotting-test.sh)
+      shell: bash

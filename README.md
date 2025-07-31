@@ -10,7 +10,7 @@
 # Description: 
 This ucvm_plotting software was originally included in UCVM v19.4.0 which was released in June 2019. 
 In 2021, the plotting utilities in UCVM v19.4 were moved into this standalone repository. The Python2 
-has be removed with newer python3 based basemap modules. Current version of ucvm plotting has been tested
+version are replaced with python3 based basemap modules. Current version of ucvm plotting has been tested
 agains UCVM v 25.7.
 
 UCVM_plotting is distributed as open-source scientific software. It can be installed compiled and run on most Linux-based computer systems if the system includes software development tools including Python, C, and Fortran compilers, and other software tools. The UCVM v19.4.0 source code is distributed using a github repository. On Github, users can find the source code, installation directions for Linux, and a wiki that provide examples and the expected results from UCVM.
