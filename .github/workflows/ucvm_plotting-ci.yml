@@ -7,13 +7,25 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to build ucvm_plotting
     steps:
+    - name: set UCVM_SRC_PATH 
+      run: echo "UCVM_SRC_PATH=$RUNNER_WORKSPACE/UCVM/ucvm" >> $GITHUB_ENV
+    - name: set UCVM_INSTALL_PATH 
+      run: echo "UCVM_INSTALL_PATH=$RUNNER_WORKSPACE/UCVM/target" >> $GITHUB_ENV
+### build ucvm(main) first 
+    - id: get-ucvm 
+      uses: actions/checkout@v2
+      with: 
+        repository: 'SCECcode/UCVM'
+        ref: main
+        path: ucvm
+    - id: build-ucvm
+      uses: ./ucvm/.github/actions/build-ucvm-action
+      with:
+         initiating-repo: 'cvmh'
+         target-model: 'cvmh'
     - uses: actions/checkout@v2
     - run: ( echo "UCVM_PLOTTING_PATH=$RUNNER_WORKSPACE/ucvm_plotting" >> $GITHUB_ENV )
       shell: bash
-    - id: build-ucvm
-      uses: SCECcode/UCVM/.github/actions@action
-      with:
-        target-models: 'cvmh'
     - run: echo build-log ${{ steps.build-ucvm.outputs.build-log }}
       shell: bash
     - run: which python
