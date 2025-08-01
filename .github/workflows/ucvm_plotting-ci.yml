@@ -8,9 +8,9 @@ jobs:
     name: A job to build ucvm_plotting
     steps:
     - name: set UCVM_SRC_PATH 
-      run: echo "UCVM_SRC_PATH=$RUNNER_WORKSPACE/ucvm" >> $GITHUB_ENV
+      run: echo "UCVM_SRC_PATH=$RUNNER_WORKSPACE/ucvm_plotting/ucvm" >> $GITHUB_ENV
     - name: set UCVM_INSTALL_PATH 
-      run: echo "UCVM_INSTALL_PATH=$RUNNER_WORKSPACE/target" >> $GITHUB_ENV
+      run: echo "UCVM_INSTALL_PATH=$RUNNER_WORKSPACE/ucvm_plotting/target" >> $GITHUB_ENV
 ### build ucvm(main) first 
     - id: get-ucvm 
       uses: actions/checkout@v2
@@ -18,18 +18,18 @@ jobs:
         repository: 'SCECcode/UCVM'
         ref: main
         path: ucvm
-    - name: Start SSH debug with tmate
-      uses: mxschmitt/action-tmate@v3
-      with:
-       limit-access-to-actor: true
-    - name: sleep to keep runner alive
-      run: sleep 3600
     - id: build-ucvm
       uses: ./ucvm/.github/actions/build-ucvm-action
       with:
          initiating-repo: 'cvmh'
          target-model: 'cvmh'
          target-branch: 'main'
+    - name: Start SSH debug with tmate
+      uses: mxschmitt/action-tmate@v3
+      with:
+       limit-access-to-actor: true
+    - name: sleep to keep runner alive
+      run: sleep 3600
     - name: get  ucvm_plotting
       uses: actions/checkout@v2
     - name:  set up path to ucvm_plotting
