@@ -13,7 +13,7 @@ In 2021, the plotting utilities in UCVM v19.4 were moved into this standalone re
 version are replaced with python3 based basemap modules. Current version of ucvm plotting has been tested
 agains UCVM v 25.7.
 
-UCVM_plotting is distributed as open-source scientific software. It can be installed compiled and run on most Linux-based computer systems if the system includes software development tools including Python, C, and Fortran compilers, and other software tools. The UCVM v19.4.0 source code is distributed using a github repository. On Github, users can find the source code, installation directions for Linux, and a wiki that provide examples and the expected results from UCVM.
+ucvm_plotting is distributed as open-source scientific software. It can be installed compiled and run on most Linux-based computer systems if the system includes software development tools including Python, C, and Fortran compilers, and other software tools. The UCVM v19.4.0 source code is distributed using a github repository. On Github, users can find the source code, installation directions for Linux, and a wiki that provide examples and the expected results from UCVM.
 
 # Table of Contents:
 1. [Software Documentation](https://github.com/SCECcode/ucvm_plotting/wiki)
@@ -63,17 +63,17 @@ The following command will produce a horizontal map view plot plot of Vs values 
 Please see the [ucvm_plotting documetation](https://github.com/sceccode/ucvm_plotting/wiki) for more information and examples.
 
 # Support:
-Support for UCVM is provided by that Southern California Earthquake Center (SCEC) Research Computing Group. This group supports several research software distributions including UCVM. Users can report issues and feature requests using UCVM's github-based issue tracking link below. Developers will also respond to emails sent to the SCEC software contact listed below.
+Support for ucvm_plotting is provided by that Statewide California Earthquake Center (SCEC) Research Computing Group. This group supports several research software distributions including UCVM. Users can report issues and feature requests using UCVM's github-based issue tracking link below. Developers will also respond to emails sent to the SCEC software contact listed below.
 1. [UCVM Github Issue Tracker:](https://github.com/SCECcode/ucvm_plotting/issues)
 2. Email Contact: software@scec.usc.edu
 
 # Contributing:
-We welcome contributions to the UCVM_plotting software utilities. An overview of the process for contributing seismic models or 
-software updates to the UCVM_plotting Project is provided in the UCVM_plotting [contribution guidelines](CONTRIBUTING.md). 
-UCVM_plotting contributors agree to abide by the code of conduct found in our [Code of Conduct](CODE_OF_CONDUCT.md) guidelines.
+We welcome contributions to the ucvm_plotting software utilities. An overview of the process for contributing seismic models or 
+software updates to the ucvm_plotting Project is provided in the ucvm_plotting [contribution guidelines](CONTRIBUTING.md). 
+ucvm_plotting contributors agree to abide by the code of conduct found in our [Code of Conduct](CODE_OF_CONDUCT.md) guidelines.
 
 # Credits:
-Development of UCVM_plotting is a group effort. A list of developers that have contributed to the UCVM Software framework 
+Development of ucvm_plotting is a group effort. A list of developers that have contributed to the UCVM Software framework 
 are listed in the [Credits.md](CREDITS.md) file in this repository.
 
 # License:

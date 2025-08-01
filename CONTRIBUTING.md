@@ -1,13 +1,13 @@
 # Contributing to ucvm_plotting
 
-This document provides an overview on how to contribute to UCVM, and will provide step-by-step instructions on a practical contribution workflow.
+This document provides an overview on how to contribute to ucvm_plotting, and will provide step-by-step instructions on a practical contribution workflow.
 
 ## Getting Started
 
 * Make sure you have an active GitHub account
 * Download and install git
 * Read the git documentation
-* Install the main branch of the sceccode/ucvm.git repository
+* Install the main branch of the sceccode/ucvm_plotting.git repository
 * If you haven't worked with Git Forks before, make sure to read the documentation linked below.
 
 ## Submitting a Pull Request
@@ -30,13 +30,13 @@ If you feel that you need to add large files, let us know and we can figure some
 
 ## Submitting an Issue
 
-Please open an issue if you want to ask a question about UCVM.
+Please open an issue if you want to ask a question about ucvm_plotting.
 
 * Please search through the past issues to see if your question or the bug has already been addressed
 * Please apply the correct tag to your issue so others can search
 
 If you want to submit a bug report, please provide the information below:
-* UCVM version, Python version, and Platform (Linux, Windows, Mac OSX, etc)
+* ucvm_plotting version, UCVM version, Python version, and Platform (Linux, Windows, Mac OSX, etc)
 * How did you install UCVM (Docker, from source...)
 * Please provide a short, complete, and correct example that demonstrates the issue.
 * If this broke in a recent update, please tell us when it used to work.
