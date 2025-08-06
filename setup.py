@@ -15,7 +15,7 @@ AUTHOR_EMAIL = "software@scec.usc.edu"
 MAINTAINER = AUTHOR
 MAINTAINER_EMAIL = AUTHOR_EMAIL
 LICENSE = "Apache 2.0 license"
-URL = "https://github.com/SCEC/ucvm_plotting"
+URL = "https://github.com/SCECcode/ucvm_plotting"
 DESCRIPTION = "Python code extensions for UCVM and plotting library for the SCEC UCVM"
 
 with open("README.md") as f:
@@ -34,7 +34,7 @@ CLASSIFIERS = [
     "License :: OSI Approved :: {}".format(LICENSE),
 ]
 PLATFORMS = "Any"
-INSTALL_REQUIRES = ["numpy", "matplotlib", "basemap", "packaging"]
+INSTALL_REQUIRES = ["numpy", "matplotlib", "basemap", "basemap-data", "basemap-data-hires", "packaging"]
 KEYWORDS = ["UCVM"]
 
 if __name__ == "__main__":
