@@ -9,6 +9,14 @@ from .cross_section import CrossSection
 from .cvm_ucvm import Point, MaterialProperties, UCVM, UCVM_CVMS
 from .cvm_plot import Plot, math, plot_cmapDiscretize, cm, mcolors, basemap, plt, np
 from .cvm_common import VERSION
+import math
+import pdb
+
+try:
+    import pyproj
+except Exception:
+    print("ERROR: PyProj must be installed for this script to work.")
+    exit(1)
 
 ##
 #  @class CrossDifferencSection
@@ -20,15 +28,22 @@ class CrossDifferenceSection(CrossSection):
     ##
     #  Initializes the super class and copies the parameters over.
     #
-    #  @param upperleftpoint The @link common.Point starting point @endlink from which this plot should start.
-    #  @param bottomrightpoint The @link common.Point ending point @endlink at which this plot should end.
-    #  @param spacing The spacing, in degrees, for this plot. 
-    #  @param cvm The community velocity model from which this data should come.
-    #  
-    def __init__(self, upperleftpoint, bottomrightpoint, meta={}):
+    #  @param startingpoint The @link common.Point starting point @endlink from which this plot should start.
+    #  @param endingpoint The @link common.Point ending point @endlink at which this plot will end.
+    #  @param meta Metadata
+    def __init__(self, startingpoint, endingpoint, meta={}):
     
+        if 'cvm1' in meta and 'cvm2' in meta :
+          meta['cvm'] = meta['cvm1'] + ',' + meta['cvm2']
+
+        if 'title' not in meta :
+          title = "%s Cross Section Difference Plot from (%.2f, %.2f) to (%.2f, %.2f)" % \
+                  (meta['cvm'], startingpoint.longitude, startingpoint.latitude, \
+                  endingpoint.longitude, endingpoint.latitude)
+          meta['title'] = title
+
         #  Initializes the base class which is a cross section.
-        CrossSection.__init__(self, upperleftpoint, bottomrightpoint, meta)
+        CrossSection.__init__(self, startingpoint, endingpoint, meta)
 
         if 'datafile1' in self.meta :
             self.datafile1 = self.meta['datafile1']
@@ -39,29 +54,46 @@ class CrossDifferenceSection(CrossSection):
             self.datafile2 = self.meta['datafile2']
         else:
             self.datafile2 = None
-    
+
+        ## The number of points we retrieved. Stored as a property for the plot function to work.
+        # How many y and x values will we need?
+        self.num_x  = int(self.meta['num_x'])
+        self.num_y = int(self.meta['num_y'])
     
     ##
     #  Retrieves the values for this cross section and stores them in the class.
     def getplotvals(self, property="vs") :
+
+        point_list = []
+        lon_list = []
+        lat_list = []
+        depth_list = []
+
+        proj = pyproj.Proj(proj='utm', zone=11, ellps='WGS84')
+
+        x1, y1 = proj(self.startingpoint.longitude, self.startingpoint.latitude)
+        x2, y2 = proj(self.endingpoint.longitude, self.endingpoint.latitude)
+
+        num_prof = int(math.sqrt((x2-x1)*(x2-x1) + \
+                                 (y2-y1)*(y2-y1))/self.hspacing)
         
-        #  How many y and x values will we need?
-        
-        ## The plot width - needs to be stored as property for the plot function to work.
-        self.plot_width  = self.bottomrightpoint.longitude - self.upperleftpoint.longitude
-        ## The plot height - needs to be stored as a property for the plot function to work.
-        self.plot_height = self.upperleftpoint.latitude - self.bottomrightpoint.latitude 
-        ## The number of x points we retrieved. Stored as a property for the plot function to work.
-        if ( self.xsteps ):
-           self.num_x = int(self.xsteps)
-        else :
-           self.num_x = int(math.ceil(self.plot_width / self.spacing)) + 1
-        ## The number of y points we retrieved. Stored as a property for the plot function to work.
-        if ( self.ysteps ) :
-           self.num_y = int(self.ysteps)  
-        else :
-           self.num_y = int(math.ceil(self.plot_height / self.spacing)) + 1
-        
+        ## figure out lats and lons
+        jstart = self.startingdepth
+        for j in range(int(self.startingdepth), int(self.todepth) + 1, int(self.vspacing)):
+            depth_list.append( round(j,3))
+            for i in range(0, num_prof + 1):
+                x = x1 + i*(x2-x1)/float(num_prof)
+                y = y1 + i*(y2-y1)/float(num_prof)
+                lon, lat = proj(x, y, inverse=True)
+                point_list.append(Point(lon, lat, j))
+                if ( j == jstart) :
+                  lon_list.append( round(lon,5))
+                  lat_list.append( round(lat,5))
+
+        self.lon_list=lon_list
+        self.lat_list=lat_list
+        self.depth_list=depth_list
+
         ## The 2D array of retrieved values.
         self.materialproperties = [[MaterialProperties(-1, -1, -1) for x in range(self.num_x)] for x in range(self.num_y)] 
         
@@ -75,7 +107,7 @@ class CrossDifferenceSection(CrossSection):
             print("\nUsing --> "+self.datafile1)
             # print("expecting x ",self.num_x," y ",self.num_y)
             dataA=[]
-            if self.datafile1.rfind(".binary") != -1 :
+            if self.datafile1.rfind(".binary") != -1 or self.datafile1.rfind(".bin") != -1 :
                 dataA = u.import_binary(self.datafile1, self.num_x, self.num_y)
             else :
                 if self.datafile1.rfind(".raw") != -1 :
@@ -89,7 +121,7 @@ class CrossDifferenceSection(CrossSection):
 
             print("\nUsing --> "+self.datafile2)
             dataB=[]
-            if self.datafile2.rfind(".binary") != -1 :
+            if self.datafile2.rfind(".binary") != -1 or self.datafile2.rfind(".bin") != -1:
                 dataB = u.import_binary(self.datafile2, self.num_x, self.num_y)
             else :
                 if self.datafile2.rfind(".raw") != -1 :
@@ -103,14 +135,32 @@ class CrossDifferenceSection(CrossSection):
 
         i = 0
         j = 0
+        mmax=None
+        mmin=None
 
         for idx in range(len(dataA)) :
-            self.materialproperties[i][j].vs = dataA[idx]-dataB[idx]
+            dif = dataA[idx]-dataB[idx]
+            self.materialproperties[i][j].vs = dif
+
+            if mmax == None or dif > mmax :
+              mmax=dif
+            if mmin == None or dif < mmin :
+              mmin=dif    
+
             j = j + 1
             if j >= self.num_x:
                 j = 0
                 i = i + 1
 
+        ## DON'T Do this, user needs to make explicit request for the range
+##reset the range if not set
+#  if mmax > 0 and mmin < 0 and 'scalemin' not in self.meta and 'scalemax' not in self.meta :
+## km
+## mmid = math.ceil(max(abs(mmax/1000),abs(mmin/1000)))
+## reset
+## self.scalemin = -mmid
+## self.scalemax = mmid
+           
     ##
     #  Plots the Difference data as a cross section. This code is very similar to the
     #  CrossSection routine.
@@ -120,21 +170,6 @@ class CrossDifferenceSection(CrossSection):
     #  @param color_scale The color scale to use for the plot. Optional.
     def plot(self) :
  
-        if self.upperleftpoint.description == None:
-            location_text = ""
-        else:
-            location_text = self.upperleftpoint.description + " "
-
-        # Gets the better CVM description if it exists.
-        try:
-            cvmdesc = UCVM_CVMS[self.cvm]
-        except: 
-            cvmdesc = self.cvm
-        
-        if 'title' not in self.meta:
-            title = "%sCross Section Difference Plot For %s" % (location_text, cvmdesc)
-            self.meta['title'] = title
-
         self.meta['mproperty']="vs"
         self.meta['difference']="vs"
 

@@ -418,7 +418,7 @@ class CrossSection:
             print("ERROR: unknown option for colorscale.")
 
         if 'difference' in self.meta :
-            bwr = cm.get_cmap('bwr')
+            bwr = plt.get_cmap('bwr')
             colormap = plot_cmapDiscretize(bwr, len(BOUNDS) - 1)
 
 

@@ -26,6 +26,15 @@ class HorizontalDifferenceSlice(HorizontalSlice):
     #  @param cvm The community velocity model from which this data should come.
     #  
     def __init__(self, upperleftpoint, bottomrightpoint, meta={}):
+
+        if 'cvm1' in meta and 'cvm2' in meta :
+          meta['cvm'] = meta['cvm1'] + ',' + meta['cvm2']
+
+        if 'title' not in meta :
+          title = "%s Horizontal Difference Plot from (%.2f, %.2f) to (%.2f, %.2f)" % \
+                  (meta['cvm'], upperleftpoint.longitude, upperleftpoint.latitude, \
+                  bottomrightpoint.longitude, bottomrightpoint.latitude)
+          meta['title'] = title
     
         #  Initializes the base class which is a horizontal slice.
         HorizontalSlice.__init__(self, upperleftpoint, bottomrightpoint, meta)
@@ -175,21 +184,6 @@ class HorizontalDifferenceSlice(HorizontalSlice):
     #  @param color_scale The color scale to use for the plot. Optional.
     def plot(self) :
  
-        if self.upperleftpoint.description == None:
-            location_text = ""
-        else:
-            location_text = self.upperleftpoint.description + " "
-
-        # Gets the better CVM description if it exists.
-        try:
-            cvmdesc = UCVM_CVMS[self.cvm]
-        except: 
-            cvmdesc = self.cvm
-        
-        if 'title' not in self.meta:
-            title = "%sHorizontal Difference Plot For %s" % (location_text, cvmdesc)
-            self.meta['title'] = title
-
         self.meta['mproperty']="vs"
         self.meta['difference']="vs"
 

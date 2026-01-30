@@ -8,10 +8,11 @@
 #  Plots a cross difference section given a set of command-line parameters and 
 #  2 cross section bin data files
 #
-#  XXX
-#  plot_cross_difference_section.py -s 0.01 -c cca -a s -o diff_cross.png
+#  plot_cross_difference_section.py 
 #    -i $UCVM_INSTALL_PATH -b 31.5348,-125.7804 -u 42.5153,-113.5259
-#    -f a_cross_section_data.bin,another_cross_section_data.bin
+#    -d vs -c cvmsi,cvms5 -a s -s 0 -e 1000 -x 100 -y 50
+#    -f cvmsi_cross_section_data.bin,cvms5_cross_section_data.bin
+#    -o diff_cross.png
 #
 
 from pycvm import CrossDifferenceSection, UCVM, VERSION, UCVM_CVMS, Point, ask_number, ask_path, ask_file, get_user_opts
@@ -27,8 +28,10 @@ def usage():
     print("\t-e, --ending: ending depth for cross-section (meters)")
     print("\t-h, --horizontal: horizontal spacing for cross-section (meters)")
     print("\t-v, --vertical: vertical spacing for cross-section (meters)")
+    print("\t-x, --numx: number of x (longitude) points")
+    print("\t-y, --numy: number of y (latitude) points")
     print("\t-d, --datatype: either 'vs', 'vp', 'density', or 'poisson', without quotation marks")
-    print("\t-c, --cvm: one of the installed CVMs")
+    print("\t-c, --cvm: optional cvm used (e.g. cvmsi,cvms5)")
     print("\t-z, --zrange: optional Z-range for elygtl:ely (e.g. -z 0,350)")
     print("\t-L, --floors: optional vs/vp/density floors for taper (e.g. -L 500,1700,1700)")
     print("\t-a, --scale: color scale, either 's' for smooth, 'd' for discretized or 'b' for bi-color scale, without quotes")
@@ -40,8 +43,9 @@ def usage():
     print("\t-o, --outfile: optional png output filename")
     print("\t-t, --title: optional plot title")
     print("\t-H, --help: optional display usage information")
-    print("\t-i, --installdir: optional UCVM isntall directory")
+    print("\t-i, --installdir: optional UCVM install directory")
     print("\t-n, --configfile: optional UCVM configfile")
+    print("\t-S, --skip: optional skip generating matplotlib plot")
     print("UCVM %s\n" % VERSION)
 
 ret_val = get_user_opts({"b,origin":"lat1,lon1", \
@@ -49,20 +53,24 @@ ret_val = get_user_opts({"b,origin":"lat1,lon1", \
              "s,starting":"starting_depth", \
 			 "e,ending":"ending_depth", \
              "d,datatype":"data_type", \
-			 "c,cvm":"cvm", \
+			 "c,cvm,o":"cvm1,cvm2", \
              "z,zrange,o":"zrange1,zrange2", \
              "L,floors,o":"vsfloor,vpfloor,densityfloor", \
 			 "h,horizontal":"horizontal_spacing", \
 			 "v,vertical":"vertical_spacing", \
+			 "x,numx":"num_x", \
+			 "y,numy":"num_y", \
 			 "a,scale": "color", \
              "A,scalebounds,o": "scalemin,scalemax", \
 			 "g,gate,o": "gate", \
-			 "f,datafile,o":"datafile", \
+			 "f,datafile":"datafile1,datafile2", \
 			 "o,outfile,o":"outfile", \
              "t,title,o":"title", \
              "H,help,o":"", \
              "i,installdir,o":"installdir", \
-             "n,configfile,o":"configfile" })
+             "n,configfile,o":"configfile", \
+             "S,skip,o":"" \
+             })
 
 meta = {}
 
@@ -176,13 +184,23 @@ else:
     
     cvm_selected = -1
     while cvm_selected < 0 or cvm_selected > counter:
-        cvm_selected = int(ask_number("\nSelect the CVM: ")) - 1
+        cvm_selected = int(ask_number("\nSelect the first CVM: ")) - 1
     
         if cvm_selected < 0 or cvm_selected > counter:
             print("Error: the number you selected must be between 1 and %d" % counter)
 
     cvm_selected = corresponding_cvm[cvm_selected]
-    meta['cvm']=cvm_selected
+    meta['cvm1']=cvm_selected
+
+    cvm_selected = -1
+    while cvm_selected < 0 or cvm_selected > counter:
+        cvm_selected = int(ask_number("\nSelect the second CVM: ")) - 1
+    
+        if cvm_selected < 0 or cvm_selected > counter:
+            print("Error: the number you selected must be between 1 and %d" % counter)
+
+    cvm_selected = corresponding_cvm[cvm_selected]
+    meta['cvm2']=cvm_selected
 
     # We will offer two color options. Discretized or smooth. But, we'll only offer red-blue for now.
     gate = 2.5
@@ -198,6 +216,7 @@ else:
             print("marks) for a smooth color scale and 'b' (without quotation marks) for bi-color scale.")
     meta['gate']=gate
     meta['color']=color
+    meta['skip']=0
 
 # Now we have all the information so we can actually plot the data.
 print("")

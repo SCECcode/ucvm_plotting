@@ -8,7 +8,7 @@
 #  Plots a horizontal difference slice given a set of command-line parameters
 #  and 2 horizontal slice bin data files
 #
-# plot_horizontal_difference_slice.py -s 0.01 -c cca -a s -o diff_horizontal.png 
+# plot_horizontal_difference_slice.py -s 0.01 -a s -o diff_horizontal.png 
 #   -i $UCVM_INSTALL_PATH -b 31.5348,-125.7804 -u 42.5153,-113.5259 
 #   -f a_horizontal_slice_data.bin,another_horizontal_slice_data.bin
 #
@@ -24,7 +24,7 @@ def usage():
     print("\t-b, --bottomleft: bottom-left latitude, longitude (e.g. 34,-118)")
     print("\t-u, --upperright: upper-right latitude, longitude (e.g. 35,-117)")
     print("\t-s, --spacing: grid spacing in degrees (typically 0.01)")
-    print("\t-c, --cvm: one of the installed community velocity models")
+    print("\t-c, --cvm: optional community velocity models used (e.g. cvmsi,cvms5)")
     print("\t-a, --scale: color scale, either 's' for smooth or 'd' for discretized, without quotes")
     print("\t-A, --scalebounds: max and min of the color scale")
     print("\t-f, --datafile: binary input data filenames")
@@ -36,12 +36,13 @@ def usage():
     print("\t-i, --installdir: optional UCVM install directory")
     print("\t-n, --configfile: optional UCVM configfile")
     print("\t-D, --debug: optional run in debug mode")
+    print("\t-S, --skip: optional skip generating matplotlib plot")
     print("UCVM %s\n" % VERSION)
 
 ret_val = get_user_opts({"b,bottomleft":"lat1,lon1",\
                          "u,upperright":"lat2,lon2", \
                          "s,spacing":"spacing", \
-                         "c,cvm":"cvm", \
+                         "c,cvm,o":"cvm1,cvm2", \
                          "a,scale": "color", \
                          "A,scalebounds,o": "scalemin,scalemax", \
                          "f,datafile":"datafile1,datafile2", \
@@ -52,7 +53,9 @@ ret_val = get_user_opts({"b,bottomleft":"lat1,lon1",\
                          "H,help,o":"", \
                          "i,installdir,o":"installdir", \
                          "n,configfile,o":"configfile", \
-                         "D,debug,o":"debug"})
+                         "D,debug,o":"debug", \
+                         "S,skip,o":"" \
+                         })
 
 meta={}
 
@@ -145,13 +148,23 @@ else:
     
     cvm_selected = -1
     while cvm_selected < 0 or cvm_selected > counter:
-        cvm_selected = int(ask_number("\nSelect the CVM: ")) - 1
+        cvm_selected = int(ask_number("\nSelect the first CVM: ")) - 1
     
         if cvm_selected < 0 or cvm_selected > counter:
             print("Error: the number you selected must be between 1 and %d" % counter)
 
     cvm_selected = corresponding_cvm[cvm_selected]
-    meta['cvm'] = cvm_selected
+    meta['cvm1'] = cvm_selected
+
+    cvm_selected = -1
+    while cvm_selected < 0 or cvm_selected > counter:
+        cvm_selected = int(ask_number("\nSelect the second CVM: ")) - 1
+    
+        if cvm_selected < 0 or cvm_selected > counter:
+            print("Error: the number you selected must be between 1 and %d" % counter)
+
+    cvm_selected = corresponding_cvm[cvm_selected]
+    meta['cvm2'] = cvm_selected
 
     color = ""
     while color != "s" and color != "d":
@@ -163,6 +176,7 @@ else:
             print("Please enter 'd' (without quotation marks) for a discrete color bar and 's' (without quotation")
             print("marks) for a smooth color scale.")
     meta['color']=color
+    meta['skip']=0
 
 
 # Now we have all the information so we can actually plot the data.

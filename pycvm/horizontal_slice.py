@@ -366,7 +366,7 @@ class HorizontalSlice:
 
 # very special case for showing 'difference plot'
         if 'difference' in self.meta :
-            bwr = cm.get_cmap('bwr')
+            bwr = plt.get_cmap('bwr')
             colormap = plot_cmapDiscretize(bwr, len(BOUNDS) - 1)
 ##            colormap = plot_cmapDiscretize(basemap.cm.GMT_globe, len(BOUNDS) - 1)
              
