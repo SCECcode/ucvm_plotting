@@ -76,11 +76,10 @@ class HorizontalSlice:
             raise ValueError("The upper-left point must be higher than, and to the " + \
                              "left of, the bottom-right point.")
 
+        ## The spacing for the plot, defined in degrees. If meters specified, it's converted to degrees.
         if 'spacing' in self.meta:
             self.spacing = self.meta['spacing']
-        #  Check the spacing. If it's specified in meters, convert to degrees.
         try:
-            ## The spacing for the plot, defined in degrees. If meters specified, it's converted to degrees.
             self.spacing = float(self.spacing)
         except Exception:
             print("TODO")
@@ -310,7 +309,7 @@ class HorizontalSlice:
 
         if self.scalemin != None and self.scalemax != None:
             BOUNDS= ucvm.makebounds(float(self.scalemin), float(self.scalemax), 5)
-            TICKS = ucvm.aketicks(float(self.scalemin), float(self.scalemax), 5)
+            TICKS = ucvm.maketicks(float(self.scalemin), float(self.scalemax), 5)
             umax=round(self.scalemax)
             umin=round(self.scalemin)
             umean=round((umax+umin)/2) 
